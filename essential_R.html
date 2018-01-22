@@ -16,7 +16,184 @@ class: center, middle, inverse, title-slide
 
 ---
 
-layout: false
+
+class: middle, center
+
+
+
+&lt;div&gt;
+  &lt;i&gt;Programs must be written for people to read, and only incidentally for machines to execute.&lt;/i&gt;
+&lt;/div&gt;
+&lt;div class="quote"&gt;
+-- Harold Abelson
+&lt;/div&gt;
+&lt;div style="margin-top: 2%"&gt;
+  &lt;i&gt;The lyf so short, the craft so long to lerne.&lt;/i&gt;
+&lt;/div&gt;
+&lt;div class="quote"&gt;
+-- Geoffrey Chaucer
+&lt;/div&gt;
+
+---
+
+## What are these slides about?
+
+These slides are a rough guideline of how to write `R` code using common
+software, such as `devtools`, `testthat`, `lintr`, `covr`, `data.table`, `Rcpp` and its derivates and other frequently used tools toprogram in `R`. We don't claim at any point that the material treated here covers all of R, but rather serve as a the author's list of essential `R` tools, he frequently uses.
+
+These slides are no introduction on how to program functionally, procedurally or in an object-oriented way, how to write code in general, or how to speed up code. The interested reader is referred to:
+
+- Robert Martin: Clean Code,
+- Andrew Hunt: The Pragmatic Programmer,
+- Gang of Four: Design Patterns,
+- Hadley Wickham: R packages,
+- Dirk Eddelbuettel: Rcpp,
+- ...
+
+
+---
+
+## Creating R packages with `yeoman`
+
+If you have `yeoman` installed, you use the `R-bones` generator in order to initialize a complete project. This gives you the following bareboneL
+
+
+```bash
+  yo r-bones
+  ls -la newpkg
+```
+
+```
+## total 168
+## drwxr-xr-x  20 simondi  1029    680 Jan 22 21:09 .
+## drwxr-xr-x  15 simondi  1029    510 Jan 22 21:14 ..
+## -rw-r--r--   1 simondi  1029    220 Jan 22 20:24 .Rbuildignore
+## -rw-r--r--   1 simondi  1029    410 Jan 22 20:24 .codecov.yml
+## -rw-r--r--   1 simondi  1029     51 Jan 22 20:24 .gitattributes
+## -rw-r--r--   1 simondi  1029    421 Jan 22 20:24 .gitignore
+## -rw-r--r--   1 simondi  1029    556 Jan 22 20:24 .lintr
+## -rw-r--r--   1 simondi  1029   1115 Jan 22 20:24 .travis.yml
+## -rw-r--r--   1 simondi  1029    176 Jan 22 20:24 .yo-rc.json
+## -rw-r--r--   1 simondi  1029    598 Jan 22 21:10 DESCRIPTION
+## -rw-r--r--   1 simondi  1029  35141 Jan 22 20:24 LICENSE
+## drwxr-xr-x   7 simondi  1029    238 Jan 22 21:10 R
+## -rw-r--r--   1 simondi  1029    562 Jan 22 20:24 README.md
+## -rw-r--r--   1 simondi  1029     93 Jan 22 20:24 TODO.md
+## -rw-r--r--   1 simondi  1029    136 Jan 22 20:24 VERSIONS.md
+## -rw-r--r--   1 simondi  1029    836 Jan 22 20:24 appveyor.yml
+## drwxr-xr-x   3 simondi  1029    102 Jan 22 20:24 inst
+## drwxr-xr-x   3 simondi  1029    102 Jan 22 20:24 src
+## drwxr-xr-x   4 simondi  1029    136 Jan 22 20:24 tests
+## drwxr-xr-x   3 simondi  1029    102 Jan 22 20:24 vignettes
+```
+
+
+---
+
+## Writing R packages with `devtools`
+
+When creating an R package `devtools` covers all functionality required.
+
+
+```r
+  devtools::create("newpkg")
+  devtools::document()
+  devtools::test()
+  devtools::install()
+  devtools::check_cran()
+  devtools::lint()
+  devtools::use_rcpp()
+  devtools::run_examples()
+```
+
+This basically covers your complete development life cycle (except code coverage). `devtools` is **tremendously** useful. If you look for sth that helps you write packages, `devtools` has a function for it. For all other things, use `usethis`.
+
+
+---
+
+## Testing code with `testthat`
+
+Right after creating your package, you should write your first test (yes, really). Testing is **essential** for writing good software. The same way as programming languages change your way of thinking, do unit tests change your way of writing functions. `testthat` is probably the best way to go here. Tests are usually put in `tests/testthat`.
+You can use:
+
+
+```r
+  devtools::use_testthat()
+```
+
+to create a test suite automatically. A test would look like this:
+
+
+```r
+  f &lt;- function(.) . + 10
+
+  testthat::test_that("test works", {
+    testthat::expect_equal(f(1), 11)
+  })
+
+  testthat::test_that("test fails", {
+    testthat::expect_error(stop("i fail"))
+  })
+```
+
+
+---
+
+# Static code analysis with `lintr`
+
+`lintr` checks your code for style, syntax error and possible issues.
+
+
+```r
+  lintr::lint("newpkg/R/bad_bad_file.R")
+```
+
+```
+## newpkg/R/bad_bad_file.R:2:1: style: lines should not be more than 80 characters.
+##                                                                               myRet = a+b
+## ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+## newpkg/R/bad_bad_file.R:2:79: style: Variable and function names should be all lowercase.
+##                                                                               myRet = a+b
+##                                                                               ^~~~~
+## newpkg/R/bad_bad_file.R:2:85: style: Use &lt;-, not =, for assignment.
+##                                                                               myRet = a+b
+##                                                                                     ^
+```
+
+You can also incorporate `lintr` in your unit tests and let them fail, if lints are discovered.
+
+
+```r
+if (requireNamespace("lintr", quietly = TRUE)) {
+  test_that("this is lint free", {  
+    lintr::expect_lint_free()
+  })
+}
+```
+
+What `lintr` considers worth reporting can be customized in a `.lintr` file in your package root directory.
+
+---
+
+# Code coverage using `covr`
+
+`covr` lets you check how much of your code is used and tested. If you created a package and you run
+
+
+```r
+  covr::package_coverage()
+```
+
+---
+
+
+```r
+  df &lt;- data.frame(x=rnorm(100), y=rnorm(100))
+  library('ggplot2')
+  ggplot() + geom_point(data=df, aes(x=x, y=y))
+```
+
+![](essential_R_files/figure-html/unnamed-chunk-9-1.png)&lt;!-- --&gt;
 
 
 .left-column[

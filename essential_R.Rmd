@@ -9,11 +9,146 @@ output:
       highlightStyle: github
       highlightLines: true
 ---
-layout: false
+
+class: middle, center
 
 ```{r setup, include=FALSE}
-options(htmltools.dir.version = FALSE)
+  options(htmltools.dir.version = FALSE)
+  library(magrittr)
 ```
+
+<div>
+  <i>Programs must be written for people to read, and only incidentally for machines to execute.</i>
+</div>
+<div class="quote">
+-- Harold Abelson
+</div>
+<div style="margin-top: 2%">
+  <i>The lyf so short, the craft so long to lerne.</i>
+</div>
+<div class="quote">
+-- Geoffrey Chaucer
+</div>
+
+---
+
+## What are these slides about?
+
+These slides are a rough guideline of how to write `R` code using common
+software, such as `devtools`, `testthat`, `lintr`, `covr`, `data.table`, `Rcpp` and its derivates and other frequently used tools toprogram in `R`. We don't claim at any point that the material treated here covers all of R, but rather serve as a the author's list of essential `R` tools, he frequently uses.
+
+These slides are no introduction on how to program functionally, procedurally or in an object-oriented way, how to write code in general, or how to speed up code. The interested reader is referred to:
+
+- Robert Martin: Clean Code,
+- Andrew Hunt: The Pragmatic Programmer,
+- Gang of Four: Design Patterns,
+- Hadley Wickham: R packages,
+- Dirk Eddelbuettel: Rcpp,
+- ...
+
+
+---
+
+## Creating R packages with `yeoman`
+
+If you have `yeoman` installed, you use the `R-bones` generator in order to initialize a complete project. This gives you the following bareboneL
+
+```{bash, eval=FALSE}
+  yo r-bones
+  ls -la newpkg
+```
+```{bash, include=TRUE, eval=TRUE,  echo=FALSE, size="small"}
+  ls -la newpkg
+```
+
+
+---
+
+## Writing R packages with `devtools`
+
+When creating an R package `devtools` covers all functionality required.
+
+```{r, include=TRUE, eval=FALSE}
+  devtools::create("newpkg")
+  devtools::document()
+  devtools::test()
+  devtools::install()
+  devtools::check_cran()
+  devtools::lint()
+  devtools::use_rcpp()
+  devtools::run_examples()
+```
+
+This basically covers your complete development life cycle (except code coverage). `devtools` is **tremendously** useful. If you look for sth that helps you write packages, `devtools` has a function for it. For all other things, use `usethis`.
+
+
+---
+
+## Testing code with `testthat`
+
+Right after creating your package, you should write your first test (yes, really). Testing is **essential** for writing good software. The same way as programming languages change your way of thinking, do unit tests change your way of writing functions. `testthat` is probably the best way to go here. Tests are usually put in `tests/testthat`.
+You can use:
+
+```{r, eval=FALSE}
+  devtools::use_testthat()
+```
+
+to create a test suite automatically. A test would look like this:
+
+```{r}
+  f <- function(.) . + 10
+
+  testthat::test_that("test works", {
+    testthat::expect_equal(f(1), 11)
+  })
+
+  testthat::test_that("test fails", {
+    testthat::expect_error(stop("i fail"))
+  })
+```
+
+
+---
+
+# Static code analysis with `lintr`
+
+`lintr` checks your code for style, syntax error and possible issues.
+
+```{r}
+  lintr::lint("newpkg/R/bad_bad_file.R")
+```
+
+You can also incorporate `lintr` in your unit tests and let them fail, if lints are discovered.
+
+```{r, eval=FALSE}
+if (requireNamespace("lintr", quietly = TRUE)) {
+  test_that("this is lint free", {  
+    lintr::expect_lint_free()
+  })
+}
+```
+
+What `lintr` considers worth reporting can be customized in a `.lintr` file in your package root directory.
+
+---
+
+# Code coverage using `covr`
+
+`covr` lets you check how much of your code is used and tested. If you created a package and you run
+
+```{r, eval=FALSE}
+  covr::package_coverage()
+```
+
+---
+
+```{r}
+  df <- data.frame(x=rnorm(100), y=rnorm(100))
+  library('ggplot2')
+  ggplot() + geom_point(data=df, aes(x=x, y=y))
+```
+
+
 .left-column[
   ## What is it?
 ]
