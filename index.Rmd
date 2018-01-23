@@ -230,9 +230,44 @@ Having high code coverage usually correlates with a good testing suite. The more
 
 ## Profiling and benchmarking
 
+If you think your code runs slowly, you can try to find the bottleneck, for instance, using `profvis` and `microbenchmark`.
+
+```{r, eval=TRUE, message=TRUE, include=TRUE, echo=TRUE}
+  library('ggplot2')
+  profvis::profvis({
+    g <- ggplot(diamonds, aes(carat, price)) + geom_point(size=1, alpha=.2)
+    invisible(print(g))
+  })
+```
+
+Often it however suffices to just benchmark two methods against each other.
+
+```{r, eval=TRUE, message=TRUE, include=TRUE, echo=TRUE}
+  f <- function(n) {
+    sum <- 0
+    for (i in seq(n)) sum <- sum + i
+  }
+  g <- function(.) sum(.)
+
+  microbenchmark::microbenchmark(f(10000), g(10000))
+```
+
+
 ## Creating a landing page
 
-TODO
+At this point you are finished writing your package and you want to provide it to a large user base. A nice landing page often helps gaining popularity. The easiest way to do so is using `pkgdown`.
+
+```{r, eval=FALSE, message=TRUE, include=TRUE, echo=TRUE}
+  pkgdown::build_site(pkg= "./newpkg")
+```
+
+This creates a web-page like this:
+
+<div align="center">
+  <img src="https://rawgit.com/dirmeier/essential-R/master/fig/pkgdown.jpg" alt="oh no" width="750px">
+</div>
+
+A good example can be found <a href="https://dirmeier.github.io/netReg/">here</a>.
 
 
 # Good practices
