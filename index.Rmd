@@ -74,7 +74,7 @@ If you have `yeoman` installed, you use the `R-bones` generator in order to init
   yo r-bones
   ls -la newpkg
 ```
-```{bash, include=TRUE, eval=TRUE,  echo=FALSE, size="small"}
+```{bash, include=TRUE, eval=TRUE, echo=FALSE}
   ls -la newpkg
 ```
 
@@ -164,6 +164,20 @@ What `lintr` considers worth reporting can be customized in a `.lintr` file in y
   covr::package_coverage("./newpkg")
 ```
 
-## Setting up continuous Integration
+## Setting up continuous Integration: `Travis CI` and `AppVeyor`
 
-To be honest, doing all these steps is tedious and annoying.
+To be honest, doing all these steps is tedious and annoying. For that reason we set up `Travis CI` to take care of running our tests, static analysis and code coverage. Travis works for Mac and Unix.
+
+```{bash}
+  cat ./newpkg/.travis.yml
+```
+
+Check out Travis` <a href="https://docs.travis-ci.com/">docs</a> for more info. What we are bascially telling Travis to do is to check our package `--as-cran`, run the unit tests, do the code coverage and finally do a static code analysis.
+
+In order to do the same for Windows machines, we also use AppVeyor.
+
+```{bash}
+  cat ./newpkg/appveyor.yml
+```
+
+Here, we only run some tests and checks, since we already got the code analysis and coverage.

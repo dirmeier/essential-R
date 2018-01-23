@@ -1,5 +1,4 @@
 language: r
-r: bioc-devel
 
 sudo: required
 dist: trusty
@@ -32,23 +31,15 @@ env:
     - R_CHECK_ARGS="--no-build-vignettes --no-manual --as-cran"
     - LINTR_COMMENT_BOT=false
 
+before_install:
+  - cd newpkg
+
 r_packages:
   - covr
   - testthat
   - lintr
 
-bioc_packages:
-  - BiocCheck
-
-before_install:
-  - sudo apt-get update -qq
-  - sudo apt-get install --only-upgrade autoconf
-  - sudo apt-get install --only-upgrade automake
-  - sudo apt-get install --only-upgrade autotools-dev
-  - sudo apt-get install autoconf-archive
-
 after_success:
   - tar -C .. -xf $PKG_TARBALL
   - Rscript -e 'covr::codecov()'
   - Rscript -e 'lintr::lint_package()'
-  - R CMD BiocCheck $PKG_TARBALL

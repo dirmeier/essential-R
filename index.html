@@ -126,7 +126,7 @@ $(document).ready(function () {
 <div class="quote" style="margin-bottom: 5%">
 <p>– Geoffrey Chaucer</p>
 </div>
-<p>These slides are a rough guideline of how to write <code>R</code> code using common software, such as <code>devtools</code>, <code>testthat</code>, <code>lintr</code>, <code>covr</code>, <code>data.table</code>, <code>Rcpp</code> and its derivates and other frequently used tools toprogram in <code>R</code>. We don’t claim at any point that the material treated here covers all of R, but rather serve as a the author’s list of essential <code>R</code> tools, he frequently uses.</p>
+<p>These slides are a rough guideline of how to write <code>R</code> code using common software, such as <code>devtools</code>, <code>testthat</code>, <code>lintr</code>, <code>covr</code>, <code>data.table</code>, <code>Rcpp</code> and its derivates and other frequently used tools to program in <code>R</code>. We don’t claim at any point that the material treated here covers all of R, but rather serve as a the author’s list of essential <code>R</code> tools, he frequently uses.</p>
 <p>These slides are no introduction on how to program functionally, procedurally or in an object-oriented way, how to write code in general, or how to speed up code. The interested reader is referred to:</p>
 <ul>
 <li>Robert Martin: Clean Code,</li>
@@ -149,25 +149,26 @@ $(document).ready(function () {
 <p>If you have <code>yeoman</code> installed, you use the <code>R-bones</code> generator in order to initialize a complete project. This gives you the following bareboneL</p>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">  <span class="kw">yo</span> r-bones
   <span class="kw">ls</span> -la newpkg</code></pre></div>
-<pre><code>total 168
-drwxr-xr-x  20 simondi  1029    680 Jan 22 21:09 .
-drwxr-xr-x  16 simondi  1029    544 Jan 23 10:22 ..
+<pre><code>total 176
+drwxr-xr-x  21 simondi  1029    714 Jan 23 11:34 .
+drwxr-xr-x  17 simondi  1029    578 Jan 23 13:53 ..
 -rw-r--r--   1 simondi  1029    220 Jan 22 20:24 .Rbuildignore
 -rw-r--r--   1 simondi  1029    410 Jan 22 20:24 .codecov.yml
 -rw-r--r--   1 simondi  1029     51 Jan 22 20:24 .gitattributes
 -rw-r--r--   1 simondi  1029    421 Jan 22 20:24 .gitignore
 -rw-r--r--   1 simondi  1029    556 Jan 22 20:24 .lintr
--rw-r--r--   1 simondi  1029   1115 Jan 22 20:24 .travis.yml
+-rw-r--r--   1 simondi  1029    799 Jan 23 13:53 .travis.yml
 -rw-r--r--   1 simondi  1029    176 Jan 22 20:24 .yo-rc.json
--rw-r--r--   1 simondi  1029    598 Jan 22 21:10 DESCRIPTION
+-rw-r--r--   1 simondi  1029    542 Jan 23 11:43 DESCRIPTION
 -rw-r--r--   1 simondi  1029  35141 Jan 22 20:24 LICENSE
-drwxr-xr-x   7 simondi  1029    238 Jan 22 21:10 R
+-rw-r--r--   1 simondi  1029     96 Jan 23 11:34 NAMESPACE
+drwxr-xr-x   6 simondi  1029    204 Jan 23 11:42 R
 -rw-r--r--   1 simondi  1029    562 Jan 22 20:24 README.md
 -rw-r--r--   1 simondi  1029     93 Jan 22 20:24 TODO.md
 -rw-r--r--   1 simondi  1029    136 Jan 22 20:24 VERSIONS.md
 -rw-r--r--   1 simondi  1029    836 Jan 22 20:24 appveyor.yml
 drwxr-xr-x   3 simondi  1029    102 Jan 22 20:24 inst
-drwxr-xr-x   3 simondi  1029    102 Jan 22 20:24 src
+drwxr-xr-x   2 simondi  1029     68 Jan 23 11:42 src
 drwxr-xr-x   4 simondi  1029    136 Jan 22 20:24 tests
 drwxr-xr-x   3 simondi  1029    102 Jan 22 20:24 vignettes</code></pre>
 <hr />
@@ -231,10 +232,57 @@ newpkg/R/bad_bad_file.R:2:85: style: Use &lt;-, not =, for assignment.
 </div>
 <div id="code-coverage-using-covr" class="section level2">
 <h2>Code coverage using <code>covr</code></h2>
-<p><code>covr</code> lets you check how much of your code is used and tested. If you created a package and you run</p>
+<p><code>covr</code> lets you check how much of your code is used and tested. If you created a package and you run:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">covr::<span class="kw">package_coverage</span>(<span class="st">&quot;./newpkg&quot;</span>)</code></pre></div>
 <pre><code>newpkg Coverage: 0.00%</code></pre>
 <pre><code>R/newpkg.R: 0.00%</code></pre>
+</div>
+<div id="setting-up-continuous-integration" class="section level2">
+<h2>Setting up continuous Integration</h2>
+<p>To be honest, doing all these steps is tedious and annoying. For that reason we set up <code>Travis CI</code> to take care of running our tests, static analysis and code coverage. Travis works for Mac and Unix, so if our package contains <code>C++</code> code, it also makes sense to use <code>appveyor</code> for testing in Windows machines.</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">  <span class="kw">cat</span> ./newpkg/.travis.yml</code></pre></div>
+<pre><code>language: r
+
+sudo: required
+dist: trusty
+
+cache: packages
+
+matrix:
+  include:
+    - compiler: gcc
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-5
+      env: COMPILER=g++-5
+    - compiler: clang
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+            - llvm-toolchain-precise-3.7
+          packages:
+            - clang-3.7
+      env: COMPILER=clang++-3.7
+
+env:
+  global:
+    - R_BUILD_ARGS=&quot;--no-build-vignettes --no-manual&quot;
+    - R_CHECK_ARGS=&quot;--no-build-vignettes --no-manual --as-cran&quot;
+    - LINTR_COMMENT_BOT=false
+
+r_packages:
+  - covr
+  - testthat
+  - lintr
+
+after_success:
+  - tar -C .. -xf $PKG_TARBALL
+  - Rscript -e &#39;covr::codecov()&#39;
+  - Rscript -e &#39;lintr::lint_package()&#39;</code></pre>
 </div>
 </div>
 
