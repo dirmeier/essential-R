@@ -163,7 +163,7 @@ $(document).ready(function () {
   <span class="kw">ls</span> -la newpkg</code></pre></div>
 <pre><code>total 1624
 drwxr-xr-x  25 simondi  1029     850 Jan 23 20:47 .
-drwxr-xr-x  19 simondi  1029     646 Jan 23 20:45 ..
+drwxr-xr-x  18 simondi  1029     612 Jan 23 21:01 ..
 -rw-r--r--   1 simondi  1029     220 Jan 22 20:24 .Rbuildignore
 drwxr-xr-x   4 simondi  1029     136 Jan 23 20:32 .Rproj.user
 -rw-r--r--   1 simondi  1029     410 Jan 22 20:24 .codecov.yml
@@ -184,7 +184,7 @@ drwxr-xr-x   3 simondi  1029     102 Jan 22 20:24 inst
 drwxr-xr-x   3 simondi  1029     102 Jan 23 15:44 man
 -rw-r--r--   1 simondi  1029     354 Jan 23 20:47 newpkg.Rproj
 -rw-r--r--   1 simondi  1029  736082 Jan 23 20:42 newpkg.html
-drwxr-xr-x   4 simondi  1029     136 Jan 23 20:45 src
+drwxr-xr-x   2 simondi  1029      68 Jan 23 20:47 src
 drwxr-xr-x   4 simondi  1029     136 Jan 22 20:24 tests
 drwxr-xr-x   3 simondi  1029     102 Jan 22 20:24 vignettes</code></pre>
 </div>
@@ -259,7 +259,7 @@ g &lt;-<span class="st"> </span>function() <span class="dv">1</span> +<span clas
 <p>If you want to submit your package to <code>CRAN</code> or <code>Bioconductor</code> certain criteria must be fulfilled. Some of which can be tested by checking or package like this:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">devtools::<span class="kw">check_cran</span>(<span class="st">&quot;./newpkg&quot;</span>)</code></pre></div>
 <pre><code>Checking 1 CRAN packages =================================================</code></pre>
-<pre><code>Results saved in /var/folders/cx/v45t2v2n6b548_vfn76vnzlw0050sr/T//RtmpfFPBHa/check_cran51555b8aeed8</code></pre>
+<pre><code>Results saved in /var/folders/cx/v45t2v2n6b548_vfn76vnzlw0050sr/T//RtmpfFPBHa/check_cran5155208a3abd</code></pre>
 <pre><code>Package library: /private/var/folders/cx/v45t2v2n6b548_vfn76vnzlw0050sr/T/RtmpfFPBHa/R-lib, /Library/Frameworks/R.framework/Versions/3.4/Resources/library</code></pre>
 <pre><code>Installing dependencies --------------------------------------------------</code></pre>
 <pre><code>Installing 1 packages: ./newpkg</code></pre>
@@ -316,6 +316,13 @@ R/bad_bad_file.R:3:85: style: Use &lt;-, not =, for assignment.
 <pre><code>R/bad_bad_file.R: 0.00%</code></pre>
 <pre><code>R/newpkg.R: 100.00%</code></pre>
 <p>Having high code coverage usually correlates with a good testing suite. The more functionality is tested, the larger the code coverage.</p>
+</div>
+<div id="profiling-and-benchmarking" class="section level2">
+<h2><span class="header-section-number">2.9</span> Profiling and benchmarking</h2>
+</div>
+<div id="creating-a-landing-page" class="section level2">
+<h2><span class="header-section-number">2.10</span> Creating a landing page</h2>
+<p>TODO</p>
 </div>
 </div>
 <div id="good-practices" class="section level1">
@@ -556,42 +563,84 @@ Eigen::MatrixXd square(Eigen::MatrixXd&amp; m)
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;RcppEigen&quot;</span>)
 Rcpp::<span class="kw">sourceCpp</span>(<span class="st">&quot;./square.cpp&quot;</span>)
 <span class="kw">square</span>(<span class="kw">matrix</span>(<span class="kw">rnorm</span>(<span class="dv">10</span>), <span class="dv">2</span>))</code></pre></div>
-<pre><code>           [,1]       [,2]       [,3]       [,4]       [,5]
-[1,]  0.1254797 -0.7197578 -0.3784382 -0.2397789  0.1221644
-[2,] -0.7197578  4.3830252  2.3426603  1.9303310 -0.6458038
-[3,] -0.3784382  2.3426603  1.2574979  1.0980954 -0.3313223
-[4,] -0.2397789  1.9303310  1.0980954  1.6684764 -0.1136310
-[5,]  0.1221644 -0.6458038 -0.3313223 -0.1136310  0.1307976</code></pre>
+<pre><code>           [,1]       [,2]        [,3]       [,4]       [,5]
+[1,]  2.9240250  1.1110206 -0.13099194 0.87451749  2.1214303
+[2,]  1.1110206  0.4478582 -0.10744431 0.27313955  0.8944847
+[3,] -0.1309919 -0.1074443  0.13522883 0.09348588 -0.2933659
+[4,]  0.8745175  0.2731396  0.09348588 0.39760035  0.4310854
+[5,]  2.1214303  0.8944847 -0.29336591 0.43108540  1.8432019</code></pre>
 <p>Even for small matrices, the speed up is already substantial.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">m &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">rnorm</span>(<span class="dv">100</span> *<span class="st"> </span><span class="dv">100</span>), <span class="dv">100</span>)
 microbenchmark::<span class="kw">microbenchmark</span>(<span class="kw">square</span>(m), <span class="kw">t</span>(m) %*%<span class="st"> </span>m)</code></pre></div>
 <pre><code>Unit: microseconds
-       expr     min       lq     mean   median       uq      max neval cld
-  square(m) 185.327 210.7970 275.5514 243.1295 306.9065 1327.929   100  a 
- t(m) %*% m 619.551 651.4855 776.0123 709.2290 755.9795 5432.500   100   b</code></pre>
+       expr     min       lq      mean    median       uq      max neval
+  square(m) 185.362 195.8070  866.0671  340.2165  497.891 15383.39   100
+ t(m) %*% m 620.021 745.7845 2384.4608 1287.2790 2166.258 39105.38   100
+ cld
+  a 
+   b</code></pre>
+<div id="rcpp-in-a-package" class="section level3">
+<h3><span class="header-section-number">4.1.1</span> Rcpp in a package</h3>
 <p>Usually, you would want to put your source code into a <code>cpp</code> file in the <code>src</code> folder. Then you can call C++ from an R function, for instance as described below.</p>
 <ol style="list-style-type: decimal">
-<li><p>Define a C++ source file and put it in <code>src</code>.</p></li>
-<li><p>Add this to your <code>DESCRIPTION</code>:</p></li>
+<li>Define a C++ source file and put it in <code>src</code>, like this:</li>
 </ol>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">  <span class="kw">tail</span> ./newpkg/DESCRIPTION</code></pre></div>
-<pre><code>Encoding: UTF-8
-Suggests:
-    testthat,
-    knitr,
-    rmarkdown,
-    lintr
-VignetteBuilder: knitr
-RoxygenNote: 6.0.1
-Imports: Rcpp
+<pre><code>#include <Rcpp.h>
+
+// [[Rcpp::export]]
+Rcpp::List dostuff()
+{
+  // some computations
+
+  return Rcpp::List::create(
+    Rcpp::Named("a") = ...
+  );
+}</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>Add this to your <code>DESCRIPTION</code>:</li>
+</ol>
+<pre><code>Imports: Rcpp
 LinkingTo: Rcpp</code></pre>
 <ol start="3" style="list-style-type: decimal">
 <li><p>Add a comment <code>#' @useDynLib newpkg, .registration = TRUE</code> to the documentation of any function, better yet to the package doc.</p></li>
 <li><p>Call <code>devtools::document()</code></p></li>
-<li><p>Call</p></li>
+<li><p>Call <code>Rcpp::compileAttributes(&quot;./newpkg&quot;)</code></p></li>
 </ol>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Rcpp::<span class="kw">compileAttributes</span>(<span class="st">&quot;./newpkg&quot;</span>)</code></pre></div>
 <p>This should let you access the C++ function from your package. For more details check out the main <a href="http://www.rcpp.org/">documentation</a> or some of my packages, like <a href="https://github.com/dirmeier/netReg">netReg</a> or <a href="https://github.com/dirmeier/datastructures">datastructures</a>. The latter also has an example how to use modules and Boost.</p>
+</div>
+</div>
+<div id="functional-programming-with-purr" class="section level2">
+<h2><span class="header-section-number">4.2</span> Functional programming with <code>purr</code></h2>
+<p>TODO</p>
+</div>
+<div id="plotting" class="section level2">
+<h2><span class="header-section-number">4.3</span> Plotting</h2>
+<p>ggplot, hrbrthemes, colorblindr, colorspace, ggthemr, ggsci, magick, imagr, tweenr, plotly, gggraph, ggnetwork, viridis, viridisLite, scales</p>
+<div id="colors" class="section level3">
+<h3><span class="header-section-number">4.3.1</span> Colors</h3>
+</div>
+</div>
+<div id="data.table" class="section level2">
+<h2><span class="header-section-number">4.4</span> data.table</h2>
+</div>
+<div id="mlr" class="section level2">
+<h2><span class="header-section-number">4.5</span> mlR</h2>
+</div>
+<div id="s3-s4-r6" class="section level2">
+<h2><span class="header-section-number">4.6</span> S3, S4, R6</h2>
+</div>
+<div id="shiny" class="section level2">
+<h2><span class="header-section-number">4.7</span> Shiny</h2>
+</div>
+<div id="pryr" class="section level2">
+<h2><span class="header-section-number">4.8</span> Pryr</h2>
+</div>
+<div id="datastructures" class="section level2">
+<h2><span class="header-section-number">4.9</span> datastructures</h2>
+</div>
+<div id="other" class="section level2">
+<h2><span class="header-section-number">4.10</span> Other</h2>
+<p>dplyr, tidyr, ORKernel, minqq, nloptr,</p>
 </div>
 </div>
 
