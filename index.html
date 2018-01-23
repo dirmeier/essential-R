@@ -161,29 +161,32 @@ $(document).ready(function () {
 <p>If you have <code>yeoman</code> installed, you can use the <code>R-bones</code> generator in order to initialize a complete project. This gives you the following barebone:</p>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">  <span class="kw">yo</span> r-bones
   <span class="kw">ls</span> -la newpkg</code></pre></div>
-<pre><code>total 176
-drwxr-xr-x  22 simondi  1029    748 Jan 23 15:44 .
-drwxr-xr-x  18 simondi  1029    612 Jan 23 20:19 ..
--rw-r--r--   1 simondi  1029    220 Jan 22 20:24 .Rbuildignore
--rw-r--r--   1 simondi  1029    410 Jan 22 20:24 .codecov.yml
--rw-r--r--   1 simondi  1029     51 Jan 22 20:24 .gitattributes
--rw-r--r--   1 simondi  1029    421 Jan 22 20:24 .gitignore
--rw-r--r--   1 simondi  1029    556 Jan 22 20:24 .lintr
--rw-r--r--   1 simondi  1029    829 Jan 23 15:44 .travis.yml
--rw-r--r--   1 simondi  1029    176 Jan 22 20:24 .yo-rc.json
--rw-r--r--   1 simondi  1029    518 Jan 23 15:44 DESCRIPTION
--rw-r--r--   1 simondi  1029  35141 Jan 22 20:24 LICENSE
--rw-r--r--   1 simondi  1029     56 Jan 23 15:44 NAMESPACE
-drwxr-xr-x   4 simondi  1029    136 Jan 23 15:44 R
--rw-r--r--   1 simondi  1029    562 Jan 22 20:24 README.md
--rw-r--r--   1 simondi  1029     93 Jan 22 20:24 TODO.md
--rw-r--r--   1 simondi  1029    136 Jan 22 20:24 VERSIONS.md
--rw-r--r--   1 simondi  1029    836 Jan 22 20:24 appveyor.yml
-drwxr-xr-x   3 simondi  1029    102 Jan 22 20:24 inst
-drwxr-xr-x   3 simondi  1029    102 Jan 23 15:44 man
-drwxr-xr-x   2 simondi  1029     68 Jan 23 20:19 src
-drwxr-xr-x   4 simondi  1029    136 Jan 22 20:24 tests
-drwxr-xr-x   3 simondi  1029    102 Jan 22 20:24 vignettes</code></pre>
+<pre><code>total 1624
+drwxr-xr-x  25 simondi  1029     850 Jan 23 20:47 .
+drwxr-xr-x  19 simondi  1029     646 Jan 23 20:45 ..
+-rw-r--r--   1 simondi  1029     220 Jan 22 20:24 .Rbuildignore
+drwxr-xr-x   4 simondi  1029     136 Jan 23 20:32 .Rproj.user
+-rw-r--r--   1 simondi  1029     410 Jan 22 20:24 .codecov.yml
+-rw-r--r--   1 simondi  1029      51 Jan 22 20:24 .gitattributes
+-rw-r--r--   1 simondi  1029     421 Jan 22 20:24 .gitignore
+-rw-r--r--   1 simondi  1029     556 Jan 22 20:24 .lintr
+-rw-r--r--   1 simondi  1029     829 Jan 23 15:44 .travis.yml
+-rw-r--r--   1 simondi  1029     176 Jan 22 20:24 .yo-rc.json
+-rw-r--r--   1 simondi  1029     548 Jan 23 20:31 DESCRIPTION
+-rw-r--r--   1 simondi  1029   35141 Jan 22 20:24 LICENSE
+-rw-r--r--   1 simondi  1029      56 Jan 23 20:47 NAMESPACE
+drwxr-xr-x   4 simondi  1029     136 Jan 23 20:45 R
+-rw-r--r--   1 simondi  1029     562 Jan 22 20:24 README.md
+-rw-r--r--   1 simondi  1029      93 Jan 22 20:24 TODO.md
+-rw-r--r--   1 simondi  1029     136 Jan 22 20:24 VERSIONS.md
+-rw-r--r--   1 simondi  1029     836 Jan 22 20:24 appveyor.yml
+drwxr-xr-x   3 simondi  1029     102 Jan 22 20:24 inst
+drwxr-xr-x   3 simondi  1029     102 Jan 23 15:44 man
+-rw-r--r--   1 simondi  1029     354 Jan 23 20:47 newpkg.Rproj
+-rw-r--r--   1 simondi  1029  736082 Jan 23 20:42 newpkg.html
+drwxr-xr-x   4 simondi  1029     136 Jan 23 20:45 src
+drwxr-xr-x   4 simondi  1029     136 Jan 22 20:24 tests
+drwxr-xr-x   3 simondi  1029     102 Jan 22 20:24 vignettes</code></pre>
 </div>
 <div id="writing-r-packages" class="section level2">
 <h2><span class="header-section-number">2.2</span> Writing R packages</h2>
@@ -256,14 +259,14 @@ g &lt;-<span class="st"> </span>function() <span class="dv">1</span> +<span clas
 <p>If you want to submit your package to <code>CRAN</code> or <code>Bioconductor</code> certain criteria must be fulfilled. Some of which can be tested by checking or package like this:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">devtools::<span class="kw">check_cran</span>(<span class="st">&quot;./newpkg&quot;</span>)</code></pre></div>
 <pre><code>Checking 1 CRAN packages =================================================</code></pre>
-<pre><code>Results saved in /var/folders/cx/v45t2v2n6b548_vfn76vnzlw0050sr/T//RtmplUvKHy/check_cran172af4252468f</code></pre>
-<pre><code>Package library: /private/var/folders/cx/v45t2v2n6b548_vfn76vnzlw0050sr/T/RtmplUvKHy/R-lib, /Library/Frameworks/R.framework/Versions/3.4/Resources/library</code></pre>
+<pre><code>Results saved in /var/folders/cx/v45t2v2n6b548_vfn76vnzlw0050sr/T//RtmpfFPBHa/check_cran51555b8aeed8</code></pre>
+<pre><code>Package library: /private/var/folders/cx/v45t2v2n6b548_vfn76vnzlw0050sr/T/RtmpfFPBHa/R-lib, /Library/Frameworks/R.framework/Versions/3.4/Resources/library</code></pre>
 <pre><code>Installing dependencies --------------------------------------------------</code></pre>
 <pre><code>Installing 1 packages: ./newpkg</code></pre>
 <pre><code>Skipping 1 packages without source:./newpkg</code></pre>
 <pre><code>Checking packages --------------------------------------------------------</code></pre>
 <pre><code>Checking 0 packages: </code></pre>
-<pre><code>Package library: /private/var/folders/cx/v45t2v2n6b548_vfn76vnzlw0050sr/T/RtmplUvKHy/R-lib, /Library/Frameworks/R.framework/Versions/3.4/Resources/library</code></pre>
+<pre><code>Package library: /private/var/folders/cx/v45t2v2n6b548_vfn76vnzlw0050sr/T/RtmpfFPBHa/R-lib, /Library/Frameworks/R.framework/Versions/3.4/Resources/library</code></pre>
 <pre><code>NULL</code></pre>
 <p>This does not test for Bioconductor though. For this you have to install <a href="https://bioconductor.org/packages/release/bioc/html/BiocCheck.html"> BioCheck</a> manually and call <code>R CMD BiocCheck newpkg*.tar</code> on the command line.</p>
 </div>
@@ -542,8 +545,7 @@ There’s a wide variety of badges to describe your project.
 <pre><code>[1] 55</code></pre>
 <p>Let’s see an <code>Eigen</code> example with sourceCpp:</p>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">  <span class="kw">cat</span> ./square.cpp</code></pre></div>
-<pre><code>
-// [[Rcpp::depends(RcppEigen)]]
+<pre><code>// [[Rcpp::depends(RcppEigen)]]
 #include &lt;RcppEigen.h&gt;
 
 // [[Rcpp::export]]
@@ -554,21 +556,42 @@ Eigen::MatrixXd square(Eigen::MatrixXd&amp; m)
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;RcppEigen&quot;</span>)
 Rcpp::<span class="kw">sourceCpp</span>(<span class="st">&quot;./square.cpp&quot;</span>)
 <span class="kw">square</span>(<span class="kw">matrix</span>(<span class="kw">rnorm</span>(<span class="dv">10</span>), <span class="dv">2</span>))</code></pre></div>
-<pre><code>           [,1]       [,2]      [,3]       [,4]       [,5]
-[1,]  1.2969390 -0.7742664  2.214050 -0.3787595  0.8799956
-[2,] -0.7742664  0.6505733 -1.712343  0.5518490 -0.8931377
-[3,]  2.2140502 -1.7123431  4.589610 -1.3220718  2.2649564
-[4,] -0.3787595  0.5518490 -1.322072  0.6739615 -0.8930734
-[5,]  0.8799956 -0.8931377  2.264956 -0.8930734  1.3152908</code></pre>
+<pre><code>           [,1]       [,2]       [,3]       [,4]       [,5]
+[1,]  0.1254797 -0.7197578 -0.3784382 -0.2397789  0.1221644
+[2,] -0.7197578  4.3830252  2.3426603  1.9303310 -0.6458038
+[3,] -0.3784382  2.3426603  1.2574979  1.0980954 -0.3313223
+[4,] -0.2397789  1.9303310  1.0980954  1.6684764 -0.1136310
+[5,]  0.1221644 -0.6458038 -0.3313223 -0.1136310  0.1307976</code></pre>
+<p>Even for small matrices, the speed up is already substantial.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">m &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">rnorm</span>(<span class="dv">100</span> *<span class="st"> </span><span class="dv">100</span>), <span class="dv">100</span>)
 microbenchmark::<span class="kw">microbenchmark</span>(<span class="kw">square</span>(m), <span class="kw">t</span>(m) %*%<span class="st"> </span>m)</code></pre></div>
 <pre><code>Unit: microseconds
-       expr     min       lq      mean   median        uq      max neval
-  square(m) 185.333 233.5485  421.2791  333.356  469.0745 3094.504   100
- t(m) %*% m 623.253 819.4430 1190.6924 1081.649 1304.6410 4241.666   100
- cld
-  a 
-   b</code></pre>
+       expr     min       lq     mean   median       uq      max neval cld
+  square(m) 185.327 210.7970 275.5514 243.1295 306.9065 1327.929   100  a 
+ t(m) %*% m 619.551 651.4855 776.0123 709.2290 755.9795 5432.500   100   b</code></pre>
+<p>Usually, you would want to put your source code into a <code>cpp</code> file in the <code>src</code> folder. Then you can call C++ from an R function, for instance as described below.</p>
+<ol style="list-style-type: decimal">
+<li><p>Define a C++ source file and put it in <code>src</code>.</p></li>
+<li><p>Add this to your <code>DESCRIPTION</code>:</p></li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">  <span class="kw">tail</span> ./newpkg/DESCRIPTION</code></pre></div>
+<pre><code>Encoding: UTF-8
+Suggests:
+    testthat,
+    knitr,
+    rmarkdown,
+    lintr
+VignetteBuilder: knitr
+RoxygenNote: 6.0.1
+Imports: Rcpp
+LinkingTo: Rcpp</code></pre>
+<ol start="3" style="list-style-type: decimal">
+<li><p>Add a comment <code>#' @useDynLib newpkg, .registration = TRUE</code> to the documentation of any function, better yet to the package doc.</p></li>
+<li><p>Call <code>devtools::document()</code></p></li>
+<li><p>Call</p></li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Rcpp::<span class="kw">compileAttributes</span>(<span class="st">&quot;./newpkg&quot;</span>)</code></pre></div>
+<p>This should let you access the C++ function from your package. For more details check out the main <a href="http://www.rcpp.org/">documentation</a> or some of my packages, like <a href="https://github.com/dirmeier/netReg">netReg</a> or <a href="https://github.com/dirmeier/datastructures">datastructures</a>. The latter also has an example how to use modules and Boost.</p>
 </div>
 </div>
 
