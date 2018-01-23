@@ -232,7 +232,7 @@ Having high code coverage usually correlates with a good testing suite. The more
 
 If you think your code runs slowly, you can try to find the bottleneck, for instance, using `profvis` and `microbenchmark`.
 
-```{r, eval=TRUE, message=TRUE, include=TRUE, echo=TRUE}
+```{r, eval=TRUE, message=TRUE, include=TRUE, echo=TRUE, fig.width=4}
   library('ggplot2')
   profvis::profvis({
     g <- ggplot(diamonds, aes(carat, price)) + geom_point(size=1, alpha=.2)
@@ -264,7 +264,7 @@ At this point you are finished writing your package and you want to provide it t
 This creates a web-page like this:
 
 <div align="center">
-  <img src="https://rawgit.com/dirmeier/essential-R/master/fig/pkgdown.jpg" alt="oh no" width="750px">
+  <img src="https://rawgit.com/dirmeier/essential-R/master/fig/pkgdown.jpg" alt="oh no" width="500px">
 </div>
 
 A good example can be found <a href="https://dirmeier.github.io/netReg/">here</a>.
@@ -370,6 +370,7 @@ There's a wide variety of badges to describe your project.
 
 ## Docker
 
+todo (needed for debugging c++)
 
 # R libraries
 
@@ -467,9 +468,28 @@ LinkingTo: Rcpp</code></pre>
 This should let you access the C++ function from your package. For more details check out the main <a href="http://www.rcpp.org/">documentation</a> or some of my packages, like <a href="https://github.com/dirmeier/netReg">netReg</a> or <a href="https://github.com/dirmeier/datastructures">datastructures</a>. The latter also has an example how to use modules and Boost.
 
 
-## Functional programming with `purr`
+## Functional programming with `purrr`
 
-TODO
+`purrr` is a functional programming toolkit, much like the `apply` class of functions. However, `purrr` does so in a more unified way with consistent return values. Furthermore, in combination with `magrittr`, the code you write is naturally more concise and easier to read.
+
+```{r, eval=TRUE, message=TRUE, include=TRUE, echo=TRUE, warnings=FALSE}
+  library('purrr')
+  library('ggplot2')
+  library('repurrrsive')
+  library('magrittr')
+  library('ggsci')
+  head(sw_people[[1]])
+  map_dfr(
+    sw_people,
+    .f = function(.) data.frame(color  = .[["eye_color"]],
+                                height = .[["height"]],
+                                mass   = .[["mass"]])) %>%
+    ggplot() +
+    geom_point(aes(x=height, y=mass, color=color)) +
+    theme_bw() +
+    ggsci::scale_color_rickandmorty()
+
+```
 
 ## Plotting
 
@@ -479,6 +499,41 @@ ggplot, hrbrthemes, colorblindr, colorspace, ggthemr, ggsci, magick, imagr, twee
 
 
 ## data.table
+
+`data.table` is a fast implementation of R's classical `data.frame`. I hardly ever use data frame any more, and if so only, because it seems to work nicer with `dplyr` and `tidyr`. However, using `dtplyr` this isn't much of a problem, really.
+
+```{r, fig.width=1, fig.height=2}
+  library('data.table')  
+  library('dplyr')
+  library('dtplyr')
+  library('grid')
+  library('gridExtra')
+  n    <- 1000
+  rn   <- rnorm(n)
+  ltrs <- sample(letters[1:5], n, replace=TRUE)
+  dt   <- data.table(X=rn, Y=ltrs)
+  df   <- data.frame(X=rn, Y=ltrs)
+
+  dt[, .SD[sample(.N, 1)], by=c("Y")] %>%
+    tableGrob(rows=NULL) %>%
+    grid.arrange
+```
+
+In the end it depends what style you prefer. I usually go with `data.table` alone without needing the `dplyr/dtplyr` dependency. However, the latter is usually more readable. For large data, the fastest solution is probably preferrable.
+
+```{r}
+  dt.only   <- function() dt[, .SD[sample(.N, 1)], by=c("Y")]
+  dt.dtplyr <- function() dt %>% group_by(Y) %>% sample_n(1)
+  df.dplyr  <- function() df %>% group_by(Y) %>% sample_n(1)
+
+  microbenchmark::microbenchmark(
+    dt.only(),
+    dt.dtplyr(),
+    df.dplyr()
+  )
+```
+
+
 
 ## mlR
 

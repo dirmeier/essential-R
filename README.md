@@ -5,11 +5,11 @@
 [![codecov](https://codecov.io/gh/dirmeier/essential-R/branch/master/graph/badge.svg)](https://codecov.io/gh/dirmeier/essential-R)
 
 
-:rocket: Opinionated good practices for programming in R.
+:rocket: Opinionated guidelines for programming in R.
 
 ## Introduction
 
-This repository is a collection of programming guidelines, good practices and  libraries I tend to use routinely when writing code in `R`.
+This repository is a collection of programming guidelines, good practices and  libraries I tend to use routinely when writing code in `R` and `C++`.
 
 In the end, it just serves as a reminder for myself..
 
