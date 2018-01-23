@@ -104,13 +104,7 @@ $(document).ready(function () {
         <ul>
         <li><a href="#intro">Intro</a></li>
         <li><a href="#r-development">R development</a></li>
-        <li><a href="#testing-code">Testing code</a></li>
-        <li><a href="#documenting-code">Documenting code</a></li>
-        <li><a href="#checking-code">Checking code</a></li>
-        <li><a href="#static-code-analysis">Static code analysis</a></li>
-        <li><a href="#running-examples">Running examples</a></li>
-        <li><a href="#code-coverage">Code coverage</a></li>
-        <li><a href="#setting-up-continuous-integration-travis-ci-and-appveyor">Setting up continuous Integration: <code>Travis CI</code> and <code>AppVeyor</code></a></li>
+        <li><a href="#ci-and-version-control">CI and Version Control</a></li>
         <li><a href="#version-control">Version control</a></li>
         </ul>
       </nav>
@@ -148,7 +142,6 @@ $(document).ready(function () {
 <li>Donald Knuth: The Art of Computer Programming,</li>
 <li>A <a href="http://norvig.com/21-days.html">comment</a> by Peter Norvig.</li>
 </ul>
-<hr />
 </div>
 <div id="r-development" class="section level1">
 <h1>R development</h1>
@@ -179,7 +172,6 @@ drwxr-xr-x   3 simondi  1029    102 Jan 22 20:24 inst
 drwxr-xr-x   2 simondi  1029     68 Jan 23 11:42 src
 drwxr-xr-x   4 simondi  1029    136 Jan 22 20:24 tests
 drwxr-xr-x   3 simondi  1029    102 Jan 22 20:24 vignettes</code></pre>
-<hr />
 </div>
 <div id="writing-r-packages" class="section level2">
 <h2>Writing R packages</h2>
@@ -199,11 +191,9 @@ usethis::<span class="kw">use_code_of_conduct</span>()
 usethis::<span class="kw">use_travis</span>()
 usethis::<span class="kw">use_vignette</span>()
 usethis::<span class="kw">use_gpl3_license</span>()</code></pre></div>
-<hr />
 </div>
-</div>
-<div id="testing-code" class="section level1">
-<h1>Testing code</h1>
+<div id="testing-code" class="section level2">
+<h2>Testing code</h2>
 <p>Right after creating your package, you should write your first test (yes, really). Testing is <strong>essential</strong> for writing good software. The same way as programming languages change your way of thinking, do unit tests change your way of writing functions. <code>testthat</code> is probably the best way to go here. Tests are usually put in <code>tests/testthat</code>. You can use:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">devtools::<span class="kw">use_testthat</span>()</code></pre></div>
 <p>to create a test suite automatically. A test would look like this:</p>
@@ -228,10 +218,9 @@ OK:       2
 Failed:   0
 Warnings: 0
 Skipped:  0</code></pre>
-<hr />
 </div>
-<div id="documenting-code" class="section level1">
-<h1>Documenting code</h1>
+<div id="documenting-code" class="section level2">
+<h2>Documenting code</h2>
 <p>Having written the first unit test, we can create the actual function for it <strong>and</strong> its documentation.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#&#39; @title Adds 1 and 1</span>
 <span class="co">#&#39;</span>
@@ -248,10 +237,9 @@ g &lt;-<span class="st"> </span>function() <span class="dv">1</span> +<span clas
 <p>Then build the documentation:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">devtools::<span class="kw">document</span>(<span class="st">&quot;./newpkg&quot;</span>)</code></pre></div>
 <p>An excellent help for creating documentation (of S3 and S4) is for instance <a href="https://github.com/variani/pckdev">pckdev</a> or the official <a href="https://cran.r-project.org/web/packages/roxygen2/vignettes/roxygen2.html">vignette</a>.</p>
-<hr />
 </div>
-<div id="checking-code" class="section level1">
-<h1>Checking code</h1>
+<div id="checking-code" class="section level2">
+<h2>Checking code</h2>
 <p>If you want to submit your package to <code>CRAN</code> or <code>Bioconductor</code> certain criteria must be fulfilled. Some of which can be tested by checking or package like this:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">devtools::<span class="kw">check_cran</span>(<span class="st">&quot;./newpkg&quot;</span>)</code></pre></div>
 <pre><code>Checking 1 CRAN packages =================================================</code></pre>
@@ -265,10 +253,9 @@ g &lt;-<span class="st"> </span>function() <span class="dv">1</span> +<span clas
 <pre><code>Package library: /private/var/folders/cx/v45t2v2n6b548_vfn76vnzlw0050sr/T/RtmplUvKHy/R-lib, /Library/Frameworks/R.framework/Versions/3.4/Resources/library</code></pre>
 <pre><code>NULL</code></pre>
 <p>This does not test for Bioconductor though. For this you have to install <a href="https://bioconductor.org/packages/release/bioc/html/BiocCheck.html"> BioCheck</a> manually and call <code>R CMD BiocCheck newpkg*.tar</code> on the command line.</p>
-<hr />
 </div>
-<div id="static-code-analysis" class="section level1">
-<h1>Static code analysis</h1>
+<div id="static-code-analysis" class="section level2">
+<h2>Static code analysis</h2>
 <p><code>lintr</code> checks your code for style, syntax error and possible issues. You can also incorporate <code>lintr</code> in your unit tests and let them fail, if lints are discovered.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">if (<span class="kw">requireNamespace</span>(<span class="st">&quot;lintr&quot;</span>, <span class="dt">quietly =</span> <span class="ot">TRUE</span>)) {
     <span class="kw">test_that</span>(<span class="st">&quot;this is lint free&quot;</span>, {
@@ -289,28 +276,29 @@ R/bad_bad_file.R:3:85: style: Use &lt;-, not =, for assignment.
                                                                               myRet = a+b
                                                                                     ^</code></pre>
 <p>Whoops!</p>
-<hr />
 </div>
-<div id="running-examples" class="section level1">
-<h1>Running examples</h1>
+<div id="running-examples" class="section level2">
+<h2>Running examples</h2>
 <p>Examples are extremely helpful both for the user and debugging purposes. When we documented our function <code>g</code> we already have an example how to use the function. We can manually call all examples using:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">devtools::<span class="kw">run_examples</span>(<span class="st">&quot;./newpkg&quot;</span>)</code></pre></div>
 <pre><code>Updating newpkg documentation</code></pre>
 <pre><code>Loading newpkg</code></pre>
 <pre><code>NULL</code></pre>
-<hr />
 </div>
-<div id="code-coverage" class="section level1">
-<h1>Code coverage</h1>
+<div id="code-coverage" class="section level2">
+<h2>Code coverage</h2>
 <p><code>covr</code> lets you check how much of your code is used and tested. If you created a package and you run:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">covr::<span class="kw">package_coverage</span>(<span class="st">&quot;./newpkg&quot;</span>)</code></pre></div>
 <pre><code>newpkg Coverage: 50.00%</code></pre>
 <pre><code>R/bad_bad_file.R: 0.00%</code></pre>
 <pre><code>R/newpkg.R: 100.00%</code></pre>
-<hr />
 </div>
-<div id="setting-up-continuous-integration-travis-ci-and-appveyor" class="section level1">
-<h1>Setting up continuous Integration: <code>Travis CI</code> and <code>AppVeyor</code></h1>
+</div>
+<div id="ci-and-version-control" class="section level1">
+<h1>CI and Version Control</h1>
+<div id="continous-integration" class="section level2">
+<h2>Continous integration</h2>
+<p>Setting up continuous Integration: <code>Travis CI</code> and <code>AppVeyor</code></p>
 <p>To be honest, doing all these steps is tedious and annoying. For that reason we set up <code>Travis CI</code> to take care of running our tests, static analysis and code coverage. Travis works for Mac and Unix.</p>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">  <span class="kw">cat</span> ./newpkg/.travis.yml</code></pre></div>
 <pre><code>language: r
@@ -408,6 +396,9 @@ artifacts:
 <div align="center">
 <p><img src="https://codecov.io/gh/dirmeier/essential-R/branch/master/graphs/sunburst.svg" alt="no img"></p>
 </div>
+<div style="text-align: center">
+<p>Code coverage</p>
+</div>
 <p>If we check the travis log, we see it has succeeded, because all tests ran through. However, we have some lints we should fix.</p>
 <pre><code>$ tar -C .. -xf $PKG_TARBALL
 after_script.2
@@ -449,9 +440,15 @@ Done. Your build exited with 0.</code></pre>
 </div>
 <hr />
 </div>
+</div>
 <div id="version-control" class="section level1">
 <h1>Version control</h1>
 <p>Putting your project on <code>GitHub</code>, of course the most prominent being that you can add badges to your <code>README.md</code> to show others about the state of your package.</p>
+<div align="center">
+<img src="/fig/readme_md.jpg" alt="oh no">
+<div>
+
+
 </div>
 
     </div>
