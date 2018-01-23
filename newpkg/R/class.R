@@ -44,6 +44,6 @@ setClass(
 #' @description i am a clazz class
 setClass(
   "clazz",
-  contains = "aclazz",  
+  contains = "aclazz",
   prototype = prototype(.data=data.frame(NA))
 )

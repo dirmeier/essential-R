@@ -22,11 +22,11 @@ context("hello")
 
 
 testthat::test_that("i know my math", {
-    testthat::equal("welcome to R-bones\n", f())
+    testthat::expect_equal(1, 2 - 1)
 })
 
 testthat::test_that("i know my math", {
-    testthat::expect_false("wrong" == g())
+    testthat::expect_false("wrong" == "right")
 })
 
 if (requireNamespace("lintr", quietly = TRUE)) {

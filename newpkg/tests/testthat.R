@@ -1,4 +1,4 @@
 library(testthat)
-library(emptypRoject)
+library(newpkg)
 
-test_check("emptypRoject")
+test_check("newpkg")

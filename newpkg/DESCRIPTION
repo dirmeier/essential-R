@@ -3,9 +3,9 @@ Type: Package
 Title: emptypRoject
 Version: 0.99.0
 Date: 2018/01/22
-Authors@R: person("user", "",
-                    email = "user", role = c("aut", "cre"))
-Maintainer: user <emptypRoject>
+Authors@R: person("Simon", "Dirmeier",
+                    email = "simon.dirmeier@web.de", role = c("aut", "cre"))
+Maintainer: Simon Dirmeier <simon.dirmeier@web.de>
 Description: description
 URL: https://github.com/githubuser/emptypRoject
 BugReports: https://github.com/githubuser/emptypRoject/issues
@@ -20,10 +20,3 @@ Suggests:
     lintr
 VignetteBuilder: knitr
 RoxygenNote: 6.0.1
-SystemRequirements: C++11
-LinkingTo:
-    Rcpp,
-    RcppEigen
-Imports:
-    Rcpp
-NeedsCompilation: yes

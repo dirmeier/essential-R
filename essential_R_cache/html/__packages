@@ -1,0 +1,6 @@
+base
+knitr
+rmdformats
+magrittr
+ggplot2
+devtools
