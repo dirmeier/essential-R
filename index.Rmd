@@ -164,4 +164,6 @@ What `lintr` considers worth reporting can be customized in a `.lintr` file in y
   covr::package_coverage("./newpkg")
 ```
 
-##
+## Setting up continuous Integration
+
+To be honest, doing all these steps is tedious and annoying.
