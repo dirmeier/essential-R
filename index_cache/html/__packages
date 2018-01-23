@@ -4,3 +4,5 @@ rmdformats
 magrittr
 ggplot2
 devtools
+testthat
+newpkg

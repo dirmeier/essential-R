@@ -9,8 +9,6 @@ Maintainer: Simon Dirmeier <simon.dirmeier@web.de>
 Description: description
 URL: https://github.com/githubuser/emptypRoject
 BugReports: https://github.com/githubuser/emptypRoject/issues
-biocViews:
-    Software
 License: GPL-3
 Encoding: UTF-8
 Suggests:

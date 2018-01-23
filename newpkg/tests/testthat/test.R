@@ -22,15 +22,15 @@ context("hello")
 
 
 testthat::test_that("i know my math", {
-    testthat::expect_equal(1, 2 - 1)
+    testthat::expect_equal(g(), 2)
 })
 
 testthat::test_that("i know my math", {
     testthat::expect_false("wrong" == "right")
 })
 
-if (requireNamespace("lintr", quietly = TRUE)) {
-  testthat::test_that("package has style", {
-    lintr::expect_lint_free()
-  })
-}
+# if (requireNamespace("lintr", quietly = TRUE)) {
+#   testthat::test_that("package has style", {
+#     lintr::expect_lint_free()
+#   })
+# }

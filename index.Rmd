@@ -66,9 +66,9 @@ These slides are no introduction on how to program functionally, procedurally or
 
 # R development
 
-## Creating R packages with `yeoman`
+## Creating R packages with
 
-If you have `yeoman` installed, you use the `R-bones` generator in order to initialize a complete project. This gives you the following bareboneL
+If you have `yeoman` installed, you use the `R-bones` generator in order to initialize a complete project. This gives you the following barebone:
 
 ```{bash, eval=FALSE}
   yo r-bones
@@ -81,19 +81,20 @@ If you have `yeoman` installed, you use the `R-bones` generator in order to init
 
 ---
 
-## Writing R packages with `devtools`
+## Writing R packages
 
-When creating an R package `devtools` covers all functionality required.
+When creating an R package `devtools` and `covr` covers almost any functionality required. The following functions delineate how my typical workflow looks:
 
 ```{r, include=TRUE, eval=FALSE, echo=TRUE}
   devtools::create("newpkg")
-  devtools::document()
   devtools::test()
-  devtools::install()
+  devtools::document()
   devtools::check_cran()
   devtools::lint()
-  devtools::use_rcpp()
   devtools::run_examples()
+  covr::package_coverage()
+  devtools::install()
+  devtools::use_rcpp()  
 ```
 
 This basically covers your complete development life cycle (except code coverage). `devtools` is **tremendously** useful. If you look for sth that helps you write packages, `devtools` has a function for it. For all other things, use `usethis`.
@@ -106,9 +107,10 @@ This basically covers your complete development life cycle (except code coverage
   usethis::use_gpl3_license()
 ```
 
+
 ---
 
-## Testing code with `testthat`
+# Testing code
 
 Right after creating your package, you should write your first test (yes, really). Testing is **essential** for writing good software. The same way as programming languages change your way of thinking, do unit tests change your way of writing functions. `testthat` is probably the best way to go here. Tests are usually put in `tests/testthat`.
 You can use:
@@ -119,30 +121,70 @@ You can use:
 
 to create a test suite automatically. A test would look like this:
 
+```{r, eval=FALSE}
+  testthat::test_that("i know my math", {
+    testthat::expect_equal(g(), 2)
+  })
+
+  testthat::test_that("i know my math", {
+      testthat::expect_false("wrong" == "right")
+  })
+```
+
+Let's test this.
+
 ```{r}
-  f <- function(.) . + 10
-
-  testthat::test_that("test works", {
-    testthat::expect_equal(f(1), 11)
-  })
-
-  testthat::test_that("test fails", {
-    testthat::expect_error(stop("i fail"))
-  })
+  devtools::test("./newpkg")
 ```
 
 
 ---
 
-## Static code analysis with `lintr`
+# Documenting code
 
-`lintr` checks your code for style, syntax error and possible issues.
+Having written the first unit test, we can create the actual function for it **and** its documentation.
 
 ```{r}
-  lintr::lint("newpkg/R/bad_bad_file.R")
+  #' @title Adds 1 and 1
+  #'
+  #' @description This magnificent function computes the sum of 1 and 1.
+  #'
+  #' @export  
+  #'
+  #' @return  returns 2
+  #'  
+  #' @examples
+  #'   a <- g()
+  #'   print(a)
+  g <- function() 1 + 1
 ```
 
-You can also incorporate `lintr` in your unit tests and let them fail, if lints are discovered.
+Then build the documentation:
+
+```{r}
+  devtools::document("./newpkg")
+```
+
+An excellent help for creating documentation (of S3 and S4) is for instance <a href="https://github.com/variani/pckdev">pckdev</a> or the official <a href="https://cran.r-project.org/web/packages/roxygen2/vignettes/roxygen2.html">vignette</a>.
+
+---
+
+# Checking code
+
+If you want to submit your package to `CRAN` or `Bioconductor` certain criteria must be fulfilled. Some of which can be tested by checking or package like this:
+
+```{r,  eval=TRUE, message=TRUE,  include=TRUE, echo=TRUE}
+  devtools::check_cran("./newpkg")
+```
+
+This does not test for Bioconductor though. For this you have to install <a href="https://bioconductor.org/packages/release/bioc/html/BiocCheck.html"> BioCheck</a> manually and call `R CMD BiocCheck newpkg*.tar` on the command line.
+
+
+---
+
+# Static code analysis
+
+`lintr` checks your code for style, syntax error and possible issues. You can also incorporate `lintr` in your unit tests and let them fail, if lints are discovered.
 
 ```{r, eval=FALSE}
 if (requireNamespace("lintr", quietly = TRUE)) {
@@ -154,9 +196,30 @@ if (requireNamespace("lintr", quietly = TRUE)) {
 
 What `lintr` considers worth reporting can be customized in a `.lintr` file in your package root directory.
 
+Let's see if our small package is lint free:
+
+```{r, eval=TRUE, message=TRUE,  include=TRUE, echo=TRUE}
+  devtools::lint("./newpkg")
+```
+
+Whoops!
+
+
 ---
 
-## Code coverage using `covr`
+# Running examples
+
+Examples are extremely helpful both for the user and debugging purposes. When
+we documented our function `g` we already have an example how to use the function. We can manually call all examples using:
+
+```{r, eval=TRUE, message=TRUE,  include=TRUE, echo=TRUE}
+  devtools::run_examples("./newpkg")
+```
+
+
+---
+
+# Code coverage
 
 `covr` lets you check how much of your code is used and tested. If you created a package and you run:
 
@@ -164,7 +227,10 @@ What `lintr` considers worth reporting can be customized in a `.lintr` file in y
   covr::package_coverage("./newpkg")
 ```
 
-## Setting up continuous Integration: `Travis CI` and `AppVeyor`
+
+---
+
+# Setting up continuous Integration: `Travis CI` and `AppVeyor`
 
 To be honest, doing all these steps is tedious and annoying. For that reason we set up `Travis CI` to take care of running our tests, static analysis and code coverage. Travis works for Mac and Unix.
 
@@ -172,7 +238,7 @@ To be honest, doing all these steps is tedious and annoying. For that reason we 
   cat ./newpkg/.travis.yml
 ```
 
-Check out Travis` <a href="https://docs.travis-ci.com/">docs</a> for more info. What we are bascially telling Travis to do is to check our package `--as-cran`, run the unit tests, do the code coverage and finally do a static code analysis.
+Check out Travis' <a href="https://docs.travis-ci.com/">docs</a> for more info. What we are basically telling Travis to do is to check our package `--as-cran`, run the unit tests, do the code coverage and finally do a static code analysis.
 
 In order to do the same for Windows machines, we also use AppVeyor.
 
@@ -181,3 +247,60 @@ In order to do the same for Windows machines, we also use AppVeyor.
 ```
 
 Here, we only run some tests and checks, since we already got the code analysis and coverage.
+
+Code coverage of our project yielded us the following results:
+
+<div align="center">
+<img src="https://codecov.io/gh/dirmeier/essential-R/branch/master/graphs/sunburst.svg" alt="no img">
+</div>
+
+If we check the travis log, we see it has succeeded, because all tests ran through. However, we have some lints we should fix.
+
+<pre><code>$ tar -C .. -xf $PKG_TARBALL
+after_script.2
+2.22s$ Rscript -e 'covr::codecov()'
+$message
+[1] "Coverage reports upload successfully"
+$id
+[1] "552fd0db-187b-434e-b37b-a0e4fcba7636"
+$meta
+$meta$status
+[1] 200
+$queued
+[1] TRUE
+$url
+[1] "https://codecov.io/github/dirmeier/essential-R/commit/f24d277296f78512524f26f3ca3b31d202e122a1"
+$uploaded
+[1] TRUE
+after_script.3
+1.23s$ Rscript -e 'lintr::lint_package()'
+R/bad_bad_file.R:3:1: style: lines should not be more than 80 characters.
+                                                                              myRet = a+b
+^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+R/bad_bad_file.R:3:79: style: Variable and function names should be all lowercase.
+                                                                              myRet = a+b
+                                                                              ^~~~~
+R/bad_bad_file.R:3:85: style: Use <-, not =, for assignment.
+                                                                              myRet = a+b
+                                                                                    ^
+Warning message:
+In readLines(filename) :
+  incomplete final line found on '/home/travis/build/dirmeier/essential-R/newpkg/R/emptypRoject-package.R'
+Done. Your build exited with 0.</code></pre>
+
+
+Fixing style related issues is essential since we want other people to be able to read our code easily. Good code also increases the number of users, because the package is more trusted than a *spaghetti code* package.
+
+<div>
+  <i>Beauty is more important in computing than anywhere else in technology because software is so complicated. Beauty is the ultimate defense against complexity.</i>
+</div>
+<div class="quote" style="margin-bottom: 5%">
+-- David Gelernter
+</div>
+
+
+---
+
+# Version control
+
+Putting your project on `GitHub`, of course the most prominent being that you can add badges to your `README.md` to show others about the state of your package.

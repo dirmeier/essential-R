@@ -104,6 +104,14 @@ $(document).ready(function () {
         <ul>
         <li><a href="#intro">Intro</a></li>
         <li><a href="#r-development">R development</a></li>
+        <li><a href="#testing-code">Testing code</a></li>
+        <li><a href="#documenting-code">Documenting code</a></li>
+        <li><a href="#checking-code">Checking code</a></li>
+        <li><a href="#static-code-analysis">Static code analysis</a></li>
+        <li><a href="#running-examples">Running examples</a></li>
+        <li><a href="#code-coverage">Code coverage</a></li>
+        <li><a href="#setting-up-continuous-integration-travis-ci-and-appveyor">Setting up continuous Integration: <code>Travis CI</code> and <code>AppVeyor</code></a></li>
+        <li><a href="#version-control">Version control</a></li>
         </ul>
       </nav>
      <div class="pages col-xs-9">
@@ -144,9 +152,9 @@ $(document).ready(function () {
 </div>
 <div id="r-development" class="section level1">
 <h1>R development</h1>
-<div id="creating-r-packages-with-yeoman" class="section level2">
-<h2>Creating R packages with <code>yeoman</code></h2>
-<p>If you have <code>yeoman</code> installed, you use the <code>R-bones</code> generator in order to initialize a complete project. This gives you the following bareboneL</p>
+<div id="creating-r-packages-with" class="section level2">
+<h2>Creating R packages with</h2>
+<p>If you have <code>yeoman</code> installed, you use the <code>R-bones</code> generator in order to initialize a complete project. This gives you the following barebone:</p>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">  <span class="kw">yo</span> r-bones
   <span class="kw">ls</span> -la newpkg</code></pre></div>
 <pre><code>total 176
@@ -173,17 +181,18 @@ drwxr-xr-x   4 simondi  1029    136 Jan 22 20:24 tests
 drwxr-xr-x   3 simondi  1029    102 Jan 22 20:24 vignettes</code></pre>
 <hr />
 </div>
-<div id="writing-r-packages-with-devtools" class="section level2">
-<h2>Writing R packages with <code>devtools</code></h2>
-<p>When creating an R package <code>devtools</code> covers all functionality required.</p>
+<div id="writing-r-packages" class="section level2">
+<h2>Writing R packages</h2>
+<p>When creating an R package <code>devtools</code> and <code>covr</code> covers almost any functionality required. The following functions delineate how my typical workflow looks:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">devtools::<span class="kw">create</span>(<span class="st">&quot;newpkg&quot;</span>)
-devtools::<span class="kw">document</span>()
 devtools::<span class="kw">test</span>()
-devtools::<span class="kw">install</span>()
+devtools::<span class="kw">document</span>()
 devtools::<span class="kw">check_cran</span>()
 devtools::<span class="kw">lint</span>()
-devtools::<span class="kw">use_rcpp</span>()
-devtools::<span class="kw">run_examples</span>()</code></pre></div>
+devtools::<span class="kw">run_examples</span>()
+covr::<span class="kw">package_coverage</span>()
+devtools::<span class="kw">install</span>()
+devtools::<span class="kw">use_rcpp</span>()</code></pre></div>
 <p>This basically covers your complete development life cycle (except code coverage). <code>devtools</code> is <strong>tremendously</strong> useful. If you look for sth that helps you write packages, <code>devtools</code> has a function for it. For all other things, use <code>usethis</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">usethis::<span class="kw">use_namespace</span>()
 usethis::<span class="kw">use_code_of_conduct</span>()
@@ -192,54 +201,117 @@ usethis::<span class="kw">use_vignette</span>()
 usethis::<span class="kw">use_gpl3_license</span>()</code></pre></div>
 <hr />
 </div>
-<div id="testing-code-with-testthat" class="section level2">
-<h2>Testing code with <code>testthat</code></h2>
+</div>
+<div id="testing-code" class="section level1">
+<h1>Testing code</h1>
 <p>Right after creating your package, you should write your first test (yes, really). Testing is <strong>essential</strong> for writing good software. The same way as programming languages change your way of thinking, do unit tests change your way of writing functions. <code>testthat</code> is probably the best way to go here. Tests are usually put in <code>tests/testthat</code>. You can use:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">devtools::<span class="kw">use_testthat</span>()</code></pre></div>
 <p>to create a test suite automatically. A test would look like this:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">f &lt;-<span class="st"> </span>function(.) . +<span class="st"> </span><span class="dv">10</span>
-
-testthat::<span class="kw">test_that</span>(<span class="st">&quot;test works&quot;</span>, {
-    testthat::<span class="kw">expect_equal</span>(<span class="kw">f</span>(<span class="dv">1</span>), <span class="dv">11</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">testthat::<span class="kw">test_that</span>(<span class="st">&quot;i know my math&quot;</span>, {
+    testthat::<span class="kw">expect_equal</span>(<span class="kw">g</span>(), <span class="dv">2</span>)
 })
 
-testthat::<span class="kw">test_that</span>(<span class="st">&quot;test fails&quot;</span>, {
-    testthat::<span class="kw">expect_error</span>(<span class="kw">stop</span>(<span class="st">&quot;i fail&quot;</span>))
+testthat::<span class="kw">test_that</span>(<span class="st">&quot;i know my math&quot;</span>, {
+    testthat::<span class="kw">expect_false</span>(<span class="st">&quot;wrong&quot;</span> ==<span class="st"> &quot;right&quot;</span>)
 })</code></pre></div>
+<p>Let’s test this.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">devtools::<span class="kw">test</span>(<span class="st">&quot;./newpkg&quot;</span>)</code></pre></div>
+<pre><code>✔ | OK F W S | Context
+
+⠏ |  0       | hello
+⠋ |  1       | hello
+⠙ |  2       | hello
+✔ |  2       | hello
+
+══ Results ════════════════════════════════════════════════════════════════
+OK:       2
+Failed:   0
+Warnings: 0
+Skipped:  0</code></pre>
 <hr />
 </div>
-<div id="static-code-analysis-with-lintr" class="section level2">
-<h2>Static code analysis with <code>lintr</code></h2>
-<p><code>lintr</code> checks your code for style, syntax error and possible issues.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lintr::<span class="kw">lint</span>(<span class="st">&quot;newpkg/R/bad_bad_file.R&quot;</span>)</code></pre></div>
-<pre><code>newpkg/R/bad_bad_file.R:2:1: style: lines should not be more than 80 characters.
-                                                                              myRet = a+b
-^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-newpkg/R/bad_bad_file.R:2:79: style: Variable and function names should be all lowercase.
-                                                                              myRet = a+b
-                                                                              ^~~~~
-newpkg/R/bad_bad_file.R:2:85: style: Use &lt;-, not =, for assignment.
-                                                                              myRet = a+b
-                                                                                    ^</code></pre>
-<p>You can also incorporate <code>lintr</code> in your unit tests and let them fail, if lints are discovered.</p>
+<div id="documenting-code" class="section level1">
+<h1>Documenting code</h1>
+<p>Having written the first unit test, we can create the actual function for it <strong>and</strong> its documentation.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#&#39; @title Adds 1 and 1</span>
+<span class="co">#&#39;</span>
+<span class="co">#&#39; @description This magnificent function computes the sum of 1 and 1.</span>
+<span class="co">#&#39;</span>
+<span class="co">#&#39; @export  </span>
+<span class="co">#&#39;</span>
+<span class="co">#&#39; @return  returns 2</span>
+<span class="co">#&#39;  </span>
+<span class="co">#&#39; @examples</span>
+<span class="co">#&#39;   a &lt;- g()</span>
+<span class="co">#&#39;   print(a)</span>
+g &lt;-<span class="st"> </span>function() <span class="dv">1</span> +<span class="st"> </span><span class="dv">1</span></code></pre></div>
+<p>Then build the documentation:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">devtools::<span class="kw">document</span>(<span class="st">&quot;./newpkg&quot;</span>)</code></pre></div>
+<p>An excellent help for creating documentation (of S3 and S4) is for instance <a href="https://github.com/variani/pckdev">pckdev</a> or the official <a href="https://cran.r-project.org/web/packages/roxygen2/vignettes/roxygen2.html">vignette</a>.</p>
+<hr />
+</div>
+<div id="checking-code" class="section level1">
+<h1>Checking code</h1>
+<p>If you want to submit your package to <code>CRAN</code> or <code>Bioconductor</code> certain criteria must be fulfilled. Some of which can be tested by checking or package like this:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">devtools::<span class="kw">check_cran</span>(<span class="st">&quot;./newpkg&quot;</span>)</code></pre></div>
+<pre><code>Checking 1 CRAN packages =================================================</code></pre>
+<pre><code>Results saved in /var/folders/cx/v45t2v2n6b548_vfn76vnzlw0050sr/T//RtmplUvKHy/check_cran172af640049e9</code></pre>
+<pre><code>Package library: /private/var/folders/cx/v45t2v2n6b548_vfn76vnzlw0050sr/T/RtmplUvKHy/R-lib, /Library/Frameworks/R.framework/Versions/3.4/Resources/library</code></pre>
+<pre><code>Installing dependencies --------------------------------------------------</code></pre>
+<pre><code>Installing 1 packages: ./newpkg</code></pre>
+<pre><code>Skipping 1 packages without source:./newpkg</code></pre>
+<pre><code>Checking packages --------------------------------------------------------</code></pre>
+<pre><code>Checking 0 packages: </code></pre>
+<pre><code>Package library: /private/var/folders/cx/v45t2v2n6b548_vfn76vnzlw0050sr/T/RtmplUvKHy/R-lib, /Library/Frameworks/R.framework/Versions/3.4/Resources/library</code></pre>
+<pre><code>NULL</code></pre>
+<p>This does not test for Bioconductor though. For this you have to install <a href="https://bioconductor.org/packages/release/bioc/html/BiocCheck.html"> BioCheck</a> manually and call <code>R CMD BiocCheck newpkg*.tar</code> on the command line.</p>
+<hr />
+</div>
+<div id="static-code-analysis" class="section level1">
+<h1>Static code analysis</h1>
+<p><code>lintr</code> checks your code for style, syntax error and possible issues. You can also incorporate <code>lintr</code> in your unit tests and let them fail, if lints are discovered.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">if (<span class="kw">requireNamespace</span>(<span class="st">&quot;lintr&quot;</span>, <span class="dt">quietly =</span> <span class="ot">TRUE</span>)) {
     <span class="kw">test_that</span>(<span class="st">&quot;this is lint free&quot;</span>, {
         lintr::<span class="kw">expect_lint_free</span>()
     })
 }</code></pre></div>
 <p>What <code>lintr</code> considers worth reporting can be customized in a <code>.lintr</code> file in your package root directory.</p>
+<p>Let’s see if our small package is lint free:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">devtools::<span class="kw">lint</span>(<span class="st">&quot;./newpkg&quot;</span>)</code></pre></div>
+<pre><code>Linting newpkg....</code></pre>
+<pre><code>R/bad_bad_file.R:3:1: style: lines should not be more than 80 characters.
+                                                                              myRet = a+b
+^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+R/bad_bad_file.R:3:79: style: Variable and function names should be all lowercase.
+                                                                              myRet = a+b
+                                                                              ^~~~~
+R/bad_bad_file.R:3:85: style: Use &lt;-, not =, for assignment.
+                                                                              myRet = a+b
+                                                                                    ^</code></pre>
+<p>Whoops!</p>
 <hr />
 </div>
-<div id="code-coverage-using-covr" class="section level2">
-<h2>Code coverage using <code>covr</code></h2>
+<div id="running-examples" class="section level1">
+<h1>Running examples</h1>
+<p>Examples are extremely helpful both for the user and debugging purposes. When we documented our function <code>g</code> we already have an example how to use the function. We can manually call all examples using:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">devtools::<span class="kw">run_examples</span>(<span class="st">&quot;./newpkg&quot;</span>)</code></pre></div>
+<pre><code>Updating newpkg documentation</code></pre>
+<pre><code>Loading newpkg</code></pre>
+<pre><code>NULL</code></pre>
+<hr />
+</div>
+<div id="code-coverage" class="section level1">
+<h1>Code coverage</h1>
 <p><code>covr</code> lets you check how much of your code is used and tested. If you created a package and you run:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">covr::<span class="kw">package_coverage</span>(<span class="st">&quot;./newpkg&quot;</span>)</code></pre></div>
-<pre><code>newpkg Coverage: 0.00%</code></pre>
-<pre><code>R/newpkg.R: 0.00%</code></pre>
+<pre><code>newpkg Coverage: 50.00%</code></pre>
+<pre><code>R/bad_bad_file.R: 0.00%</code></pre>
+<pre><code>R/newpkg.R: 100.00%</code></pre>
+<hr />
 </div>
-<div id="setting-up-continuous-integration" class="section level2">
-<h2>Setting up continuous Integration</h2>
-<p>To be honest, doing all these steps is tedious and annoying. For that reason we set up <code>Travis CI</code> to take care of running our tests, static analysis and code coverage. Travis works for Mac and Unix, so if our package contains <code>C++</code> code, it also makes sense to use <code>appveyor</code> for testing in Windows machines.</p>
+<div id="setting-up-continuous-integration-travis-ci-and-appveyor" class="section level1">
+<h1>Setting up continuous Integration: <code>Travis CI</code> and <code>AppVeyor</code></h1>
+<p>To be honest, doing all these steps is tedious and annoying. For that reason we set up <code>Travis CI</code> to take care of running our tests, static analysis and code coverage. Travis works for Mac and Unix.</p>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">  <span class="kw">cat</span> ./newpkg/.travis.yml</code></pre></div>
 <pre><code>language: r
 
@@ -274,16 +346,112 @@ env:
     - R_CHECK_ARGS=&quot;--no-build-vignettes --no-manual --as-cran&quot;
     - LINTR_COMMENT_BOT=false
 
+before_install:
+  - cd newpkg
+
 r_packages:
   - covr
   - testthat
   - lintr
 
-after_success:
+after_script:
   - tar -C .. -xf $PKG_TARBALL
   - Rscript -e &#39;covr::codecov()&#39;
   - Rscript -e &#39;lintr::lint_package()&#39;</code></pre>
+<p>Check out Travis’ <a href="https://docs.travis-ci.com/">docs</a> for more info. What we are basically telling Travis to do is to check our package <code>--as-cran</code>, run the unit tests, do the code coverage and finally do a static code analysis.</p>
+<p>In order to do the same for Windows machines, we also use AppVeyor.</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">  <span class="kw">cat</span> ./newpkg/appveyor.yml</code></pre></div>
+<pre><code># DO NOT CHANGE the &quot;init&quot; and &quot;install&quot; sections below
+
+# Download script file from GitHub
+init:
+  ps: |
+        $ErrorActionPreference = &quot;Stop&quot;
+        Invoke-WebRequest http://raw.github.com/krlmlr/r-appveyor/master/scripts/appveyor-tool.ps1 -OutFile &quot;..\appveyor-tool.ps1&quot;
+        Import-Module &#39;..\appveyor-tool.ps1&#39;
+
+install:
+  ps: Bootstrap
+
+# Adapt as necessary starting from here
+
+build_script:
+  - travis-tool.sh install_deps
+
+test_script:
+  - travis-tool.sh run_tests
+
+on_failure:
+  - 7z a failure.zip *.Rcheck\*
+  - appveyor PushArtifact failure.zip
+
+artifacts:
+  - path: &#39;*.Rcheck\**\*.log&#39;
+    name: Logs
+
+  - path: &#39;*.Rcheck\**\*.out&#39;
+    name: Logs
+
+  - path: &#39;*.Rcheck\**\*.fail&#39;
+    name: Logs
+
+  - path: &#39;*.Rcheck\**\*.Rout&#39;
+    name: Logs
+
+  - path: &#39;\*_*.tar.gz&#39;
+    name: Bits
+
+  - path: &#39;\*_*.zip&#39;
+    name: Bits</code></pre>
+<p>Here, we only run some tests and checks, since we already got the code analysis and coverage.</p>
+<p>Code coverage of our project yielded us the following results:</p>
+<div align="center">
+<p><img src="https://codecov.io/gh/dirmeier/essential-R/branch/master/graphs/sunburst.svg" alt="no img"></p>
 </div>
+<p>If we check the travis log, we see it has succeeded, because all tests ran through. However, we have some lints we should fix.</p>
+<pre><code>$ tar -C .. -xf $PKG_TARBALL
+after_script.2
+2.22s$ Rscript -e 'covr::codecov()'
+$message
+[1] "Coverage reports upload successfully"
+$id
+[1] "552fd0db-187b-434e-b37b-a0e4fcba7636"
+$meta
+$meta$status
+[1] 200
+$queued
+[1] TRUE
+$url
+[1] "https://codecov.io/github/dirmeier/essential-R/commit/f24d277296f78512524f26f3ca3b31d202e122a1"
+$uploaded
+[1] TRUE
+after_script.3
+1.23s$ Rscript -e 'lintr::lint_package()'
+R/bad_bad_file.R:3:1: style: lines should not be more than 80 characters.
+                                                                              myRet = a+b
+^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+R/bad_bad_file.R:3:79: style: Variable and function names should be all lowercase.
+                                                                              myRet = a+b
+                                                                              ^~~~~
+R/bad_bad_file.R:3:85: style: Use <-, not =, for assignment.
+                                                                              myRet = a+b
+                                                                                    ^
+Warning message:
+In readLines(filename) :
+  incomplete final line found on '/home/travis/build/dirmeier/essential-R/newpkg/R/emptypRoject-package.R'
+Done. Your build exited with 0.</code></pre>
+<p>Fixing style related issues is essential since we want other people to be able to read our code easily. Good code also increases the number of users, because the package is more trusted than a <em>spaghetti code</em> package.</p>
+<div>
+<p><i>Beauty is more important in computing than anywhere else in technology because software is so complicated. Beauty is the ultimate defense against complexity.</i></p>
+</div>
+<div class="quote" style="margin-bottom: 5%">
+<p>– David Gelernter</p>
+</div>
+<hr />
+</div>
+<div id="version-control" class="section level1">
+<h1>Version control</h1>
+<p>Putting your project on <code>GitHub</code>, of course the most prominent being that you can add badges to your <code>README.md</code> to show others about the state of your package.</p>
 </div>
 
     </div>
