@@ -2,12 +2,14 @@
 title: "Essential R"
 output:
   rmdformats::material:
-    highlight: kate
+    highlight: default
     self_contained: false
-    lib_dir: libs
-    css: ["default", "theme.css"]
+    lib_dir: libs    
+    theme: lumen
+    number_sections: true
+    css: ["default", "theme.css"]        
     nature:
-      highlightStyle: github
+      highlightStyle: default
       highlightLines: true
 
 
@@ -21,7 +23,7 @@ output:
   devtools::install("./newpkg")
   options(htmltools.dir.version = FALSE)
   options(max.print="75")
-  opts_chunk$set(cache=TRUE,
+  opts_chunk$set(#cache=TRUE,
                  prompt=FALSE,
                  tidy=TRUE,
                  comment=NA,
@@ -46,9 +48,9 @@ output:
 
 
 These slides are a rough guideline of how to write `R` code using common
-software, such as `devtools`, `testthat`, `lintr`, `covr`, `data.table`, `Rcpp` and its derivates and other frequently used tools to program in `R`. We don't claim at any point that the material treated here covers all of R, but rather serve as a the author's list of essential `R` tools, he frequently uses.
+software, such as `devtools`, `testthat`, `lintr`, `covr`, `data.table`, `Rcpp` and its derivates, and other frequently used tools to program in `R`. We don't claim at any point that the material treated here covers all of R, but rather serve as a the author's list of essential `R` tools he frequently uses.
 
-These slides are no introduction on how to program functionally, procedurally or in an object-oriented way, how to write code in general, or how to speed up code. The interested reader is referred to:
+These slides are no introduction on how to program functionally, procedurally or in an object-oriented way, how to write code in general, or how to speed it up. The interested reader is referred to:
 
 - Robert Martin: Clean Code,
 - Andrew Hunt: The Pragmatic Programmer,
@@ -64,10 +66,19 @@ These slides are no introduction on how to program functionally, procedurally or
 
 # R development
 
+The following section covers tools that help and speed up developing R:
 
-## Creating R packages with
+- `yeoman`
+- `devtools`
+- `testthat`
+- `roxygen2`
+- `covr`
+- `lintr`
+- `usethis`
 
-If you have `yeoman` installed, you use the `R-bones` generator in order to initialize a complete project. This gives you the following barebone:
+## Creating R packages
+
+If you have `yeoman` installed, you can use the `R-bones` generator in order to initialize a complete project. This gives you the following barebone:
 
 ```{bash, eval=FALSE}
   yo r-bones
@@ -132,10 +143,12 @@ Let's test this.
   devtools::test("./newpkg")
 ```
 
+A function ideally does *one task and one task only*. Functions with side effects, multiple operations or exceedingly large method body easily introduce bugs. Keep your functions concise! This also simplifies testing, because it is easier to track down a bug in a shorter function.
+
 
 ## Documenting code
 
-Having written the first unit test, we can create the actual function for it **and** its documentation.
+Having written the first unit test, we can create the actual function for it **and** its documentation using `roxygen2`:
 
 ```{r}
   #' @title Adds 1 and 1
@@ -200,24 +213,27 @@ Whoops!
 Examples are extremely helpful both for the user and debugging purposes. When
 we documented our function `g` we already have an example how to use the function. We can manually call all examples using:
 
-```{r, eval=TRUE, message=TRUE,  include=TRUE, echo=TRUE}
+```{r, eval=TRUE, message=TRUE, include=TRUE, echo=TRUE}
   devtools::run_examples("./newpkg")
 ```
 
 
 ## Code coverage
 
-`covr` lets you check how much of your code is used and tested. If you created a package and you run:
+`covr` lets you check how much of your code is used and tested. If you created a package just run:
 
-```{r, eval=TRUE, message=TRUE,  include=TRUE, echo=TRUE}
+```{r, eval=TRUE, message=TRUE, include=TRUE, echo=TRUE}
   covr::package_coverage("./newpkg")
 ```
 
+Having high code coverage usually correlates with a good testing suite. The more functionality is tested, the larger the code coverage.
 
-# CI and Version Control
 
+# Good practices
 
-## Continous integration
+Continuous integration, version control and containerization are three of the many tools of a developer. Here, we quickly introduce how the three can be used for `R`.
+
+## Continuous integration
 
 Setting up continuous Integration: `Travis CI` and `AppVeyor`
 
@@ -239,14 +255,13 @@ Here, we only run some tests and checks, since we already got the code analysis 
 
 Code coverage of our project yielded us the following results:
 
-<div>
-  <div align="center">
-    <img src="https://codecov.io/gh/dirmeier/essential-R/branch/master/graphs/sunburst.svg" alt="no img">
-  </div>
-  <div style="text-align: center">
-    Code coverage
-  </div>
+<div align="center">
+  <img src="https://codecov.io/gh/dirmeier/essential-R/branch/master/graphs/sunburst.svg" alt="no img">
 </div>
+<div style="text-align: center">
+  Code coverage
+</div>
+
 If we check the travis log, we see it has succeeded, because all tests ran through. However, we have some lints we should fix.
 
 <pre><code>$ tar -C .. -xf $PKG_TARBALL
@@ -292,12 +307,102 @@ Fixing style related issues is essential since we want other people to be able t
 </div>
 
 
----
+## Version control
 
-# Version control
-
-Putting your project on `GitHub`, of course the most prominent being that you can add badges to your `README.md` to show others about the state of your package.
+Aside from he fact that version control is great, putting your project on `GitHub` has the most prominent advantage that you can add badges to your `README.md` to show others about the state of your package, for instance repository, CI or code coverage status.
 
 <div align="center">
-  <img src="https://rawgit.com/dirmeier/essential-R/master/fig/readme_me.jpg" alt="oh no">
-<div>
+  <img src="https://rawgit.com/dirmeier/essential-R/master/fig/readme_me.jpg" alt="oh no" width="750px">
+</div>
+
+There's a wide variety of badges to describe your project.
+<div align="center">
+| Description  | Badge |
+| ------------- | ------------- |
+| Is the project passing on windows?  | <img src="https://ci.appveyor.com/api/projects/status/github/dirmeier/netReg?branch=master&svg=true">  |
+| How long is it on Bioconductor?  | ![](https://bioconductor.org/shields/years-in-bioc/netReg.svg)  |
+| Is it installable using conda?  | ![](https://anaconda.org/bioconda/netreg/badges/installer/conda.svg)  |
+| What is its version on CRAN?  | ![](http://www.r-pkg.org/badges/version/datastructures?color=brightgreen)  |
+| How often has it been downloaded?  | ![](http://cranlogs.r-pkg.org/badges/grand-total/datastructures?color=brightgreen)  |
+</div>
+
+
+## Docker
+
+
+# R libraries
+
+Much of `R`'s popularity is due to its fantastic ecosystem. `R` users benefit heavily from CRAN and Bioconductor packages created by its community.
+
+For data analysis or statistics `R` is a good choice for various reasons:
+
+- high-level,
+- easy to install packages,
+- can be extended to `C++` without needing knowledge of linking or `C++` build-systems,
+- probably the best plotting facility with `ggplot`, `cowplot`, `hrbrthemes` or `ggsci`,
+- Bioconductor, machine learning and statistics libraries,
+- small standard library.
+
+There are a few things, however, `R` is not so great at:
+
+- in general slow,
+- not really suited for large projects,
+- poor object orientation,
+- inconsistent function names,
+- superior IDEs for Java, Python, ...,
+- very limited threading capabilities.
+
+## Extending to C++ using `Rcpp`
+
+Using `Rcpp` (and `RcppEigen`, `RcppArmadillo`, `Boost`) you can easily your extend your code to C++. It not only nicely wraps the standard C API, but also let's you use standard matrix libraries such as Eigen and Armadillo or Boost :heart_eyes:.
+
+If you have a project that's not a package you can for instance create a function like this:
+
+```{r}  
+  Rcpp::cppFunction('double sum(std::vector<double>& vec) {
+      double sum = .0;
+      for (std::vector<double>::size_type i = 0; i < vec.size(); ++i)
+          sum += vec[i];
+      return sum;
+  }')
+
+
+  sum(as.numeric(seq(10)))
+```
+
+Let's see an `Eigen` example with sourceCpp:
+
+```{bash}
+  cat ./square.cpp
+```
+
+```{r}  
+  library('RcppEigen')
+  Rcpp::sourceCpp("./square.cpp")
+  square(matrix(rnorm(10), 2))
+```
+
+Even for small matrices, the speed up is already substantial.
+
+```{r}  
+  m <- matrix(rnorm(100 * 100), 100)
+  microbenchmark::microbenchmark(
+    square(m),
+    t(m) %*% m
+  )
+```
+
+Usually, you would want to put your source code into a `cpp` file in the `src` folder. Then you can call C++ from an R function, for instance as described below.
+
+1) Define a C++ source file
+
+
+```{bash}
+  cat ./newpkg/src/main.cpp
+```
+
+2) Call `compileAttributes`
+
+```{r, eval=TRUE, message=TRUE,  include=TRUE, echo=TRUE}
+  Rcpp::compileAttributes("./newpkg")
+```

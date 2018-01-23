@@ -5,7 +5,7 @@
 #' @export
 #'
 #' @return  returns 2
-#'
+#' @useDynLib newpkg, .registration = TRUE
 #' @examples
 #'   a <- g()
 #'   print(a)
