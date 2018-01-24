@@ -167,10 +167,24 @@ Having high code coverage usually correlates with a good testing suite. The more
 If you think your code runs slowly, you can try to find the bottleneck, for instance, using `profvis` and `microbenchmark`.
 
 ```{r, eval=TRUE, message=TRUE, include=TRUE, echo=TRUE, fig.width=4}
-  library('ggplot2')
+  library('profvis')
+  library('gam')
+  data(kyphosis)
   profvis::profvis({
-    g <- ggplot(diamonds, aes(carat, price)) + geom_point(size=1, alpha=.2)
-    invisible(print(g))
+    sp <- stats::spline(kyphosis$Age, kyphosis$Number, method="n")
+    gm <- gam::gam(Number ~ Age, family=poisson, data=kyphosis)
+
+    df <- data.frame(
+      X = c(sp$x, kyphosis$Age),
+      Y = c(sp$y, predict(gm, kyphosis)),
+      model = c(rep("Spline", length(sp$x)),
+                rep("GAM",    length(kyphosis$Age))))
+
+    g <- ggplot(df) +
+      geom_point(aes(x=X, y=Y, color=model)) +
+      theme_void()
+
+    print(g)
   })
 ```
 

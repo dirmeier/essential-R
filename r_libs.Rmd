@@ -26,7 +26,7 @@ Using `Rcpp` (and `RcppEigen`, `RcppArmadillo`, `Boost`) you can easily your ext
 
 If you have a project that's not a package you can for instance create a function like this:
 
-```{r}
+```{r}  
   Rcpp::cppFunction('double sum(std::vector<double>& vec) {
       double sum = .0;
       for (std::vector<double>::size_type i = 0; i < vec.size(); ++i)
@@ -65,18 +65,18 @@ Usually, you would want to put your source code into a `cpp` file in the `src` f
 
 1) Define a C++ source file and put it in `src`, like this:
 
-<pre><code>#include \<Rcpp.h\>
+```{c++, eval=FALSE}
+  #include <Rcpp.h>
+  // [[Rcpp::export]]
+  Rcpp::List dostuff()
+  {
+    // some computations
 
-// [[Rcpp::export]]
-Rcpp::List dostuff()
-{
-  // some computations
-
-  return Rcpp::List::create(
-    Rcpp::Named("a") = ...
-  );
-}</code></pre>
-
+    return Rcpp::List::create(
+      Rcpp::Named("a") = ...
+    );
+  }
+```
 
 2) Add this to your `DESCRIPTION`:
 
@@ -140,13 +140,13 @@ C++ is a large, complex language. Chances that you mess up, introduce bugs and m
   library('ggplot2')
   library('repurrrsive')
   library('magrittr')  
-  head(sw_people[[1]])
+  utils::head(sw_people[[1]])
   df <- map_dfr(
     sw_people,
     .f = function(.) data.frame(color  = .[["eye_color"]],
                                 height = .[["height"]],
                                 mass   = .[["mass"]]))
-  head(df)
+  utils::head(df)
 ```
 
 ## Plotting
@@ -193,7 +193,7 @@ Often you want to create an interactive plot, for instance when serving on a `sh
 
 ```{r, fig.align = 'center', fig.height=6}
   library('plotly')
-  ggplotly(g)
+  plotly::ggplotly(g)
 ```
 
 ### Other packages to consider
@@ -219,10 +219,10 @@ Other useful packages for plotting, using colors, animations or working with ima
   library('grid')
   library('gridExtra')
   n    <- 1000
-  rn   <- rnorm(n)
-  ltrs <- sample(letters[1:5], n, replace=TRUE)
-  dt   <- data.table(X=rn, Y=ltrs)
-  df   <- data.frame(X=rn, Y=ltrs)
+  rn   <- stats::rnorm(n)
+  ltrs <- base::sample(letters[1:5], n, replace=TRUE)
+  dt   <- data.table::data.table(X=rn, Y=ltrs)
+  df   <- base::data.frame(X=rn, Y=ltrs)
 
   dt[, .SD[sample(.N, 1)], by=c("Y")] %>%
     tableGrob(rows=NULL) %>%
@@ -233,8 +233,8 @@ In the end it depends what style you prefer. I usually go with `data.table` alon
 
 ```{r}
   dt.only   <- function() dt[, .SD[sample(.N, 1)], by=c("Y")]
-  dt.dtplyr <- function() dt %>% group_by(Y) %>% sample_n(1)
-  df.dplyr  <- function() df %>% group_by(Y) %>% sample_n(1)
+  dt.dtplyr <- function() dt %>% dplyr::group_by(Y) %>% dplyr::sample_n(1)
+  df.dplyr  <- function() df %>% dplyr::group_by(Y) %>% dplyr::sample_n(1)
 
   microbenchmark::microbenchmark(
     dt.only(),
@@ -246,18 +246,132 @@ In the end it depends what style you prefer. I usually go with `data.table` alon
 
 ## mlR and openML
 
-CRAN offers dozens of packages related to machine and statistical learning, many of which doing the same. `mlR` wraps many of these into one common library.
+CRAN offers dozens of packages related to machine and statistical learning, many of which doing the same. `mlR` wraps many of these into one big library.
+`mlR` integrates with `openML`, an open machine learning platform where people share code, data and algorithms. Here we show an example where we use a Gaussian process to predict the Kyphosis label from the `gam` package.
 
+```{r}
+  library(mlr)
+  task  <- mlr::makeClassifTask(data = kyphosis, target = "Kyphosis")
+  lrn   <- mlr::makeLearner("classif.gausspr")
 
+  n <- nrow(kyphosis)
+  train.set <- sample(n, size = 2/3*n)
+  test.set  <- setdiff(1:n, train.set)
 
-## S3, S4, R6
+  model <- mlr::train(lrn, task, subset = train.set)
+  pred  <- stats::predict(model, task = task, subset = test.set)
+  performance(pred, measures = list(mmce, acc))
+```
+
+## Object-oriented programming
+
+R has three different native ways for object-oriented programming and as far as I know one additional library. `S3`, `S4` and `RefClasses` (`R5`) come with the standard library, while `R6` can be installed from CRAN. I actually never use R5, because it feels incredibly bulky and slow, so we will not cover it here.
+
+### S3
+
+S3 methods dispatch on the first argument. If you come from other languages, such as `Java`, an S3 method is basically an overloaded function on the first argument. You can define an S3 function like this:
+
+```{r}
+  s3 <- function(x, y, ...) UseMethod("s3")
+
+  s3.matrix <- function(x, y, ...) apply(x, 1, sum)
+  s3.character <- function(x, y, ...) paste(x, y)
+
+  s3(matrix(1:6, 2))
+  s3("hello", "reader")
+```
+
+S3 classes are defines like this:
+
+```{r}
+  s3.list <- function(x, y, ...)
+  {
+    l <- list(x=x, y=y)
+    base::class(l) <- "my.s3"
+
+    l
+  }
+  s3(list(x=1), y=2)
+```
+
+The main issue here is of course that the user can easily overwrite a class and that method dispatching on one argument usually is not enough. However, often S3 functions are all you need.
+
+### S4
+
+Bioconductor seems to prefer S4 over S3, so if you want to submit your package, you could for instance define interfaces using S4 and the rest using S3 or w/o OO entirely. In that way the user of your package only sees the exported interface (the S4 method) and upon calling would receive an S4 object. The rest of the implementation would be hidden.
+
+```{r}
+  methods::setClass("normallist",
+         representation = list(.el = "list"),
+         prototype = prototype(.el = list())
+  )
+
+  methods::setGeneric("put", function(obj, x) base::standardGeneric("insert"))
+
+  methods::setMethod(
+    "put",
+    signature = signature(obj = "normallist", x = "vector"),
+    function(obj, x) obj@.el <- as.list(x)
+  )
+
+  d <- methods::new("normallist")
+  d <- put(d, seq(3))
+  d
+```
+
 
 ## Shiny
 
+Next to Rmarkdown, setting up a Shiny instance for reporting is a nice way to present data with interactive plots. Setting up shiny is fairly easy. You need to create a `server.R` file and `ui.R` file, e.g. like this:
+
+```{bash}
+  cat R/server.R
+  cat R/ui.R
+```
+
+You can publish your server on <a href="http://www.shinyapps.io/">shinyapps.io</a> so that it is accessible by everyone.
+
 ## Pryr
+
+In some cases it is interesting to have a look at the implementation of specific functions, get their sizes in byte or get the current memory consumption. It is especially useful to keep track of the addresses your objects point to. When I was new to R I found it confusing when a reference is dropped and when a new copy of an object is created.
+
+```{r}
+  library('pryr')
+  pryr::inspect(list())
+  pryr::inspect(vector())
+
+  pryr::object_size(numeric())
+  pryr::object_size(numeric(1))
+
+  x <- stats::rnorm(10)
+  y <- x
+  pryr::address(x)
+  pryr::address(y)
+  y[1] <- 1
+  pryr::address(y)
+```
 
 ## datastructures
 
+If you have a background in computer science you may wonder, that R does not have support for advanced data structures such as Fibonacci heaps or hashmaps.
+`datastructures` tries to solve this. It uses Rcpp modules to export Boost data structures to R:
+
+```{r}
+  library('datastructures')
+  q <- datastructures::fibonacci_heap("integer", "numeric")
+  q[1:3] <- list(rnorm(3), 2, rnorm(4))
+  datastructures::pop(q)
+  datastructures::pop(q)
+  datastructures::pop(q)
+  datastructures::pop(q)
+```
+
 ## Other
 
-dplyr, tidyr, ORKernel, minqq, nloptr,
+There are many other great tools I did not specifically mention due to the fact that they are more situational. Some of these are:
+
+- dplyr,
+- tidyr,
+- IRKernel,
+- minqa and nloptr,
+- glmnet, lme4 and netReg.
