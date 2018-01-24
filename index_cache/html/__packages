@@ -1,9 +1,0 @@
-base
-knitr
-rmdformats
-magrittr
-ggplot2
-devtools
-testthat
-BiocStyle
-newpkg

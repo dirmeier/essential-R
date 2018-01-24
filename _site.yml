@@ -9,6 +9,7 @@ navbar:
       href: http://twitter.com/simon_dirmeier/
 output:
   html_document:
+    css: theme.css
     theme: lumen
     toc: true
     toc_depth: 2
@@ -16,8 +17,7 @@ output:
       collapsed: false
       smooth_scroll: true
     number_sections: true
-    highlight: textmate
+    highlight: pygments
     include:
       after_body: doc_suffix.html
-    css: theme.css
 output_dir: "."

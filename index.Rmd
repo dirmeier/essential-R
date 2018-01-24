@@ -1,5 +1,4 @@
 ---
-title: "Essential R"
 ---
 
 ```{r knitr_init, echo=FALSE, cache=FALSE, message=FALSE}
@@ -7,16 +6,15 @@ title: "Essential R"
   library(rmdformats)  
   library(magrittr)
   library(devtools)
-  devtools::install("./newpkg")
-  options(htmltools.dir.version = FALSE)
-  options(max.print="75")
-  opts_chunk$set(#cache=TRUE,
-                 prompt=FALSE,
+  devtools::install("./newpkg")    
+  opts_chunk$set(prompt=FALSE,
                  tidy=TRUE,
                  comment=NA,
                  message=FALSE,
                  warning=FALSE)
 ```
+
+<div style="margin-top: 5%">
 
 ```{r child = 'intro.Rmd'}
 ```

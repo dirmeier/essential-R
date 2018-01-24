@@ -26,14 +26,13 @@ Using `Rcpp` (and `RcppEigen`, `RcppArmadillo`, `Boost`) you can easily your ext
 
 If you have a project that's not a package you can for instance create a function like this:
 
-```{r}  
+```{r}
   Rcpp::cppFunction('double sum(std::vector<double>& vec) {
       double sum = .0;
       for (std::vector<double>::size_type i = 0; i < vec.size(); ++i)
           sum += vec[i];
       return sum;
   }')
-
 
   sum(as.numeric(seq(10)))
 ```
@@ -66,7 +65,7 @@ Usually, you would want to put your source code into a `cpp` file in the `src` f
 
 1) Define a C++ source file and put it in `src`, like this:
 
-<pre><code>#include <Rcpp.h>
+<pre><code>#include \<Rcpp.h\>
 
 // [[Rcpp::export]]
 Rcpp::List dostuff()
