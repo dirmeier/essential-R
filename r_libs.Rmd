@@ -138,37 +138,80 @@ C++ is a large, complex language. Chances that you mess up, introduce bugs and m
   library('purrr')
   library('ggplot2')
   library('repurrrsive')
-  library('magrittr')
-  library('ggsci')
+  library('magrittr')  
   head(sw_people[[1]])
-  map_dfr(
+  df <- map_dfr(
     sw_people,
     .f = function(.) data.frame(color  = .[["eye_color"]],
                                 height = .[["height"]],
-                                mass   = .[["mass"]])) %>%
-    ggplot() +
-    geom_point(aes(x=height, y=mass, color=color)) +
-    theme_bw() +
-    ggsci::scale_color_rickandmorty()
-
+                                mass   = .[["mass"]]))
+  head(df)
 ```
 
 ## Plotting
 
-One of the most significant reasons to use R is probably its plotting capabilities.
+One of the most significant reasons to use R is probably its plotting capabilities and people contributing to `ggplot2`.
 
+Use `hrbrthemes` for a nicer layout:
 
+```{r, fig.align = 'center', fig.height=6}    
+  library('hrbrthemes')
+  library('ggsci')
+  import_roboto_condensed()
 
-ggplot, hrbrthemes, colorblindr, colorspace, ggthemr, ggsci, magick, imagr, tweenr, plotly, gggraph, ggnetwork, viridis, viridisLite, scales
+  g <- ggplot(df) +
+    geom_point(aes(x=height, y=mass, color=color)) +
+    hrbrthemes::theme_ipsum_rc() +
+    ggsci::scale_color_rickandmorty()
+  print(g)
+```
 
 ### Colors
 
+Use `cowplot` for publication ready plots and `colorspace` in order to remove some hue and chroma. `Viridis` is a wonderful set of colors for continuous, sequential data. For discrete, qualitative data I mainly use `ggthemr` and the `fresh` colors. `ggsci` also has some wonderful color palettes.
+
+```{r, fig.align = 'center', fig.height=6}
+  library('colorspace')
+  library('colorblindr')
+  library('viridis')
+  library('scales')
+  library('cowplot')
+  library('ggthemr')
+  ggthemr("fresh")
+
+   p1 <- colorblindr::gg_color_gradient() + colorspace::scale_fill_continuous_sequential("viridis", c1=20, c2=70, l1=25, l2=100)
+   p2 <- colorblindr::gg_color_gradient() + colorspace::scale_fill_continuous_sequential("Blues", c1=20, c2=70, l1=25, l2=100)
+   p3 <- colorblindr::gg_color_gradient() +  colorspace::scale_fill_continuous_diverging(c1=40)
+   df <- data.frame(Col=ggthemr::swatch()[1:10], X=1, Y=seq(10))
+   p4 <- ggplot(df) + geom_tile(aes(x=Y, y=X), fill=df$Col) + theme_void()
+
+   cowplot::plot_grid(p1, p2, p3, p4, ncol=2, align="vh")
+```
+
+Often you want to create an interactive plot, for instance when serving on a `shiny` instance:
+
+```{r, fig.align = 'center', fig.height=6}
+  library('plotly')
+  ggplotly(g)
+```
+
+### Other packages to consider
+
+Other useful packages for plotting, using colors, animations or working with images are:
+
+- `magick`
+- `imager`
+- `scales`
+- `tweenr` (and basically everything from <a href="https://github.com/thomasp85">Thomas Pederson</a>.)
+- `ggraph` and `ggnetwork`
+- `gganimate`
+- `ggpubr`
 
 ## data.table
 
 `data.table` is a fast implementation of R's classical `data.frame`. I hardly ever use data frame any more, and if so only, because it seems to work nicer with `dplyr` and `tidyr`. However, using `dtplyr` this isn't much of a problem, really.
 
-```{r, fig.width=1, fig.height=2, fig.align = 'center'}
+```{r, fig.width=2, fig.height=2, fig.align = 'center'}
   library('data.table')  
   library('dplyr')
   library('dtplyr')
