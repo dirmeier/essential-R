@@ -1,0 +1,216 @@
+# R libraries
+
+Much of `R`'s popularity is due to its fantastic ecosystem. `R` users benefit heavily from CRAN and Bioconductor packages created by its community.
+
+For data analysis or statistics `R` is a good choice for various reasons:
+
+- high-level,
+- easy to install packages,
+- can be extended to `C++` without needing knowledge of linking or `C++` build-systems,
+- probably the best plotting facility with `ggplot`, `cowplot`, `hrbrthemes` or `ggsci`,
+- Bioconductor, machine learning and statistics libraries,
+- small standard library.
+
+There are a few things, however, `R` is not so great at:
+
+- in general slow,
+- not really suited for large projects,
+- poor object orientation,
+- inconsistent function names,
+- superior IDEs for Java, Python, ...,
+- very limited threading capabilities.
+
+## Extending to C++ using `Rcpp`
+
+Using `Rcpp` (and `RcppEigen`, `RcppArmadillo`, `Boost`) you can easily your extend your code to C++. It not only nicely wraps the standard C API, but also let's you use standard matrix libraries such as Eigen and Armadillo or Boost :heart_eyes:.
+
+If you have a project that's not a package you can for instance create a function like this:
+
+```{r}  
+  Rcpp::cppFunction('double sum(std::vector<double>& vec) {
+      double sum = .0;
+      for (std::vector<double>::size_type i = 0; i < vec.size(); ++i)
+          sum += vec[i];
+      return sum;
+  }')
+
+
+  sum(as.numeric(seq(10)))
+```
+
+Let's see an `Eigen` example with sourceCpp:
+
+```{bash}
+  cat ./square.cpp
+```
+
+```{r}  
+  library('RcppEigen')
+  Rcpp::sourceCpp("./square.cpp")
+  square(matrix(rnorm(10), 2))
+```
+
+Even for small matrices, the speed up is already substantial.
+
+```{r}  
+  m <- matrix(rnorm(100 * 100), 100)
+  microbenchmark::microbenchmark(
+    square(m),
+    t(m) %*% m
+  )
+```
+
+### Rcpp in a package
+
+Usually, you would want to put your source code into a `cpp` file in the `src` folder. Then you can call C++ from an R function, for instance as described below.
+
+1) Define a C++ source file and put it in `src`, like this:
+
+<pre><code>#include <Rcpp.h>
+
+// [[Rcpp::export]]
+Rcpp::List dostuff()
+{
+  // some computations
+
+  return Rcpp::List::create(
+    Rcpp::Named("a") = ...
+  );
+}</code></pre>
+
+
+2) Add this to your `DESCRIPTION`:
+
+<pre><code>Imports: Rcpp
+LinkingTo: Rcpp</code></pre>
+
+3) Add a comment `#' @useDynLib newpkg, .registration = TRUE` to the documentation of any function, better yet to the package doc.
+
+4) Call `devtools::document()`
+
+5) Call `Rcpp::compileAttributes("./newpkg")`
+
+
+This should let you access the C++ function from your package. For more details check out the main <a href="http://www.rcpp.org/">documentation</a> or some of my packages, like <a href="https://github.com/dirmeier/netReg">netReg</a> or <a href="https://github.com/dirmeier/datastructures">datastructures</a>. The latter also has an example how to use modules and Boost.
+
+
+### Writing `C++`
+
+Here are some tools that help you develop your code"
+
+- `gdb` and `lldb` for debugging,
+- `valgrind` and `gprof` to check for memory leaks and for profiling,
+- Intel's `Parallel Studio XE` (<3) which is a toolbox for vectorization, debugging, memory checks, etc. If you can get hold of it, get it. It is magnificent.
+- `BOOST` for unit tests, data structures and basically everything you ever need,
+- `cppcheck` for static code analysis,
+- `doxygen` for code documentation.
+
+For larger projects many C++ libraries, like `Dlib`, `Eigen` or `tensorflow` have an R interface. At this point it also makes sense to have a look at various `C++` books such as
+
+- Scott Meyers: Effective Modern C++,
+- Scott Meyers: Effective C++,
+- Ben Klemens: 21. century C,
+- Kurt Guntheroth: Optimized C++,
+- Nicolai Josuttis: C++17 - the complete guide,
+- David Vandevoorde: C++ Templates - the compete guide.
+
+For fast numerical code `OpenMP`, advanced vector or streaming SIMD extensions, makes also sense to have a look at. For instance, starting from version 4 (?), OpenMP easily allows vectorization using `#pragma simd`.
+
+**Note: the last lines in this section are heavily subjective and only state the author's opinion.**
+
+More and more garbage code is forced onto the scientific community, mostly related to academic hubris and lack of knowledge about how to *program* (we don't mean how to *accomplish a task using a programming language*, but to embrace a language and its philosophy at its very core). If you aim to publish your code, make sure it follows *contemporary* good practices, standards and guidelines and that it is consistent, for instance by following people's code who are part of the community for ages. At this point we want to emphasize that the author doesn't claim to know C++, but rather that he is annoyed by this very trend.
+
+C++ is a large, complex language. Chances that you mess up, introduce bugs and memory leaks are high, unless you have some experience. In academia in mostly results in bad, un-maintainable code. If your argument is *but it is faster than R*, at least have a look at `Julia` or `Python` (and `numpy`). If you still prefer hacking in C++ try to stick to some guidelines:
+
+- don't include C headers in your C++ projects .. just don't. C and C++ are **two** languages. There is for need for `FILE*` or `malloc`.
+- modern C++ rarely needs pointers. Use `std::vector` or `std::unique_ptr`. No need to manually release pointers is an advantage of itself.
+- BOOST has (probably) everything you will ever need. Don't reinvent the wheel and learn to include libraries in your project.
+- Learn how to use Cmake, Meson or autotools. You should **never** need to directly invoke a compiler or write a hard-coded Makefile.
+- Only because you have a PhD or M. Sc. in CS does not make you a prolific programmer. It requires staying up to date, **reading other people's code** and embracing of new ideas and the very philosophy of the language and its community.
+- Print warnings. They are usually there for a reason.
+- Start a toy project or contribute to OSS projects.
+
+## Functional programming with `purrr`
+
+`purrr` is a functional programming toolkit, much like the `apply` class of functions. However, `purrr` does so in a more unified way with consistent return values. Furthermore, in combination with `magrittr`, the code you write is naturally more concise and easier to read.
+
+```{r, eval=TRUE, message=TRUE, include=TRUE, echo=TRUE, warnings=FALSE, fig.align = 'center'}
+  library('purrr')
+  library('ggplot2')
+  library('repurrrsive')
+  library('magrittr')
+  library('ggsci')
+  head(sw_people[[1]])
+  map_dfr(
+    sw_people,
+    .f = function(.) data.frame(color  = .[["eye_color"]],
+                                height = .[["height"]],
+                                mass   = .[["mass"]])) %>%
+    ggplot() +
+    geom_point(aes(x=height, y=mass, color=color)) +
+    theme_bw() +
+    ggsci::scale_color_rickandmorty()
+
+```
+
+## Plotting
+
+One of the most significant reasons to use R is probably its plotting capabilities.
+
+
+
+ggplot, hrbrthemes, colorblindr, colorspace, ggthemr, ggsci, magick, imagr, tweenr, plotly, gggraph, ggnetwork, viridis, viridisLite, scales
+
+### Colors
+
+
+## data.table
+
+`data.table` is a fast implementation of R's classical `data.frame`. I hardly ever use data frame any more, and if so only, because it seems to work nicer with `dplyr` and `tidyr`. However, using `dtplyr` this isn't much of a problem, really.
+
+```{r, fig.width=1, fig.height=2, fig.align = 'center'}
+  library('data.table')  
+  library('dplyr')
+  library('dtplyr')
+  library('grid')
+  library('gridExtra')
+  n    <- 1000
+  rn   <- rnorm(n)
+  ltrs <- sample(letters[1:5], n, replace=TRUE)
+  dt   <- data.table(X=rn, Y=ltrs)
+  df   <- data.frame(X=rn, Y=ltrs)
+
+  dt[, .SD[sample(.N, 1)], by=c("Y")] %>%
+    tableGrob(rows=NULL) %>%
+    grid.arrange
+```
+
+In the end it depends what style you prefer. I usually go with `data.table` alone without needing the `dplyr/dtplyr` dependency. However, the latter is usually more readable. For large data, the fastest solution is probably preferrable.
+
+```{r}
+  dt.only   <- function() dt[, .SD[sample(.N, 1)], by=c("Y")]
+  dt.dtplyr <- function() dt %>% group_by(Y) %>% sample_n(1)
+  df.dplyr  <- function() df %>% group_by(Y) %>% sample_n(1)
+
+  microbenchmark::microbenchmark(
+    dt.only(),
+    dt.dtplyr(),
+    df.dplyr()
+  )
+```
+
+
+
+## mlR
+
+## S3, S4, R6
+
+## Shiny
+
+## Pryr
+
+## datastructures
+
+## Other
+
+dplyr, tidyr, ORKernel, minqq, nloptr,
