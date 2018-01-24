@@ -105,7 +105,9 @@ Here are some tools that help you develop your code"
 - `cppcheck` for static code analysis,
 - `doxygen` for code documentation.
 
-For larger projects many C++ libraries, like `Dlib`, `Eigen` or `tensorflow` have an R interface. At this point it also makes sense to have a look at various `C++` books such as
+Many C++ libraries, like `Dlib`, `Eigen` or `tensorflow` have an R interface, so before implementing functionality yourself check out if there is already an implementation for it.
+
+At this point it also makes sense to have a look at various `C++` books such as
 
 - Scott Meyers: Effective Modern C++,
 - Scott Meyers: Effective C++,
@@ -114,7 +116,7 @@ For larger projects many C++ libraries, like `Dlib`, `Eigen` or `tensorflow` hav
 - Nicolai Josuttis: C++17 - the complete guide,
 - David Vandevoorde: C++ Templates - the compete guide.
 
-For fast numerical code `OpenMP`, advanced vector or streaming SIMD extensions, makes also sense to have a look at. For instance, starting from version 4 (?), OpenMP easily allows vectorization using `#pragma simd`.
+For fast numerical code OpenMP and advanced vector and streaming SIMD extensions (AVX/SSE) is often the way to go. Writing good code using AVX is however not very simple and knowledge of memory alignment is required. However, starting from version 4 (?), OpenMP easily allows vectorization using `#pragma simd`.
 
 **Note: the last lines in this section are heavily subjective and only state the author's opinion.**
 
@@ -228,7 +230,7 @@ Other useful packages for plotting, using colors, animations or working with ima
     grid.arrange
 ```
 
-In the end it depends what style you prefer. I usually go with `data.table` alone without needing the `dplyr/dtplyr` dependency. However, the latter is usually more readable. For large data, the fastest solution is probably preferrable.
+In the end it depends what style you prefer. I usually go with `data.table` alone without needing the `dplyr/dtplyr` dependency. However, the latter is usually more readable. For large data, the fastest solution is probably preferable.
 
 ```{r}
   dt.only   <- function() dt[, .SD[sample(.N, 1)], by=c("Y")]
@@ -243,8 +245,11 @@ In the end it depends what style you prefer. I usually go with `data.table` alon
 ```
 
 
+## mlR and openML
 
-## mlR
+CRAN offers dozens of packages related to machine and statistical learning, many of which doing the same. `mlR` wraps many of these into one common library.
+
+
 
 ## S3, S4, R6
 

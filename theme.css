@@ -8,8 +8,18 @@
     width: 10%;
 }
 
+.tocify {
+  border-radius: 0px;
+}
+
 .header-panel {
   background-color: white;
+}
+
+.list-group-item.active, .list-group-item.active:hover, .list-group-item.active:focus {
+    background-color: #f5f5f5;
+    border-color: #f5f5f5;
+    color: black
 }
 
 @keyframes blinker {
@@ -108,7 +118,7 @@ img.image-thumb {
 }
 
 
-.header-panel h1 {
+.header {
   color: black;
   box-shadow: none;
   -webkit-box-shadow: none;
@@ -116,6 +126,7 @@ img.image-thumb {
 	text-shadow: none;
   font-family: 'Raleway';
   position: absolute;
+  margin-bottom: 10%;
 }
 
 body, h1, h2, h3 {

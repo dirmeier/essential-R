@@ -1,18 +1,5 @@
 ---
 title: "Essential R"
-output:
-  rmdformats::material:
-    highlight: default
-    self_contained: false
-    lib_dir: libs    
-    theme: lumen
-    number_sections: true
-    css: [ "theme.css"]        
-    nature:
-      highlightStyle: default
-      highlightLines: true
-
-
 ---
 
 ```{r knitr_init, echo=FALSE, cache=FALSE, message=FALSE}

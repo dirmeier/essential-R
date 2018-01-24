@@ -1,0 +1,23 @@
+name: "essential-R"
+navbar:
+  title: "Essential R"
+  type: inverse
+  right:
+    - icon: fa-github fa-lg
+      href: https://github.com/dirmeier/essential-R
+    - icon: fa fa-twitter-square fa-lg
+      href: http://twitter.com/simon_dirmeier/
+output:
+  html_document:
+    theme: lumen
+    toc: true
+    toc_depth: 2
+    toc_float:
+      collapsed: false
+      smooth_scroll: true
+    number_sections: true
+    highlight: textmate
+    include:
+      after_body: doc_suffix.html
+    css: theme.css
+output_dir: "."

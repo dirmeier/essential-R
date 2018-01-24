@@ -1,0 +1,152 @@
+@import url(https://fonts.googleapis.com/css?family=Raleway:400,300,600);
+@import url(https://fonts.googleapis.com/css?family=Roboto+Condensed);
+
+.col-xs-10 {
+    width: 90%;
+}
+.col-xs-2 {
+    width: 10%;
+}
+
+.tocify {
+  border-radius: 0px;
+}
+
+.header-panel {
+  background-color: white;
+}
+
+.list-group-item.active, .list-group-item.active:hover, .list-group-item.active:focus {
+    background-color: #f5f5f5;
+    border-color: #f5f5f5;
+    color: black;
+}
+
+@keyframes blinker {
+    0% {
+        opacity: 1.0;
+    }
+    50% {
+        opacity: 0.0;
+    }
+    100% {
+        opacity: 1.0;
+    }
+}
+
+nav {
+    height: 10px;
+    line-height: 10px;
+}
+
+nav i, nav [class^="mdi-"], nav [class*="mdi-"], nav i.material-icons {
+    height: 5px;
+    line-height: 5px;
+}
+
+nav .button-collapse i {
+    height: 5px;
+    line-height: 5px;
+}
+
+nav .brand-logo {
+    font-size: 1.6rem;
+}
+
+.menu ul li {
+  padding: 10px 0 10px 25px;
+}
+
+img.image-thumb {
+    max-width: 1250px;
+}
+
+@media only screen and (min-width: 601px){
+    nav, nav .nav-wrapper i, nav a.button-collapse, nav a.button-collapse i {
+        height: 5px;
+        line-height: 5px;
+    }
+}
+
+@keyframes pulse_animation {
+	0% {
+    transform: scale(1);
+  }
+	30% {
+     transform: scale(1); }
+
+	40% {
+    transform: scale(1.08);
+   }
+	50% {
+    transform: scale(1);
+  }
+	60% {
+     transform: scale(1);
+   }
+	70% {
+    transform: scale(1.05);
+  }
+	80% {
+    transform: scale(1);
+  }
+	100% {
+    transform: scale(1);
+   }
+}
+
+
+@keyframes nudge {
+    0%, 100% {
+        transform: translate(0, 0);
+    }
+
+    50% {
+        transform: translate(400px, 0);
+    }
+
+    80% {
+        transform: translate(-50px, 0);
+    }
+}
+
+.animateme {
+  animation:
+            pulse 3s ease infinite alternate,
+            blinker 5s linear infinite,
+            nudge 5s linear infinite alternate;
+}
+
+
+.header-panel h1 {
+  color: black;
+  box-shadow: none;
+  -webkit-box-shadow: none;
+	-moz-box-shadow: none;
+	text-shadow: none;
+  font-family: 'Raleway';
+  position: absolute;
+  margin-bottom: 10%;
+}
+
+body, h1, h2, h3 {
+  font-family: 'Roboto Condensed' !important;
+}
+
+
+.blue {
+  color: #1F407A;
+}
+
+
+html.blur .slide-background {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-blend-mode: lighten;
+  background-color: rgba(255, 255, 255, 0.5) !important;
+}
+
+.quote {
+  color: #1F407A;
+  text-align: right;
+}
