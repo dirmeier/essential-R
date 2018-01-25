@@ -13,6 +13,8 @@
 
 .tocify {
   border-radius: 0px;
+  border: 0px;
+  overflow: hidden;
 }
 
 
@@ -131,7 +133,9 @@ img.image-thumb {
             nudge 5s linear infinite alternate;
 }
 
-
+pre {
+  border: 0px;
+}
 .title {
   color: black;
   font-family: 'Raleway';
@@ -139,9 +143,34 @@ img.image-thumb {
   font-size: 1.5em;
 }
 
+body, h1, h2, h3, .navbar-brand {
+  font-family: Palatino, "Palatino Linotype", "Palatino LT STD", "Book Antiqua", Georgia, serif;
+}
 
-body, h1, h2, h3 {
-  font-family: 'Roboto Condensed' !important;
+h1, h2, h3, .navbar-brand {
+  font-style: italic;
+}
+
+h1, h2, h3 {
+  font-weight: 400;
+}
+
+h1 {
+  font-size: 3rem;
+  margin-bottom: 2rem;
+  margin-top: 6rem;
+}
+
+h2 {
+  font-size: 2.5rem;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+h3 {
+  font-size: 2rem;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
 }
 
 

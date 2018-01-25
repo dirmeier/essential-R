@@ -1,4 +1,5 @@
 ---
+title: "Essential R"
 ---
 
 ```{r knitr_init, echo=FALSE, cache=FALSE, message=FALSE}

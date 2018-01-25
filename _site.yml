@@ -1,7 +1,6 @@
 name: "essential-R"
 navbar:
   title: "Essential R"
-  type: inverse
   right:
     - icon: fa-github fa-lg
       href: https://github.com/dirmeier/essential-R
@@ -9,10 +8,10 @@ navbar:
       href: http://twitter.com/simon_dirmeier/
 output:
   html_document:
+    theme: simplex
     css: theme.css
-    theme: lumen
     toc: true
-    toc_depth: 2
+    toc_depth: 1
     toc_float:
       collapsed: false
       smooth_scroll: true

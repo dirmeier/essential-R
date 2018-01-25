@@ -1,12 +1,10 @@
 # Good practices
 
-Continuous integration, version control and containerization are three of the many tools of a developer. Here, we quickly introduce how the three can be used for `R`.
+Continuous integration, version control and containerization are three of the many tools of a developer. Here, I quickly introduce how the three can be used for `R`.
 
 ## Continuous integration
 
-Setting up continuous Integration: `Travis CI` and `AppVeyor`
-
-To be honest, doing all these steps is tedious and annoying. For that reason we set up `Travis CI` to take care of running our tests, static analysis and code coverage. Travis works for Mac and Unix.
+To be honest, doing all the steps from the section above is tedious and annoying. For that reason I set up Travis CI to take care of running our tests, static analysis and code coverage in the project. Travis works for Mac and Unix.
 
 ```{bash}
   cat ./newpkg/.travis.yml
@@ -65,7 +63,6 @@ In readLines(filename) :
   incomplete final line found on '/home/travis/build/dirmeier/essential-R/newpkg/R/emptypRoject-package.R'
 Done. Your build exited with 0.</code></pre>
 
-
 Fixing style related issues is essential since we want other people to be able to read our code easily. Good code also increases the number of users, because the package is more trusted than a *spaghetti code* package.
 
 <div>
@@ -78,7 +75,7 @@ Fixing style related issues is essential since we want other people to be able t
 
 ## Version control
 
-Aside from he fact that version control is great, putting your project on `GitHub` has the most prominent advantage that you can add badges to your `README.md` to show others about the state of your package, for instance repository, CI or code coverage status.
+Aside from he fact that version control is great, putting your project on GitHub has the most prominent advantage that you can add badges to your `README.md` to show others about the state of your package, for instance repository, CI or code coverage status.
 
 <div align="center">
   <img src="https://rawgit.com/dirmeier/essential-R/master/fig/readme_me.jpg" alt="oh no" width="750px">

@@ -10,6 +10,7 @@ The following section covers tools that help and speed up developing R:
 - `lintr`
 - `usethis`
 
+
 ## Creating R packages
 
 If you have `yeoman` installed, you can use the `R-bones` generator in order to initialize a complete project. This gives you the following barebone:
@@ -25,21 +26,21 @@ If you have `yeoman` installed, you can use the `R-bones` generator in order to 
 
 ## Writing R packages
 
-When creating an R package `devtools` and `covr` covers almost any functionality required. The following functions delineate how my typical workflow looks:
+When creating an R package `devtools` and `covr` cover almost any functionality required. The following functions delineate how my typical workflow looks:
 
 ```{r, include=TRUE, eval=FALSE, echo=TRUE}
   devtools::create("newpkg")
+  devtools::use_rcpp()  
+  devtools::document()  
   devtools::test()
-  devtools::document()
   devtools::check_cran()
   devtools::lint()
   devtools::run_examples()
   covr::package_coverage()
   devtools::install()
-  devtools::use_rcpp()  
 ```
 
-This basically covers your complete development life cycle (except code coverage). `devtools` is **tremendously** useful. If you look for sth that helps you write packages, `devtools` has a function for it. For all other things, use `usethis`.
+This basically covers your complete development life cycle. devtools is tremendously useful. If you look for something that helps you write a package, devtools usually has a function for it. For all other things, use usethis.
 
 ```{r, include=TRUE, eval=FALSE, echo=TRUE}
   usethis::use_namespace()
@@ -49,11 +50,9 @@ This basically covers your complete development life cycle (except code coverage
   usethis::use_gpl3_license()
 ```
 
-
 ## Testing code
 
-Right after creating your package, you should write your first test (yes, really). Testing is **essential** for writing good software. The same way as programming languages change your way of thinking, do unit tests change your way of writing functions. `testthat` is probably the best way to go here. Tests are usually put in `tests/testthat`.
-You can use:
+Right after creating your package, you should write your first test (yes, really). Testing is essential*for writing good software. The same way as programming languages change your way of thinking, unit tests change your way of writing functions. testthat is probably the best way to go here. Tests are usually put in `tests/testthat`. You can use:
 
 ```{r, eval=FALSE}
   devtools::use_testthat()
@@ -82,7 +81,7 @@ A function ideally does *one task and one task only*. Functions with side effect
 
 ## Documenting code
 
-Having written the first unit test, we can create the actual function for it **and** its documentation using `roxygen2`:
+Having written the first unit test, we can create the actual function and its respective documentation using `roxygen2`:
 
 ```{r}
   #' @title Adds 1 and 1
@@ -110,7 +109,7 @@ An excellent help for creating documentation (of S3 and S4) is for instance <a h
 
 ## Checking code
 
-If you want to submit your package to `CRAN` or `Bioconductor` certain criteria must be fulfilled. Some of which can be tested by checking or package like this:
+If you want to submit your package to CRAN or Bioconductor certain criteria must be fulfilled. Some of which can be tested by checking or package like this:
 
 ```{r,  eval=TRUE, message=TRUE,  include=TRUE, echo=TRUE}
   devtools::check_cran("./newpkg")
@@ -121,7 +120,7 @@ This does not test for Bioconductor though. For this you have to install <a href
 
 ## Static code analysis
 
-`lintr` checks your code for style, syntax error and possible issues. You can also incorporate `lintr` in your unit tests and let them fail, if lints are discovered.
+lintr checks your code for style, syntax error and possible issues. You can also incorporate lintr in your unit tests and let them fail, if lints are discovered.
 
 ```{r, eval=FALSE}
 if (requireNamespace("lintr", quietly = TRUE)) {
@@ -131,7 +130,7 @@ if (requireNamespace("lintr", quietly = TRUE)) {
 }
 ```
 
-What `lintr` considers worth reporting can be customized in a `.lintr` file in your package root directory.
+What lintr considers worth reporting can be customized in a .lintr file in your package root directory.
 
 Let's see if our small package is lint free:
 
@@ -154,13 +153,18 @@ we documented our function `g` we already have an example how to use the functio
 
 ## Code coverage
 
-`covr` lets you check how much of your code is used and tested. If you created a package just run:
+covr lets you check how much of your code is used and tested. If you created a package just run:
 
 ```{r, eval=TRUE, message=TRUE, include=TRUE, echo=TRUE}
   covr::package_coverage("./newpkg")
 ```
 
-Having high code coverage usually correlates with a good testing suite. The more functionality is tested, the larger the code coverage.
+Having high code coverage usually correlates with a good testing suite. The more functionality is tested, the larger the code coverage. You can customized reports by adding a file called `.codecov.yml` to your project's root:
+
+```{bash}
+  cat ./newpkg/.codecov.yml
+```
+
 
 ## Profiling and benchmarking
 
@@ -168,6 +172,7 @@ If you think your code runs slowly, you can try to find the bottleneck, for inst
 
 ```{r, eval=TRUE, message=TRUE, include=TRUE, echo=TRUE, fig.width=4}
   library('profvis')
+  library('ggthemes')
   library('gam')
   data(kyphosis)
   profvis::profvis({
@@ -180,9 +185,9 @@ If you think your code runs slowly, you can try to find the bottleneck, for inst
       model = c(rep("Spline", length(sp$x)),
                 rep("GAM",    length(kyphosis$Age))))
 
-    g <- ggplot(df) +
-      geom_point(aes(x=X, y=Y, color=model)) +
-      theme_void()
+    g <- ggplot2::ggplot(df) +
+      ggplot2::geom_point(ggplot2::aes(x=X, y=Y, color=model)) +
+      ggthemes::theme_tufte()
 
     print(g)
   })

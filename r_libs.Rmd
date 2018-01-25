@@ -1,17 +1,15 @@
 # R libraries
 
-Much of `R`'s popularity is due to its fantastic ecosystem. `R` users benefit heavily from CRAN and Bioconductor packages created by its community.
-
-For data analysis or statistics `R` is a good choice for various reasons:
+Much of R's popularity is due to its fantastic ecosystem. R users benefit heavily from CRAN and Bioconductor packages created by its community. For data analysis or statistics R is a good choice for various reasons:
 
 - high-level,
 - easy to install packages,
-- can be extended to `C++` without needing knowledge of linking or `C++` build-systems,
-- probably the best plotting facility with `ggplot`, `cowplot`, `hrbrthemes` or `ggsci`,
+- can be extended to C++ without needing knowledge of linking or C++ build-systems,
+- probably the best plotting facility with ggplot, cowplot, hrbrthemes or ggsci,
 - Bioconductor, machine learning and statistics libraries,
 - small standard library.
 
-There are a few things, however, `R` is not so great at:
+There are a few things, however, R is not so great at:
 
 - in general slow,
 - not really suited for large projects,
@@ -20,9 +18,12 @@ There are a few things, however, `R` is not so great at:
 - superior IDEs for Java, Python, ...,
 - very limited threading capabilities.
 
-## Extending to C++ using `Rcpp`
+For stats and data analysis I find R still superior to Python, partly due to `Rmarkdown`, `shiny`, `ggplot2` and `Rcpp`.
 
-Using `Rcpp` (and `RcppEigen`, `RcppArmadillo`, `Boost`) you can easily your extend your code to C++. It not only nicely wraps the standard C API, but also let's you use standard matrix libraries such as Eigen and Armadillo or Boost :heart_eyes:.
+
+## Extending to C++ using Rcpp
+
+Using Rcpp (and RcppEigen, RcppArmadillo, Boost) you can easily your extend your code to C++. It not only nicely wraps the standard C API, but also let's you use standard matrix libraries such as Eigen and Armadillo or Boost.
 
 If you have a project that's not a package you can for instance create a function like this:
 
@@ -37,7 +38,7 @@ If you have a project that's not a package you can for instance create a functio
   sum(as.numeric(seq(10)))
 ```
 
-Let's see an `Eigen` example with sourceCpp:
+Let's have a look at an Eigen example with sourceCpp:
 
 ```{bash}
   cat ./square.cpp
@@ -95,18 +96,18 @@ This should let you access the C++ function from your package. For more details 
 
 ### Writing `C++`
 
-Here are some tools that help you develop your code"
+Here are some tools that help you develop your code:
 
-- `gdb` and `lldb` for debugging,
-- `valgrind` and `gprof` to check for memory leaks and for profiling,
-- Intel's `Parallel Studio XE` (<3) which is a toolbox for vectorization, debugging, memory checks, etc. If you can get hold of it, get it. It is magnificent.
-- `BOOST` for unit tests, data structures and basically everything you ever need,
-- `cppcheck` for static code analysis,
-- `doxygen` for code documentation.
+- gdb and lldb for debugging,
+- valgrind and gprof to check for memory leaks and for profiling,
+- Intel's Parallel Studio XE (<3) which is a toolbox for vectorization, debugging, memory checks, etc. If you can get hold of it, get it. It is magnificent.
+- Boost for unit tests, data structures and basically everything you ever need,
+- cppcheck for static code analysis,
+- doxygen for code documentation.
 
-Many C++ libraries, like `Dlib`, `Eigen` or `tensorflow` have an R interface, so before implementing functionality yourself check out if there is already an implementation for it.
+Many C++ libraries, like Dlib, Eigen or tensorflow have an R interface, so before implementing functionality yourself check out if there is already an implementation for it.
 
-At this point it also makes sense to have a look at various `C++` books such as
+At this point it also makes sense to have a look at various C++ books such as
 
 - Scott Meyers: Effective Modern C++,
 - Scott Meyers: Effective C++,
@@ -117,11 +118,9 @@ At this point it also makes sense to have a look at various `C++` books such as
 
 For fast numerical code OpenMP and advanced vector and streaming SIMD extensions (AVX/SSE) is often the way to go. Writing good code using AVX is however not very simple and knowledge of memory alignment is required. However, starting from version 4 (?), OpenMP easily allows vectorization using `#pragma simd`.
 
-**Note: the last lines in this section are heavily subjective and only state the author's opinion.**
+**Note: the last lines in this section are heavily subjective and only state the author's opinion.** *More and more garbage code is forced onto the scientific community, mostly related to academic hubris and lack of knowledge about how to *program* (we don't mean how to *accomplish a task using a programming language*, but to embrace a language and its philosophy at its very core). If you aim to publish your code, make sure it follows *contemporary* good practices, standards and guidelines and that it is consistent, for instance by following people's code who are part of the community for ages. At this point we want to emphasize that the author doesn't claim to know C++, but rather that he is annoyed by this very trend.*
 
-More and more garbage code is forced onto the scientific community, mostly related to academic hubris and lack of knowledge about how to *program* (we don't mean how to *accomplish a task using a programming language*, but to embrace a language and its philosophy at its very core). If you aim to publish your code, make sure it follows *contemporary* good practices, standards and guidelines and that it is consistent, for instance by following people's code who are part of the community for ages. At this point we want to emphasize that the author doesn't claim to know C++, but rather that he is annoyed by this very trend.
-
-C++ is a large, complex language. Chances that you mess up, introduce bugs and memory leaks are high, unless you have some experience. In academia in mostly results in bad, un-maintainable code. If your argument is *but it is faster than R*, at least have a look at `Julia` or `Python` (and `numpy`). If you still prefer hacking in C++ try to stick to some guidelines:
+C++ is a large, complex language. Chances that you mess up, introduce bugs and memory leaks are high, unless you have some experience. In academia in mostly results in bad, un-maintainable code. If your argument is *but it is faster than R*, at least have a look at Fortran, Julia or Python (and `numpy`). If you still prefer hacking in C++ try to stick to some guidelines:
 
 - don't include C headers in your C++ projects .. just don't. C and C++ are **two** languages. There is for need for `FILE*` or `malloc`.
 - modern C++ rarely needs pointers. Use `std::vector` or `std::unique_ptr`. No need to manually release pointers is an advantage of itself.
@@ -131,9 +130,9 @@ C++ is a large, complex language. Chances that you mess up, introduce bugs and m
 - Print warnings. They are usually there for a reason.
 - Start a toy project or contribute to OSS projects.
 
-## Functional programming with `purrr`
+## Functional programming
 
-`purrr` is a functional programming toolkit, much like the `apply` class of functions. However, `purrr` does so in a more unified way with consistent return values. Furthermore, in combination with `magrittr`, the code you write is naturally more concise and easier to read.
+`purrr` is a functional programming toolkit, much like the `apply` class of functions. However, purrr does so in a more unified way with consistent return values. Furthermore, in combination with `magrittr`, the code you write is naturally more concise and easier to read.
 
 ```{r, eval=TRUE, message=TRUE, include=TRUE, echo=TRUE, warnings=FALSE, fig.align = 'center'}
   library('purrr')
@@ -151,11 +150,32 @@ C++ is a large, complex language. Chances that you mess up, introduce bugs and m
 
 ## Plotting
 
-One of the most significant reasons to use R is probably its plotting capabilities and people contributing to `ggplot2`.
+One of the most significant reasons to use R is probably its plotting capabilities and people contributing to ggplot2 and the community's effort of adding package that integrate with it. Some nice packages for plotting are the following:
+
+- `hrbrthemes`
+- `ggthemes`
+- `cowplot`
+- `ggpubr`
+- `ggthemr`
+- `ggsci`
+- `viridis` and `viridisLite`
+- `colorspace` and `colorblindr`
+- `highcharter`
+- `plotly`
+- `lattice`
+- `magick`
+- `imager`
+- `scales`
+- `tweenr`
+- `ggraph` and `ggnetwork`
+- `gganimate`
+
+
+### Layout
 
 Use `hrbrthemes` for a nicer layout:
 
-```{r, fig.align = 'center', fig.height=6}    
+```{r, fig.align = 'center', fig.height=6}
   library('hrbrthemes')
   library('ggsci')
   import_roboto_condensed()
@@ -167,17 +187,41 @@ Use `hrbrthemes` for a nicer layout:
   print(g)
 ```
 
+Recently I started changing to simpler layouts and themes, for instance as described on <a href="http://motioninsocial.com/tufte/">
+Tufte in R</a>. `ggthemes` offers some nice options to do so. For instance, if you are feeling jealous that you cannot draft some Excel plots, cause you are working with R:
+
+```{r, fig.align = 'center', fig.height=6}
+  library('ggthemes')
+
+  g <- ggplot(df) +
+    geom_point(aes(x=height, y=mass), color="green") +
+    ggthemes::theme_excel()
+  print(g)
+```
+
+
+### Publication ready plots
+
+`cowplot` and `ggpubr` are great for greating publication ready plots:
+
+```{r, fig.align = 'center', fig.height=6}
+  p1 <- ggplot(mtcars, aes(hp, disp)) + geom_point() + ggthemes::theme_tufte()
+  p2 <- ggplot(mtcars, aes(hp, disp)) + geom_point() + ggthemes::theme_gdocs()
+
+  cowplot::plot_grid(p1, p2, ncol=2, align="vh", labels=c("Nice", "Meh"))
+```
+
 ### Colors
 
-Use `cowplot` for publication ready plots and `colorspace` in order to remove some hue and chroma. `Viridis` is a wonderful set of colors for continuous, sequential data. For discrete, qualitative data I mainly use `ggthemr` and the `fresh` colors. `ggsci` also has some wonderful color palettes.
+I use `colorspace`  and `colorblindr` in order to remove some hue and chroma. `viridis` is a wonderful set of colors for continuous, sequential data. For discrete, qualitative data I mainly use `ggthemr` and the `fresh` colors. `ggsci` also has some wonderful color palettes. `scales` lets you have a look at a color palette easily.
 
 ```{r, fig.align = 'center', fig.height=6}
   library('colorspace')
   library('colorblindr')
   library('viridis')
+  library('ggthemr')
   library('scales')
   library('cowplot')
-  library('ggthemr')
   ggthemr("fresh")
 
    p1 <- colorblindr::gg_color_gradient() + colorspace::scale_fill_continuous_sequential("viridis", c1=20, c2=70, l1=25, l2=100)
@@ -189,24 +233,26 @@ Use `cowplot` for publication ready plots and `colorspace` in order to remove so
    cowplot::plot_grid(p1, p2, p3, p4, ncol=2, align="vh")
 ```
 
-Often you want to create an interactive plot, for instance when serving on a `shiny` instance:
+
+### Interactive plots
+
+Often you want to create an interactive plot, for instance when serving on a `shiny` instance. One way to do that is using plotly:
 
 ```{r, fig.align = 'center', fig.height=6}
   library('plotly')
-  plotly::ggplotly(g)
+  q <- qplot(data=iris, x=Sepal.Length, y=Sepal.Width, color=Species) +
+    ggthemes::theme_tufte()
+  plotly::ggplotly(q)
 ```
 
-### Other packages to consider
+Recently I also stumbled upon `highcharter`:
 
-Other useful packages for plotting, using colors, animations or working with images are:
+```{r, fig.align = 'center', fig.height=6}
+  library('highcharter')
+  hchart(iris, "scatter", hcaes(x = Sepal.Length, y = Sepal.Width,  group=Species)) %>%
+    hc_add_theme(hc_theme_tufte())
+```
 
-- `magick`
-- `imager`
-- `scales`
-- `tweenr` (and basically everything from <a href="https://github.com/thomasp85">Thomas Pederson</a>.)
-- `ggraph` and `ggnetwork`
-- `gganimate`
-- `ggpubr`
 
 ## data.table
 
@@ -218,6 +264,7 @@ Other useful packages for plotting, using colors, animations or working with ima
   library('dtplyr')
   library('grid')
   library('gridExtra')
+
   n    <- 1000
   rn   <- stats::rnorm(n)
   ltrs <- base::sample(letters[1:5], n, replace=TRUE)
@@ -263,9 +310,11 @@ CRAN offers dozens of packages related to machine and statistical learning, many
   performance(pred, measures = list(mmce, acc))
 ```
 
+
 ## Object-oriented programming
 
-R has three different native ways for object-oriented programming and as far as I know one additional library. `S3`, `S4` and `RefClasses` (`R5`) come with the standard library, while `R6` can be installed from CRAN. I actually never use R5, because it feels incredibly bulky and slow, so we will not cover it here.
+R has three different native ways for object-oriented programming and as far as I know one additional library. `S3`, `S4` and `refClasses` (`R5`) come with the standard library, while `R6` can be installed from CRAN. I actually never use R5, because it feels incredibly bulky and slow, so we will not cover it here.
+
 
 ### S3
 
@@ -320,12 +369,20 @@ Bioconductor seems to prefer S4 over S3, so if you want to submit your package, 
 ```
 
 
-## Shiny
+## Markdown and Shiny
+
+Rmarkdown is a great way for documentation, reporting and working reproducibly, for instance by building interactive web-sites using `shiny`, static pages using HTML documents using the Bootstrap framework or plain handouts using Tufte style. For presentations that use R code I use <a href="https://github.com/yihui/xaringan">xaringan</a>.
+
+
+### Shiny
 
 Next to Rmarkdown, setting up a Shiny instance for reporting is a nice way to present data with interactive plots. Setting up shiny is fairly easy. You need to create a `server.R` file and `ui.R` file, e.g. like this:
 
 ```{bash}
-  cat R/server.R
+  cat R/ui.R
+```
+
+```{bash}
   cat R/ui.R
 ```
 

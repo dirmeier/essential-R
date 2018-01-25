@@ -14,14 +14,15 @@
 </div>
 
 
-These slides are a rough guideline of how to write `R` code using common
-software, such as `devtools`, `testthat`, `lintr`, `covr`, `data.table`, `Rcpp` and its derivates, and other frequently used tools to program in `R`. We don't claim at any point that the material treated here covers all of R, but rather serve as a the author's list of essential `R` tools he frequently uses.
+This site serves as a collection and reminder of guidelines, libraries and development tools I routinely use. I don't claim at any point that the material treated here covers all of R, but rather serves as my personal list of essential R tools I found useful to know. The document is partly opinionated and subjective, so feel free to open up an <a href="https://github.com/dirmeier/essential-R/issues">issue</a> if you feel like it.
 
-These slides are no introduction on how to program functionally, procedurally or in an object-oriented way, how to write code in general, or how to speed it up. The interested reader is referred to:
+It's no introduction on how to program functionally, procedurally or in an object-oriented way, how to write code in general, or how to speed it up. The interested reader is referred to:
 
 - Robert Martin: Clean Code,
 - Andrew Hunt: The Pragmatic Programmer,
 - Gang of Four: Design Patterns,
+- Colin Gillespie: Efficient R programming,
+- Patrick Burns: The R Inferno,
 - Hadley Wickham: R packages,
 - Hadley Wickham: Advanced R,
 - Dirk Eddelbuettel: Seamless R and C++ Integration with Rcpp,

@@ -13,17 +13,17 @@
 
 <title></title>
 
-<script src="site_libs/jquery/jquery.min.js"></script>
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="site_libs/bootstrap/css/lumen.min.css" rel="stylesheet" />
-<script src="site_libs/bootstrap/js/bootstrap.min.js"></script>
-<script src="site_libs/bootstrap/shim/html5shiv.min.js"></script>
-<script src="site_libs/bootstrap/shim/respond.min.js"></script>
-<script src="site_libs/jqueryui/jquery-ui.min.js"></script>
-<link href="site_libs/tocify/jquery.tocify.css" rel="stylesheet" />
-<script src="site_libs/tocify/jquery.tocify.js"></script>
-<script src="site_libs/navigation/tabsets.js"></script>
-<link href="site_libs/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+<link href="site_libs/bootstrap-3.3.5/css/simplex.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
 
 
 <style type="text/css">code{white-space: pre;}</style>
@@ -130,34 +130,34 @@ button.code-folding-btn:focus {
 <style type="text/css">
 /* padding for bootstrap navbar */
 body {
-  padding-top: 54px;
+  padding-top: 41px;
   padding-bottom: 40px;
 }
 /* offset scroll position for anchor links (for fixed navbar)  */
 .section h1 {
-  padding-top: 59px;
-  margin-top: -59px;
+  padding-top: 46px;
+  margin-top: -46px;
 }
 
 .section h2 {
-  padding-top: 59px;
-  margin-top: -59px;
+  padding-top: 46px;
+  margin-top: -46px;
 }
 .section h3 {
-  padding-top: 59px;
-  margin-top: -59px;
+  padding-top: 46px;
+  margin-top: -46px;
 }
 .section h4 {
-  padding-top: 59px;
-  margin-top: -59px;
+  padding-top: 46px;
+  margin-top: -46px;
 }
 .section h5 {
-  padding-top: 59px;
-  margin-top: -59px;
+  padding-top: 46px;
+  margin-top: -46px;
 }
 .section h6 {
-  padding-top: 59px;
-  margin-top: -59px;
+  padding-top: 46px;
+  margin-top: -46px;
 }
 </style>
 
@@ -204,7 +204,7 @@ $(document).ready(function ()  {
 
     // establish options
     var options = {
-      selectors: "h1,h2",
+      selectors: "h1",
       theme: "bootstrap3",
       context: '.toc-content',
       hashGenerator: function (text) {
@@ -297,7 +297,7 @@ div.tocify {
 
 
 
-<div class="navbar navbar-inverse  navbar-fixed-top" role="navigation">
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
@@ -339,11 +339,10 @@ div.tocify {
 
 <div id="good-practices" class="section level1">
 <h1><span class="header-section-number">1</span> Good practices</h1>
-<p>Continuous integration, version control and containerization are three of the many tools of a developer. Here, we quickly introduce how the three can be used for <code>R</code>.</p>
+<p>Continuous integration, version control and containerization are three of the many tools of a developer. Here, I quickly introduce how the three can be used for <code>R</code>.</p>
 <div id="continuous-integration" class="section level2">
 <h2><span class="header-section-number">1.1</span> Continuous integration</h2>
-<p>Setting up continuous Integration: <code>Travis CI</code> and <code>AppVeyor</code></p>
-<p>To be honest, doing all these steps is tedious and annoying. For that reason we set up <code>Travis CI</code> to take care of running our tests, static analysis and code coverage. Travis works for Mac and Unix.</p>
+<p>To be honest, doing all the steps from the section above is tedious and annoying. For that reason I set up Travis CI to take care of running our tests, static analysis and code coverage in the project. Travis works for Mac and Unix.</p>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">  <span class="kw">cat</span> ./newpkg/.travis.yml</code></pre></div>
 <pre><code>## language: r
 ## 
@@ -485,7 +484,7 @@ Done. Your build exited with 0.</code></pre>
 </div>
 <div id="version-control" class="section level2">
 <h2><span class="header-section-number">1.2</span> Version control</h2>
-<p>Aside from he fact that version control is great, putting your project on <code>GitHub</code> has the most prominent advantage that you can add badges to your <code>README.md</code> to show others about the state of your package, for instance repository, CI or code coverage status.</p>
+<p>Aside from he fact that version control is great, putting your project on GitHub has the most prominent advantage that you can add badges to your <code>README.md</code> to show others about the state of your package, for instance repository, CI or code coverage status.</p>
 <div align="center">
 <p><img src="https://rawgit.com/dirmeier/essential-R/master/fig/readme_me.jpg" alt="oh no" width="750px"></p>
 </div>
