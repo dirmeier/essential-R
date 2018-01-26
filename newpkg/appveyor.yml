@@ -12,7 +12,11 @@ install:
 
 # Adapt as necessary starting from here
 
+before_build:
+  ps: cd newpkg
+
 build_script:
+  - ps: cd newpkg
   - travis-tool.sh install_deps
 
 test_script:

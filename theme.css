@@ -1,5 +1,18 @@
-@import url(https://fonts.googleapis.com/css?family=Raleway:400,300,600);
-@import url(https://fonts.googleapis.com/css?family=Roboto+Condensed);
+@import url('https://fonts.googleapis.com/css?family=Raleway:400,300,600');
+@import url('https://fonts.googleapis.com/css?family=Hind|Inconsolata');
+
+body, h1, h2, h3, .navbar-brand {
+  font-family: "Raleway", "Hind", "Helvetica";
+}
+
+code {
+  font-family:  "Inconsolata";
+}
+
+body {
+  font-size: 14px;
+  color: black;
+}
 
 .col-xs-10 {
     width: 90%;
@@ -27,19 +40,6 @@
     background-color: #f5f5f5;
     border-color: #f5f5f5;
     color: black
-}
-
-
-@keyframes blinker {
-    0% {
-        opacity: 1.0;
-    }
-    50% {
-        opacity: 0.0;
-    }
-    100% {
-        opacity: 1.0;
-    }
 }
 
 
@@ -84,67 +84,15 @@ img.image-thumb {
 }
 
 
-@keyframes pulse_animation {
-	0% {
-    transform: scale(1);
-  }
-	30% {
-     transform: scale(1); }
-
-	40% {
-    transform: scale(1.08);
-   }
-	50% {
-    transform: scale(1);
-  }
-	60% {
-     transform: scale(1);
-   }
-	70% {
-    transform: scale(1.05);
-  }
-	80% {
-    transform: scale(1);
-  }
-	100% {
-    transform: scale(1);
-   }
-}
-
-
-@keyframes nudge {
-    0%, 100% {
-        transform: translate(0, 0);
-    }
-
-    50% {
-        transform: translate(400px, 0);
-    }
-
-    80% {
-        transform: translate(-50px, 0);
-    }
-}
-
-.animateme {
-  animation:
-            pulse 3s ease infinite alternate,
-            blinker 5s linear infinite,
-            nudge 5s linear infinite alternate;
-}
-
 pre {
   border: 0px;
 }
+
 .title {
   color: black;
   font-family: 'Raleway';
   margin-bottom: 10%;
   font-size: 1.5em;
-}
-
-body, h1, h2, h3, .navbar-brand {
-  font-family: Palatino, "Palatino Linotype", "Palatino LT STD", "Book Antiqua", Georgia, serif;
 }
 
 h1, h2, h3, .navbar-brand {
@@ -173,19 +121,9 @@ h3 {
   margin-bottom: 2rem;
 }
 
-
 .blue {
   color: #1F407A;
 }
-
-
-html.blur .slide-background {
-  background-position: center;
-  background-repeat: no-repeat;
-  background-blend-mode: lighten;
-  background-color: rgba(255, 255, 255, 0.5) !important;
-}
-
 
 .quote {
   color: #1F407A;
