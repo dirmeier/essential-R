@@ -1,3 +1,4 @@
+node_modules
 inst/doc/*
 build/
 src/test

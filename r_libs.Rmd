@@ -161,6 +161,8 @@ One of the most significant reasons to use R is probably its plotting capabiliti
 - `viridis` and `viridisLite`
 - `colorspace` and `colorblindr`
 - `highcharter`
+- `patchwork`
+- `animation`
 - `plotly`
 - `lattice`
 - `magick`
@@ -252,6 +254,7 @@ Recently I also stumbled upon `highcharter`:
   hchart(iris, "scatter", hcaes(x = Sepal.Length, y = Sepal.Width,  group=Species)) %>%
     hc_add_theme(hc_theme_tufte())
 ```
+
 
 
 ## data.table
@@ -373,7 +376,6 @@ Bioconductor seems to prefer S4 over S3, so if you want to submit your package, 
 
 Rmarkdown is a great way for documentation, reporting and working reproducibly, for instance by building interactive web-sites using `shiny`, static pages using HTML documents using the Bootstrap framework or plain handouts using Tufte style. For presentations that use R code I use <a href="https://github.com/yihui/xaringan">xaringan</a>.
 
-
 ### Shiny
 
 Next to Rmarkdown, setting up a Shiny instance for reporting is a nice way to present data with interactive plots. Setting up shiny is fairly easy. You need to create a `server.R` file and `ui.R` file, e.g. like this:
@@ -429,6 +431,7 @@ There are many other great tools I did not specifically mention due to the fact 
 
 - dplyr,
 - tidyr,
+- optparse,
 - IRKernel,
 - minqa and nloptr,
 - glmnet, lme4 and netReg.

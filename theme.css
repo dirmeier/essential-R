@@ -5,6 +5,10 @@ body, h1, h2, h3, .navbar-brand {
   font-family: "Raleway", "Hind", "Helvetica";
 }
 
+.level2, .level1, .level3 {
+  margin-top: 2%
+}
+
 code {
   font-family:  "Inconsolata";
 }
