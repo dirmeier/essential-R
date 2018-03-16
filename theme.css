@@ -9,13 +9,18 @@ body, h1, h2, h3, .navbar-brand {
   margin-top: 2%
 }
 
-code {
-  font-family:  "Inconsolata";
-}
 
 body {
-  font-size: 14px;
+  font-size: 1.5rem;
   color: black;
+  line-height: 1.6;
+  text-align: justify;
+}
+code,pre {
+  font-family:  "Inconsolata";
+  font-size: 1.4rem;
+}
+
 }
 
 .col-xs-10 {
@@ -115,13 +120,13 @@ h1 {
 
 h2 {
   font-size: 2.5rem;
-  margin-top: 2rem;
+  margin-top: 3rem;
   margin-bottom: 2rem;
 }
 
 h3 {
   font-size: 2rem;
-  margin-top: 2rem;
+  margin-top: 3rem;
   margin-bottom: 2rem;
 }
 
