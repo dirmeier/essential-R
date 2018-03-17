@@ -3,7 +3,7 @@ module.exports = function (grunt) {
         pkg: grunt.file.readJSON("package.json"),
         exec: {
           build: {
-            cmd: "Rscript -e 'rmarkdown::render_site(\"index.Rmd\")'"
+            cmd: "Rscript -e 'rmarkdown::render_site()'"
           }
         }
     });

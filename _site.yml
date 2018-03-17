@@ -1,6 +1,18 @@
 name: "essential-R"
 navbar:
   title: "Essential R"
+  -left:
+    - text: "Essential R"
+      href: index.html
+    - text: "sasd"
+      icon: fas fa-book
+      menu:
+      - text: "R development"
+        href: r_devel.html
+      - text: "Good practices"
+        href: good_practies.html
+      - text: "R libraries"
+        href: r_libs.html
   right:
     - icon: fa fa-home fa-lg
       href: http://simon-dirmeier.net

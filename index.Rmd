@@ -15,16 +15,3 @@ title: "Essential R"
                  warning=FALSE)
 ```
 
-<div style="margin-top: 5%">
-
-```{r child = 'intro.Rmd'}
-```
-
-```{r child = 'r_devel.Rmd'}
-```
-
-```{r child = 'good_practices.Rmd'}
-```
-
-```{r child = 'r_libs.Rmd'}
-```
