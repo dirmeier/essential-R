@@ -1,8 +1,10 @@
-# Good practices
+---
+title: "Good practices"
+---
 
 Continuous integration, version control and containerization are three of the many tools of a developer. Here, I quickly introduce how the three can be used for `R`.
 
-## Continuous integration
+# Continuous integration
 
 To be honest, doing all the steps from the section above is tedious and annoying. For that reason I set up Travis CI to take care of running our tests, static analysis and code coverage in the project. Travis works for Mac and Unix.
 
@@ -73,7 +75,7 @@ Fixing style related issues is essential since we want other people to be able t
 </div>
 
 
-## Version control
+# Version control
 
 Aside from he fact that version control is great, putting your project on GitHub has the most prominent advantage that you can add badges to your `README.md` to show others about the state of your package, for instance repository, CI or code coverage status.
 
@@ -93,6 +95,6 @@ There's a wide variety of badges to describe your project.
 </div>
 
 
-## Docker
+# Docker
 
 todo (needed for debugging c++)

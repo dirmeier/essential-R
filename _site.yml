@@ -1,36 +1,38 @@
-name: "essential-R"
+name: essential-R
 navbar:
-  title: "Essential R"
-  -left:
-    - text: "Essential R"
-      href: index.html
-    - text: "sasd"
-      icon: fas fa-book
-      menu:
-      - text: "R development"
-        href: r_devel.html
-      - text: "Good practices"
-        href: good_practies.html
-      - text: "R libraries"
-        href: r_libs.html
+  left:
+  - text: Home
+    href: index.html
+  - text: Essential-R
+    icon: fas fa-book
+    menu:
+    - text: R development
+      href: r_devel.html
+    - text: Good practices
+      href: good_practices.html
+    - text: R libraries
+      href: r_libs.html
   right:
-    - icon: fa fa-home fa-lg
-      href: http://simon-dirmeier.net
-    - icon: fa-github fa-lg
-      href: https://github.com/dirmeier/essential-R
-    - icon: fa fa-twitter-square fa-lg
-      href: http://twitter.com/simon_dirmeier/
+  - icon: fa fa-home fa-lg
+    href: http://simon-dirmeier.net
+  - icon: fa-github fa-lg
+    href: https://github.com/dirmeier/essential-R
+  - icon: fa fa-twitter-square fa-lg
+    href: http://twitter.com/simon_dirmeier/
 output:
   html_document:
     theme: simplex
     css: theme.css
-    toc: true
-    toc_depth: 1
+    toc: yes
+    toc_depth: 2
     toc_float:
-      collapsed: false
-      smooth_scroll: true
-    number_sections: true
+      collapsed: no
+      smooth_scroll: yes
+    number_sections: yes
     highlight: pygments
     include:
       after_body: doc_suffix.html
-output_dir: "."
+    lib_dir: site_libs
+    self_contained: no
+output_dir: '.'
+

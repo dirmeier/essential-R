@@ -1,4 +1,6 @@
-# R libraries
+---
+title: "R libraries"
+---
 
 Much of R's popularity is due to its fantastic ecosystem. R users benefit heavily from CRAN and Bioconductor packages created by its community. For data analysis or statistics R is a good choice for various reasons:
 
@@ -21,7 +23,7 @@ There are a few things, however, R is not so great at:
 For stats and data analysis I find R still superior to Python, partly due to `Rmarkdown`, `shiny`, `ggplot2` and `Rcpp`.
 
 
-## Extending to C++ using Rcpp
+# Extending to C++ using Rcpp
 
 Using Rcpp (and RcppEigen, RcppArmadillo, Boost) you can easily your extend your code to C++. It not only nicely wraps the standard C API, but also let's you use standard matrix libraries such as Eigen and Armadillo or Boost.
 
@@ -60,7 +62,7 @@ Even for small matrices, the speed up is already substantial.
   )
 ```
 
-### Rcpp in a package
+## Rcpp in a package
 
 Usually, you would want to put your source code into a `cpp` file in the `src` folder. Then you can call C++ from an R function, for instance as described below.
 
@@ -94,7 +96,7 @@ LinkingTo: Rcpp</code></pre>
 This should let you access the C++ function from your package. For more details check out the main <a href="http://www.rcpp.org/">documentation</a> or some of my packages, like <a href="https://github.com/dirmeier/netReg">netReg</a> or <a href="https://github.com/dirmeier/datastructures">datastructures</a>. The latter also has an example how to use modules and Boost.
 
 
-### Writing `C++`
+## Writing `C++`
 
 Here are some tools that help you develop your code:
 
@@ -130,7 +132,7 @@ C++ is a large, complex language. Chances that you mess up, introduce bugs and m
 - Print warnings. They are usually there for a reason.
 - Start a toy project or contribute to OSS projects.
 
-## Functional programming
+# Functional programming
 
 `purrr` is a functional programming toolkit, much like the `apply` class of functions. However, purrr does so in a more unified way with consistent return values. Furthermore, in combination with `magrittr`, the code you write is naturally more concise and easier to read.
 
@@ -148,7 +150,7 @@ C++ is a large, complex language. Chances that you mess up, introduce bugs and m
   utils::head(df)
 ```
 
-## Plotting
+# Plotting
 
 One of the most significant reasons to use R is probably its plotting capabilities and people contributing to ggplot2 and the community's effort of adding package that integrate with it. Some nice packages for plotting are the following:
 
@@ -173,7 +175,7 @@ One of the most significant reasons to use R is probably its plotting capabiliti
 - `gganimate`
 
 
-### Layout
+## Layout
 
 Use `hrbrthemes` for a nicer layout:
 
@@ -213,7 +215,7 @@ Tufte in R</a>. `ggthemes` offers some nice options to do so. For instance, if y
   cowplot::plot_grid(p1, p2, ncol=2, align="vh", labels=c("Nice", "Meh"))
 ```
 
-### Colors
+## Colors
 
 I use `colorspace`  and `colorblindr` in order to remove some hue and chroma. `viridis` is a wonderful set of colors for continuous, sequential data. For discrete, qualitative data I mainly use `ggthemr` and the `fresh` colors. `ggsci` also has some wonderful color palettes. `scales` lets you have a look at a color palette easily.
 
@@ -236,7 +238,7 @@ I use `colorspace`  and `colorblindr` in order to remove some hue and chroma. `v
 ```
 
 
-### Interactive plots
+## Interactive plots
 
 Often you want to create an interactive plot, for instance when serving on a `shiny` instance. One way to do that is using plotly:
 
@@ -257,7 +259,7 @@ Recently I also stumbled upon `highcharter`:
 
 
 
-## data.table
+# data.table
 
 `data.table` is a fast implementation of R's classical `data.frame`. I hardly ever use data frame any more, and if so only, because it seems to work nicer with `dplyr` and `tidyr`. However, using `dtplyr` this isn't much of a problem, really.
 
@@ -294,7 +296,7 @@ In the end it depends what style you prefer. I usually go with `data.table` alon
 ```
 
 
-## mlR and openML
+# mlR and openML
 
 CRAN offers dozens of packages related to machine and statistical learning, many of which doing the same. `mlR` wraps many of these into one big library.
 `mlR` integrates with `openML`, an open machine learning platform where people share code, data and algorithms. Here we show an example where we use a Gaussian process to predict the Kyphosis label from the `gam` package.
@@ -314,65 +316,7 @@ CRAN offers dozens of packages related to machine and statistical learning, many
 ```
 
 
-## Object-oriented programming
-
-R has three different native ways for object-oriented programming and as far as I know one additional library. `S3`, `S4` and `refClasses` (`R5`) come with the standard library, while `R6` can be installed from CRAN. I actually never use R5, because it feels incredibly bulky and slow, so we will not cover it here.
-
-
-### S3
-
-S3 methods dispatch on the first argument. If you come from other languages, such as `Java`, an S3 method is basically an overloaded function on the first argument. You can define an S3 function like this:
-
-```{r}
-  s3 <- function(x, y, ...) UseMethod("s3")
-
-  s3.matrix <- function(x, y, ...) apply(x, 1, sum)
-  s3.character <- function(x, y, ...) paste(x, y)
-
-  s3(matrix(1:6, 2))
-  s3("hello", "reader")
-```
-
-S3 classes are defines like this:
-
-```{r}
-  s3.list <- function(x, y, ...)
-  {
-    l <- list(x=x, y=y)
-    base::class(l) <- "my.s3"
-
-    l
-  }
-  s3(list(x=1), y=2)
-```
-
-The main issue here is of course that the user can easily overwrite a class and that method dispatching on one argument usually is not enough. However, often S3 functions are all you need.
-
-### S4
-
-Bioconductor seems to prefer S4 over S3, so if you want to submit your package, you could for instance define interfaces using S4 and the rest using S3 or w/o OO entirely. In that way the user of your package only sees the exported interface (the S4 method) and upon calling would receive an S4 object. The rest of the implementation would be hidden.
-
-```{r}
-  methods::setClass("normallist",
-         representation = list(.el = "list"),
-         prototype = prototype(.el = list())
-  )
-
-  methods::setGeneric("put", function(obj, x) base::standardGeneric("insert"))
-
-  methods::setMethod(
-    "put",
-    signature = signature(obj = "normallist", x = "vector"),
-    function(obj, x) obj@.el <- as.list(x)
-  )
-
-  d <- methods::new("normallist")
-  d <- put(d, seq(3))
-  d
-```
-
-
-## Markdown and Shiny
+# Markdown and Shiny
 
 Rmarkdown is a great way for documentation, reporting and working reproducibly, for instance by building interactive web-sites using `shiny`, static pages using HTML documents using the Bootstrap framework or plain handouts using Tufte style. For presentations that use R code I use <a href="https://github.com/yihui/xaringan">xaringan</a>.
 
@@ -390,7 +334,7 @@ Next to Rmarkdown, setting up a Shiny instance for reporting is a nice way to pr
 
 You can publish your server on <a href="http://www.shinyapps.io/">shinyapps.io</a> so that it is accessible by everyone.
 
-## Pryr
+# Pryr
 
 In some cases it is interesting to have a look at the implementation of specific functions, get their sizes in byte or get the current memory consumption. It is especially useful to keep track of the addresses your objects point to. When I was new to R I found it confusing when a reference is dropped and when a new copy of an object is created.
 
@@ -410,7 +354,7 @@ In some cases it is interesting to have a look at the implementation of specific
   pryr::address(y)
 ```
 
-## datastructures
+# datastructures
 
 If you have a background in computer science you may wonder, that R does not have support for advanced data structures such as Fibonacci heaps or hashmaps.
 `datastructures` tries to solve this. It uses Rcpp modules to export Boost data structures to R:
@@ -425,7 +369,7 @@ If you have a background in computer science you may wonder, that R does not hav
   datastructures::pop(q)
 ```
 
-## Other
+# Other
 
 There are many other great tools I did not specifically mention due to the fact that they are more situational. Some of these are:
 
