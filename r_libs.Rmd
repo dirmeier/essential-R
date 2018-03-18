@@ -237,6 +237,14 @@ I use `colorspace`  and `colorblindr` in order to remove some hue and chroma. `v
    cowplot::plot_grid(p1, p2, p3, p4, ncol=2, align="vh")
 ```
 
+Another great tool  is `swatches`:
+
+```{r}
+  library(swatches)
+  omega_nebula <- read_ase(system.file("palettes", "omega_nebula.ase", package="swatches"))
+  show_palette(omega_nebula)
+```
+
 
 ## Interactive plots
 
@@ -257,7 +265,32 @@ Recently I also stumbled upon `highcharter`:
     hc_add_theme(hc_theme_tufte())
 ```
 
+## Graphs
 
+There are many wonderful graph and network libraries around. I primarily use `ggnetwork`/`ggnet2`, `igraph`, `ggraph` and `DiagrammeR`.
+
+```{r}
+  library(DiagrammeR)
+  create_graph() %>%
+    add_node(label=expression(Z),
+             node_aes = node_aes(penwidth=2, fontname="Arial Narrow", fontcolor = "black", fillcolor="white", color="black")) %>%
+    add_node(label="X",
+              node_aes = node_aes(penwidth=2, fontname="Arial Narrow", fontcolor = "black", fillcolor="grey", color="black")) %>%
+    add_edge(from = 1, to = 2, edge_aes=edge_aes(color="black")) %>%
+    render_graph(layout = "tree")
+```
+
+
+```{r}
+  library(network)
+  library(sna)
+  library(ggplot2)
+  library(GGally)
+  net = rgraph(10, mode = "graph", tprob = 0.5)
+  net = network(net, directed = FALSE)
+  network.vertex.names(net) = letters[1:10]
+  ggnet2(net, color = "phono", shape = 15)
+```
 
 # data.table
 
@@ -320,7 +353,7 @@ CRAN offers dozens of packages related to machine and statistical learning, many
 
 Rmarkdown is a great way for documentation, reporting and working reproducibly, for instance by building interactive web-sites using `shiny`, static pages using HTML documents using the Bootstrap framework or plain handouts using Tufte style. For presentations that use R code I use <a href="https://github.com/yihui/xaringan">xaringan</a>.
 
-### Shiny
+## Shiny
 
 Next to Rmarkdown, setting up a Shiny instance for reporting is a nice way to present data with interactive plots. Setting up shiny is fairly easy. You need to create a `server.R` file and `ui.R` file, e.g. like this:
 

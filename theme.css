@@ -37,8 +37,13 @@ code,pre {
   border-radius: 0px;
   border: 0px;
   overflow: hidden;
+  background-color: #fcfcfc;
 }
 
+
+.list-group-item {
+  background-color: white;
+}
 
 .header-panel {
   background-color: white;
@@ -48,7 +53,8 @@ code,pre {
 .list-group-item.active, .list-group-item.active:hover, .list-group-item.active:focus {
     background-color: #f5f5f5;
     border-color: #f5f5f5;
-    color: black
+    color: black;
+    border-radius: 4px
 }
 
 

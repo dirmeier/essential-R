@@ -1,17 +1,15 @@
 name: essential-R
 navbar:
+  type: inverse
   left:
-  - text: Home
-    href: index.html
   - text: Essential-R
-    icon: fas fa-book
-    menu:
-    - text: R development
-      href: r_devel.html
-    - text: Good practices
-      href: good_practices.html
-    - text: R libraries
-      href: r_libs.html
+    href: index.html
+  - text: R development
+    href: r_devel.html
+  - text: Good practices
+    href: good_practices.html
+  - text: R libraries
+    href: r_libs.html
   right:
   - icon: fa fa-home fa-lg
     href: http://simon-dirmeier.net
@@ -21,7 +19,7 @@ navbar:
     href: http://twitter.com/simon_dirmeier/
 output:
   html_document:
-    theme: simplex
+    theme: lumen
     css: theme.css
     toc: yes
     toc_depth: 2

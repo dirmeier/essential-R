@@ -263,7 +263,7 @@ The main issue here is of course that the user can easily overwrite a class and 
 
 Bioconductor seems to prefer S4 over S3, so if you want to submit your package, you could for instance define interfaces using S4 and the rest using S3 or w/o OO entirely. In that way the user of your package only sees the exported interface (the S4 method) and upon calling would receive an S4 object. The rest of the implementation would be hidden.
 
-```{r}
+```{r, eval=FALSE}
   methods::setClass("normallist",
          representation = list(.el = "list"),
          prototype = methods::prototype(.el = list())

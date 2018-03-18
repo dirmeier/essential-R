@@ -98,3 +98,38 @@ There's a wide variety of badges to describe your project.
 # Docker
 
 todo (needed for debugging c++)
+
+# Code style
+
+I try to follow two general guidelines when writing code. These are primarily not my personal preferences, nut adopted form packages like
+`data.table`, `lme4`, `Matrix` or Bioconductor. 
+Whatever you do, just be consistent. There seem to be a lot of different preference around.
+
+If I mainly write using `S3` classes and functions I prefer writing code like this:
+
+```{r ,eval=FALSE}
+  my.var <- "2"
+  
+  i.am.a.function <- function(i) 
+  {
+    sapply(seq(10), function(i) {
+      i + 1
+    })  
+  }
+  
+  plot.me <- function(x, ...) plot.default(x)
+  
+  .i.am.private <- "2"
+```
+
+For `S4` classes and functions I recommend using the [Bioconductor](https://www.bioconductor.org/developers/how-to/coding-style/) style guide or how 
+`lme4` and `Matrix` do it:
+
+```{r, eval=FALSE}
+  setMethod("camelCaps", 
+            signature=signature(iAmAList = "list"))
+
+```
+
+
+
