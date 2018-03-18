@@ -23,6 +23,22 @@ There are a few things, however, R is not so great at:
 For stats and data analysis I find R still superior to Python, partly due to `Rmarkdown`, `shiny`, `ggplot2` and `Rcpp`.
 
 
+# Data wrangling
+
+Every analysis of data starts with preprocessing and parsing. For this I've found `dplyr` and `tidyr` tremendously useful. There are many more great tools in the tidyverse and Rstudio, such as `purrr` (explained later), `magrittr` or `tibble`, but these two simlify most of my work.
+
+```{r}
+  library(dplyr)
+  data(iris)
+  group_by(iris, Species) %>% 
+    summarize(Petal.Length = mean(Petal.Length),
+              Sepal.Length = mean(Sepal.Length)) %>%
+    mutate(Species = toupper(Species))
+  
+  tidyr::gather(iris, Col, Val, -Species) %>% head
+```
+
+
 # Extending to C++ using Rcpp
 
 Using Rcpp (and RcppEigen, RcppArmadillo, Boost) you can easily your extend your code to C++. It not only nicely wraps the standard C API, but also let's you use standard matrix libraries such as Eigen and Armadillo or Boost.
@@ -204,7 +220,7 @@ Tufte in R</a>. `ggthemes` offers some nice options to do so. For instance, if y
 ```
 
 
-### Publication ready plots
+## Publication ready plots
 
 `cowplot` and `ggpubr` are great for greating publication ready plots:
 
@@ -213,6 +229,13 @@ Tufte in R</a>. `ggthemes` offers some nice options to do so. For instance, if y
   p2 <- ggplot(mtcars, aes(hp, disp)) + geom_point() + ggthemes::theme_gdocs()
 
   cowplot::plot_grid(p1, p2, ncol=2, align="vh", labels=c("Nice", "Meh"))
+```
+
+If these two are still not enough, I usually go with `patchwork`:
+
+```{r, fig.align = 'center', fig.height=6}
+  library(patchwork)
+
 ```
 
 ## Colors
@@ -246,7 +269,7 @@ Another great tool  is `swatches`:
 ```
 
 
-## Interactive plots
+## Interactive and animated plots
 
 Often you want to create an interactive plot, for instance when serving on a `shiny` instance. One way to do that is using plotly:
 
@@ -257,12 +280,41 @@ Often you want to create an interactive plot, for instance when serving on a `sh
   plotly::ggplotly(q)
 ```
 
-Recently I also stumbled upon `highcharter`:
+Recently I also stumbled upon `highcharter` and `ggvis`:
 
 ```{r, fig.align = 'center', fig.height=6}
   library('highcharter')
   hchart(iris, "scatter", hcaes(x = Sepal.Length, y = Sepal.Width,  group=Species)) %>%
     hc_add_theme(hc_theme_tufte())
+```
+
+```{r, fig.align = 'center', fig.height=6}
+  library('ggvis')
+  data("mtcars")
+  mtcars %>% 
+    ggvis(~wt, ~mpg,  
+          size := input_slider(10, 100),
+          opacity := input_slider(0, 1) ) %>%  
+      layer_points()
+```
+
+```{r, fig.align = 'center', fig.height=6}
+  library('animation')
+  ani.options(interval = 0.2, nmax = 50)
+  par(mar = c(4, 4, 1, 1))
+  MC.samplemean(border = NA)$est
+```
+
+With `gganimate` you can directly create GIFs from you plots:
+```{r, fig.align = 'center', fig.height=6}
+  library('gganimate')
+  library('gapminder')
+  g <- ggplot(gapminder, aes(gdpPercap, lifeExp, size = pop, frame = year)) +
+    geom_point() +
+    geom_smooth(aes(group = year), method = "lm", show.legend = FALSE) +
+    facet_wrap(~continent, scales = "free") +
+    ggthemes::theme_tufte()
+  gganimate(g)
 ```
 
 ## Graphs
@@ -402,13 +454,21 @@ If you have a background in computer science you may wonder, that R does not hav
   datastructures::pop(q)
 ```
 
+# Workflow management
+
+I recently came across [`drake`](https://ropensci.github.io/drake/index.html) as a workflow manager. It allows you to run a project and easily update output files.
+
+<div align="center">
+  <img src="https://rawgit.com/dirmeier/essential-R/master/fig/drake.jpg" alt="oh no" width="500px">
+</div>
+
 # Other
 
 There are many other great tools I did not specifically mention due to the fact that they are more situational. Some of these are:
 
-- dplyr,
-- tidyr,
-- optparse,
+- Rlang
+- argtparse,
 - IRKernel,
-- minqa and nloptr,
+- CVXR, minqa and nloptr,
+- tensorflow and keras,
 - glmnet, lme4 and netReg.
