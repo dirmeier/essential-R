@@ -2,12 +2,30 @@
 title: "R libraries"
 ---
 
-Much of R's popularity is due to its fantastic ecosystem. R users benefit heavily from CRAN and Bioconductor packages created by its community. For data analysis or statistics R is a good choice for various reasons:
+
+```{r knitr_init, echo=FALSE, cache=FALSE, message=FALSE}
+  library(knitr)
+  #library(rmdformats)  
+  library(magrittr)
+  library(devtools)
+  devtools::install("./newpkg")    
+  opts_chunk$set(prompt=FALSE,
+                 tidy=TRUE,
+                 comment=NA,
+                 message=FALSE,
+                 warning=FALSE)
+  
+  library('gam')
+  data(kyphosis)
+```
+
+Much of R's popularity is due to its fantastic ecosystem. R users benefit heavily from CRAN and Bioconductor packages created by its community. 
+For data analysis or statistics R is a good choice for various reasons:
 
 - high-level,
 - easy to install packages,
 - can be extended to C++ without needing knowledge of linking or C++ build-systems,
-- probably the best plotting facility with ggplot, cowplot, hrbrthemes or ggsci,
+- probably the best plotting facility with ggplot, cowplot, hrbrthemes, ggsci and others,
 - Bioconductor, machine learning and statistics libraries,
 - small standard library.
 
@@ -17,10 +35,9 @@ There are a few things, however, R is not so great at:
 - not really suited for large projects,
 - poor object orientation,
 - inconsistent function names,
-- superior IDEs for Java, Python, ...,
 - very limited threading capabilities.
 
-For stats and data analysis I find R still superior to Python, partly due to `Rmarkdown`, `shiny`, `ggplot2` and `Rcpp`.
+For stats, data analysis and writing reports I find R still superior to Python, partly due to `Rmarkdown`, `shiny`, `ggplot2` and `Rcpp`.
 
 
 # Data wrangling
@@ -152,7 +169,7 @@ C++ is a large, complex language. Chances that you mess up, introduce bugs and m
 
 `purrr` is a functional programming toolkit, much like the `apply` class of functions. However, purrr does so in a more unified way with consistent return values. Furthermore, in combination with `magrittr`, the code you write is naturally more concise and easier to read.
 
-```{r, eval=TRUE, message=TRUE, include=TRUE, echo=TRUE, warnings=FALSE, fig.align = 'center'}
+```{r, eval=TRUE, message=FALSE, include=TRUE, echo=TRUE, warnings=FALSE, fig.align = 'center'}
   library('purrr')
   library('ggplot2')
   library('repurrrsive')
@@ -187,8 +204,8 @@ One of the most significant reasons to use R is probably its plotting capabiliti
 - `imager`
 - `scales`
 - `tweenr`
-- `ggraph` and `ggnetwork`
-- `gganimate`
+- `ggraph`, `ggnet` and `ggnetwork`
+- `gganimate` and `animattion`
 
 
 ## Layout
@@ -210,7 +227,7 @@ Use `hrbrthemes` for a nicer layout:
 Recently I started changing to simpler layouts and themes, for instance as described on <a href="http://motioninsocial.com/tufte/">
 Tufte in R</a>. `ggthemes` offers some nice options to do so. For instance, if you are feeling jealous that you cannot draft some Excel plots, cause you are working with R:
 
-```{r, fig.align = 'center', fig.height=6}
+```{r blub, fig.align = 'center', fig.height=6}
   library('ggthemes')
 
   g <- ggplot(df) +
@@ -224,7 +241,7 @@ Tufte in R</a>. `ggthemes` offers some nice options to do so. For instance, if y
 
 `cowplot` and `ggpubr` are great for greating publication ready plots:
 
-```{r, fig.align = 'center', fig.height=6}
+```{r cow, fig.align = 'center', fig.height=6}
   p1 <- ggplot(mtcars, aes(hp, disp)) + geom_point() + ggthemes::theme_tufte()
   p2 <- ggplot(mtcars, aes(hp, disp)) + geom_point() + ggthemes::theme_gdocs()
 
@@ -233,8 +250,9 @@ Tufte in R</a>. `ggthemes` offers some nice options to do so. For instance, if y
 
 If these two are still not enough, I usually go with `patchwork`:
 
-```{r, fig.align = 'center', fig.height=6}
-  library(patchwork)
+```{r patch, fig.align = 'center', fig.height=6}
+  library(patchwork) 
+  g + (p1 + p2) + plot_layout(ncol = 1)
 
 ```
 
@@ -249,7 +267,7 @@ I use `colorspace`  and `colorblindr` in order to remove some hue and chroma. `v
   library('ggthemr')
   library('scales')
   library('cowplot')
-  ggthemr("fresh")
+  ggthemr::ggthemr("fresh", "scientific", spacing = 2, type = 'inner')
 
    p1 <- colorblindr::gg_color_gradient() + colorspace::scale_fill_continuous_sequential("viridis", c1=20, c2=70, l1=25, l2=100)
    p2 <- colorblindr::gg_color_gradient() + colorspace::scale_fill_continuous_sequential("Blues", c1=20, c2=70, l1=25, l2=100)
@@ -262,7 +280,7 @@ I use `colorspace`  and `colorblindr` in order to remove some hue and chroma. `v
 
 Another great tool  is `swatches`:
 
-```{r}
+```{r swatch}
   library(swatches)
   omega_nebula <- read_ase(system.file("palettes", "omega_nebula.ase", package="swatches"))
   show_palette(omega_nebula)
@@ -273,12 +291,13 @@ Another great tool  is `swatches`:
 
 Often you want to create an interactive plot, for instance when serving on a `shiny` instance. One way to do that is using plotly:
 
-```{r, fig.align = 'center', fig.height=6}
+```{r plotly, fig.align = 'center', fig.height=6}
   library('plotly')
   q <- qplot(data=iris, x=Sepal.Length, y=Sepal.Width, color=Species) +
     ggthemes::theme_tufte()
   plotly::ggplotly(q)
 ```
+
 
 Recently I also stumbled upon `highcharter` and `ggvis`:
 
@@ -298,15 +317,9 @@ Recently I also stumbled upon `highcharter` and `ggvis`:
       layer_points()
 ```
 
-```{r, fig.align = 'center', fig.height=6}
-  library('animation')
-  ani.options(interval = 0.2, nmax = 50)
-  par(mar = c(4, 4, 1, 1))
-  MC.samplemean(border = NA)$est
-```
 
 With `gganimate` you can directly create GIFs from you plots:
-```{r, fig.align = 'center', fig.height=6}
+```{r, eval=FALSE}
   library('gganimate')
   library('gapminder')
   g <- ggplot(gapminder, aes(gdpPercap, lifeExp, size = pop, frame = year)) +
@@ -317,11 +330,13 @@ With `gganimate` you can directly create GIFs from you plots:
   gganimate(g)
 ```
 
+![](https://rawgit.com/dirmeier/essential-R/master/fig/gganimate.gif)
+
 ## Graphs
 
 There are many wonderful graph and network libraries around. I primarily use `ggnetwork`/`ggnet2`, `igraph`, `ggraph` and `DiagrammeR`.
 
-```{r}
+```{r,fig.height=2, fig.align = 'center'}
   library(DiagrammeR)
   create_graph() %>%
     add_node(label=expression(Z),
@@ -333,20 +348,9 @@ There are many wonderful graph and network libraries around. I primarily use `gg
 ```
 
 
-```{r}
-  library(network)
-  library(sna)
-  library(ggplot2)
-  library(GGally)
-  net = rgraph(10, mode = "graph", tprob = 0.5)
-  net = network(net, directed = FALSE)
-  network.vertex.names(net) = letters[1:10]
-  ggnet2(net, color = "phono", shape = 15)
-```
-
 # data.table
 
-`data.table` is a fast implementation of R's classical `data.frame`. I hardly ever use data frame any more, and if so only, because it seems to work nicer with `dplyr` and `tidyr`. However, using `dtplyr` this isn't much of a problem, really.
+`data.table` is a fast implementation of R's classical `data.frame`. I hardly ever use data frame any more, and if so only, because it seems to work nicer with `dplyr` and `tidyr`. However, by using `dtplyr` this isn't much of a problem, really.
 
 ```{r, fig.width=2, fig.height=2, fig.align = 'center'}
   library('data.table')  
@@ -403,11 +407,15 @@ CRAN offers dozens of packages related to machine and statistical learning, many
 
 # Markdown and Shiny
 
-Rmarkdown is a great way for documentation, reporting and working reproducibly, for instance by building interactive web-sites using `shiny`, static pages using HTML documents using the Bootstrap framework or plain handouts using Tufte style. For presentations that use R code I use <a href="https://github.com/yihui/xaringan">xaringan</a>.
+`Rmarkdown` is a great way for documentation, reporting and working reproducibly. Rstudio provides tons of different output formats like web sites (like this one), Tufte style documents, blogs and others. If you want to present your work interactively you can do so by building a web page using `shiny`.
+For presentations that use R code I use either <a href="https://github.com/yihui/xaringan">xaringan</a>, <a href="http://slidify.org/">Slidify</a> or <a href="https://rmarkdown.rstudio.com/revealjs_presentation_format.html">reveal.js</a>.
+
+Find all the output formats by Rstudio [here](https://rmarkdown.rstudio.com/lesson-9.html).
 
 ## Shiny
 
-Next to Rmarkdown, setting up a Shiny instance for reporting is a nice way to present data with interactive plots. Setting up shiny is fairly easy. You need to create a `server.R` file and `ui.R` file, e.g. like this:
+Setting up a Shiny instance for reporting is a great way to present data using interactive plots. 
+Setting up shiny is fairly easy. You need to create a `server.R` file and `ui.R` file, e.g. like this:
 
 ```{bash}
   cat R/ui.R
@@ -462,12 +470,12 @@ I recently came across [`drake`](https://ropensci.github.io/drake/index.html) as
   <img src="https://rawgit.com/dirmeier/essential-R/master/fig/drake.jpg" alt="oh no" width="500px">
 </div>
 
-# Other
+# Others
 
-There are many other great tools I did not specifically mention due to the fact that they are more situational. Some of these are:
+There are many other great tools I did not specifically mention due to the fact that they are probably more situational. Some of these are:
 
-- Rlang
-- argtparse,
+- rlang
+- argparse,
 - IRKernel,
 - CVXR, minqa and nloptr,
 - tensorflow and keras,

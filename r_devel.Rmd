@@ -279,5 +279,4 @@ Bioconductor seems to prefer S4 over S3, so if you want to submit your package, 
 
   d <- methods::new("normallist")
   d <- put(d, seq(3))
-  d
 ```

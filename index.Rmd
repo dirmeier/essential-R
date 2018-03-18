@@ -16,12 +16,17 @@ title: "Essential R"
 ```
 
 
-<div>
-  <i>Programs must be written for people to read, and only incidentally for machines to execute.</i>
-</div>
-<div class="quote">
--- Harold Abelson
-</div>
+This site serves as a collection of
+
+* tools for package development,
+* good practices for programming,
+* and my most frequently used packages.
+
+I don't claim at any point that the material treated here covers all of R, but rather serves as my personal list of essential things related to prgoraming in `R` that
+I found useful to know. The document is partly opinionated and subjective, so feel free to open up an <a href="https://github.com/dirmeier/essential-R/issues">issue</a> if you feel some parts should be clarified or reformulated.
+
+Programming is in my oppinion not about *getting the job done*, but more a craft and form of art which cannot be mastered in a few years only.
+
 <div style="margin-top: 2%">
   <i>The lyf so short, the craft so long to lerne.</i>
 </div>
@@ -29,10 +34,16 @@ title: "Essential R"
 -- Geoffrey Chaucer
 </div>
 
+<div>
+  <i>Programs must be written for people to read, and only incidentally for machines to execute.</i>
+</div>
+<div class="quote">
+-- Harold Abelson
+</div>
 
-This site serves as a collection of guidelines, libraries and development tools I routinely use. I don't claim at any point that the material treated here covers all of R, but rather serves as my personal list of essential R tools I found useful to know. The document is partly opinionated and subjective, so feel free to open up an <a href="https://github.com/dirmeier/essential-R/issues">issue</a> if you feel like it.
 
-It's no introduction on how to program functionally, procedurally or in an object-oriented way, how to write code in general, or how to speed it up. The interested reader is referred to:
+This document is no introduction on how to program functionally, procedurally or in an object-oriented way, how to write code in general, or how to speed it up. 
+The interested reader is referred to:
 
 - Robert Martin: Clean Code,
 - Andrew Hunt: The Pragmatic Programmer,
@@ -45,4 +56,5 @@ It's no introduction on how to program functionally, procedurally or in an objec
 - Thomas Cormen: Introduction to Algorithms,
 - Dan Gusfield: Algorithms on Strings, Trees and Sequences,
 - Donald Knuth: The Art of Computer Programming,
-- A <a href="http://norvig.com/21-days.html">comment</a> by Peter Norvig.
+- a <a href="http://norvig.com/21-days.html">comment</a> by Peter Norvig,
+- ...

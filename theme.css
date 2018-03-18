@@ -43,6 +43,11 @@ code,pre {
 
 .list-group-item {
   background-color: white;
+
+}
+
+.tocify .list-group-item {
+  padding: 10px;
 }
 
 .header-panel {

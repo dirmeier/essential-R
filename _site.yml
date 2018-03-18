@@ -22,11 +22,11 @@ output:
     theme: lumen
     css: theme.css
     toc: yes
-    toc_depth: 2
+    toc_depth: 1
     toc_float:
       collapsed: no
       smooth_scroll: yes
-    number_sections: yes
+    number_sections: no
     highlight: pygments
     include:
       after_body: doc_suffix.html
