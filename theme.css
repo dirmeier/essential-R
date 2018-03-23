@@ -1,5 +1,42 @@
-@import url('https://fonts.googleapis.com/css?family=Raleway:400,300,600');
+@import url(https://fonts.googleapis.com/css?family=Raleway);
 @import url('https://fonts.googleapis.com/css?family=Hind|Inconsolata');
+
+
+.navbar {
+    font-family: "Raleway", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    border-width: 0 1px 2px 1px;
+    position: fixed;
+    max-height: 20px;
+    top: 0px;
+}
+
+.navbar .navbar-nav > li > a > .fa {
+    font-size: 20px;
+}
+
+.navbar .navbar-nav > li > a {
+    text-transform: uppercase;
+    font-size: 11px;
+    letter-spacing: .2rem;
+    color: #222;
+}
+
+.navbar .navbar-brand:hover {
+  color: #1EAEDB;
+}
+
+.navbar .navbar-nav > li > a:hover,
+.navbar .navbar-brand > a:hover {
+  color: #1EAEDB;
+}
+
+.navbar {
+    font-family: "Raleway", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    border-width: 0 1px 2px 1px;
+    position: fixed;
+    max-height: 20px;
+    top: 0px;
+}
 
 body, h1, h2, h3, .navbar-brand {
   font-family: "Raleway", "Hind", "Helvetica";
@@ -21,8 +58,6 @@ code,pre {
   font-size: 1.4rem;
 }
 
-}
-
 .col-xs-10 {
     width: 90%;
 }
@@ -37,18 +72,8 @@ code,pre {
   border-radius: 0px;
   border: 0px;
   overflow: hidden;
-  background-color: #fcfcfc;
 }
 
-
-.list-group-item {
-  background-color: white;
-
-}
-
-.tocify .list-group-item {
-  padding: 10px;
-}
 
 .header-panel {
   background-color: white;
@@ -58,8 +83,7 @@ code,pre {
 .list-group-item.active, .list-group-item.active:hover, .list-group-item.active:focus {
     background-color: #f5f5f5;
     border-color: #f5f5f5;
-    color: black;
-    border-radius: 4px
+    color: black
 }
 
 
