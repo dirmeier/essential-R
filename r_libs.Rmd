@@ -14,12 +14,12 @@ title: "R libraries"
                  comment=NA,
                  message=FALSE,
                  warning=FALSE)
-  
+
   library('gam')
   data(kyphosis)
 ```
 
-Much of R's popularity is due to its fantastic ecosystem. R users benefit heavily from CRAN and Bioconductor packages created by its community. 
+Much of R's popularity is due to its fantastic ecosystem. R users benefit heavily from CRAN and Bioconductor packages created by its community.
 For data analysis or statistics R is a good choice for various reasons:
 
 - high-level,
@@ -47,11 +47,11 @@ Every analysis of data starts with preprocessing and parsing. For this I've foun
 ```{r}
   library(dplyr)
   data(iris)
-  group_by(iris, Species) %>% 
+  group_by(iris, Species) %>%
     summarize(Petal.Length = mean(Petal.Length),
               Sepal.Length = mean(Sepal.Length)) %>%
     mutate(Species = toupper(Species))
-  
+
   tidyr::gather(iris, Col, Val, -Species) %>% head
 ```
 
@@ -172,8 +172,11 @@ C++ is a large, complex language. Chances that you mess up, introduce bugs and m
 ```{r, eval=TRUE, message=FALSE, include=TRUE, echo=TRUE, warnings=FALSE, fig.align = 'center'}
   library('purrr')
   library('ggplot2')
+  library('gganimate')
+  library('gapminder')
   library('repurrrsive')
   library('magrittr')  
+  library(DiagrammeR)
   utils::head(sw_people[[1]])
   df <- map_dfr(
     sw_people,
@@ -251,7 +254,7 @@ Tufte in R</a>. `ggthemes` offers some nice options to do so. For instance, if y
 If these two are still not enough, I usually go with `patchwork`:
 
 ```{r patch, fig.align = 'center', fig.height=6}
-  library(patchwork) 
+  library(patchwork)
   g + (p1 + p2) + plot_layout(ncol = 1)
 
 ```
@@ -301,16 +304,16 @@ Often you want to create an interactive plot, for instance when serving on a `sh
 
 Recently I also stumbled upon `highcharter` and `ggvis`:
 
-```{r, fig.align = 'center', fig.height=6}
+```{r highcharter, fig.align = 'center', fig.height=6, eval=FALSE}
   library('highcharter')
   hchart(iris, "scatter", hcaes(x = Sepal.Length, y = Sepal.Width,  group=Species)) %>%
     hc_add_theme(hc_theme_tufte())
 ```
 
-```{r, fig.align = 'center', fig.height=6}
+```{r ggvis, fig.align = 'center', fig.height=6}
   library('ggvis')
   data("mtcars")
-  mtcars %>% 
+  mtcars %>%
     ggvis(~wt, ~mpg,  
           size := input_slider(10, 100),
           opacity := input_slider(0, 1) ) %>%  
@@ -336,7 +339,7 @@ With `gganimate` you can directly create GIFs from you plots:
 
 There are many wonderful graph and network libraries around. I primarily use `ggnetwork`/`ggnet2`, `igraph`, `ggraph` and `DiagrammeR`.
 
-```{r,fig.height=2, fig.align = 'center'}
+```{r diagrammer,fig.height=2, fig.align = 'center'}
   library(DiagrammeR)
   create_graph() %>%
     add_node(label=expression(Z),
@@ -414,7 +417,7 @@ Find all the output formats by Rstudio [here](https://rmarkdown.rstudio.com/less
 
 ## Shiny
 
-Setting up a Shiny instance for reporting is a great way to present data using interactive plots. 
+Setting up a Shiny instance for reporting is a great way to present data using interactive plots.
 Setting up shiny is fairly easy. You need to create a `server.R` file and `ui.R` file, e.g. like this:
 
 ```{bash}

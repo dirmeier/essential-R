@@ -8,8 +8,6 @@
 
 This repository is a collection of programming guidelines, good practices and  libraries I tend to use routinely when writing code in `R` and `C++`.
 
-In the end, it just serves as a reminder for myself..
-
 ## Author
 
 Simon Dirmeier <a href="mailto:simon.dirmeier@web.de">simon.dirmeier@web.de</a>
