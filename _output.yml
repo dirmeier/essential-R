@@ -1,10 +1,10 @@
 bookdown::gitbook:
-  css: _css/theme.css
+  css: theme.css
   highlight: pygments
   config:
     toc:
       before: |
-        <li><a href="/index.html">essential-R</a></li>
+        <li><a href="./">essential-R</a></li>
       after: |
     download: null
     edit : null
@@ -16,6 +16,7 @@ bookdown::gitbook:
       family: sans
       size: 2
     sharing:
+      github: yes
       facebook: no
       twitter: yes
       linkedin: yes
