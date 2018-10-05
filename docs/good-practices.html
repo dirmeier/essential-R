@@ -32,7 +32,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="programming-paradigma-in-r.html">
+<link rel="prev" href="r-libraries.html">
 
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -54,6 +54,23 @@
 <link href="libs/highlight-6.2.0/textmate.css" rel="stylesheet" />
 <script src="libs/highlight-6.2.0/highlight.js"></script>
 <script src="libs/profvis-binding-0.3.5/profvis.js"></script>
+<script src="libs/plotly-binding-4.7.1/plotly.js"></script>
+<script src="libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="libs/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.0.0/js/crosstalk.min.js"></script>
+<link href="libs/plotlyjs-1.29.2/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotlyjs-1.29.2/plotly-latest.min.js"></script>
+<script src="libs/detect-resize-0.5.3/jquery.resize.js"></script>
+<link href="libs/jquery-ui-1.11.4/jquery-ui.min.css" rel="stylesheet" />
+<script src="libs/jquery-ui-1.11.4/jquery-ui.min.js"></script>
+<script src="libs/vega-1.4.3/vega.min.js"></script>
+<script src="libs/lodash-2.2.1/lodash.min.js"></script>
+<script>var lodash = _.noConflict();</script>
+<link href="libs/ggvis-0.4.3/css/ggvis.css" rel="stylesheet" />
+<script src="libs/ggvis-0.4.3/js/ggvis.js"></script>
+<script src="libs/viz-0.3/viz.js"></script>
+<link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
+<script src="libs/grViz-binding-1.0.0/grViz.js"></script>
 
 
 <style type="text/css">
@@ -107,7 +124,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
       <nav role="navigation">
 
 <ul class="summary">
-<li><a href="./">essential-R</a></li>
+<li><a href="./index.html">essential-R</a></li>
 
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Abstract</a></li>
@@ -133,11 +150,34 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="2.2.4" data-path="programming-paradigma-in-r.html"><a href="programming-paradigma-in-r.html#r6"><i class="fa fa-check"></i><b>2.2.4</b> R6</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="good-practices.html"><a href="good-practices.html"><i class="fa fa-check"></i><b>3</b> Good practices</a><ul>
-<li class="chapter" data-level="3.1" data-path="good-practices.html"><a href="good-practices.html#continuous-integration"><i class="fa fa-check"></i><b>3.1</b> Continuous integration</a></li>
-<li class="chapter" data-level="3.2" data-path="good-practices.html"><a href="good-practices.html#version-control"><i class="fa fa-check"></i><b>3.2</b> Version control</a></li>
-<li class="chapter" data-level="3.3" data-path="good-practices.html"><a href="good-practices.html#docker"><i class="fa fa-check"></i><b>3.3</b> Docker</a></li>
-<li class="chapter" data-level="3.4" data-path="good-practices.html"><a href="good-practices.html#code-style"><i class="fa fa-check"></i><b>3.4</b> Code style</a></li>
+<li class="chapter" data-level="3" data-path="r-libraries.html"><a href="r-libraries.html"><i class="fa fa-check"></i><b>3</b> R libraries</a><ul>
+<li class="chapter" data-level="3.1" data-path="r-libraries.html"><a href="r-libraries.html#data-wrangling"><i class="fa fa-check"></i><b>3.1</b> Data wrangling</a></li>
+<li class="chapter" data-level="3.2" data-path="r-libraries.html"><a href="r-libraries.html#extending-to-c-using-rcpp"><i class="fa fa-check"></i><b>3.2</b> Extending to C++ using Rcpp</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="r-libraries.html"><a href="r-libraries.html#rcpp-in-a-package"><i class="fa fa-check"></i><b>3.2.1</b> Rcpp in a package</a></li>
+<li class="chapter" data-level="3.2.2" data-path="r-libraries.html"><a href="r-libraries.html#writing-c"><i class="fa fa-check"></i><b>3.2.2</b> Writing <code>C++</code></a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="r-libraries.html"><a href="r-libraries.html#plotting"><i class="fa fa-check"></i><b>3.3</b> Plotting</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="r-libraries.html"><a href="r-libraries.html#layout"><i class="fa fa-check"></i><b>3.3.1</b> Layout</a></li>
+<li class="chapter" data-level="3.3.2" data-path="r-libraries.html"><a href="r-libraries.html#publication-ready-plots"><i class="fa fa-check"></i><b>3.3.2</b> Publication ready plots</a></li>
+<li class="chapter" data-level="3.3.3" data-path="r-libraries.html"><a href="r-libraries.html#colors"><i class="fa fa-check"></i><b>3.3.3</b> Colors</a></li>
+<li class="chapter" data-level="3.3.4" data-path="r-libraries.html"><a href="r-libraries.html#interactive-and-animated-plots"><i class="fa fa-check"></i><b>3.3.4</b> Interactive and animated plots</a></li>
+<li class="chapter" data-level="3.3.5" data-path="r-libraries.html"><a href="r-libraries.html#graphs"><i class="fa fa-check"></i><b>3.3.5</b> Graphs</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="r-libraries.html"><a href="r-libraries.html#data.table"><i class="fa fa-check"></i><b>3.4</b> data.table</a></li>
+<li class="chapter" data-level="3.5" data-path="r-libraries.html"><a href="r-libraries.html#mlr-and-openml"><i class="fa fa-check"></i><b>3.5</b> mlR and openML</a></li>
+<li class="chapter" data-level="3.6" data-path="r-libraries.html"><a href="r-libraries.html#markdown-and-shiny"><i class="fa fa-check"></i><b>3.6</b> Markdown and Shiny</a><ul>
+<li class="chapter" data-level="3.6.1" data-path="r-libraries.html"><a href="r-libraries.html#shiny"><i class="fa fa-check"></i><b>3.6.1</b> Shiny</a></li>
+</ul></li>
+<li class="chapter" data-level="3.7" data-path="r-libraries.html"><a href="r-libraries.html#pryr"><i class="fa fa-check"></i><b>3.7</b> Pryr</a></li>
+<li class="chapter" data-level="3.8" data-path="r-libraries.html"><a href="r-libraries.html#datastructures"><i class="fa fa-check"></i><b>3.8</b> datastructures</a></li>
+<li class="chapter" data-level="3.9" data-path="r-libraries.html"><a href="r-libraries.html#workflow-management"><i class="fa fa-check"></i><b>3.9</b> Workflow management</a></li>
+<li class="chapter" data-level="3.10" data-path="r-libraries.html"><a href="r-libraries.html#others"><i class="fa fa-check"></i><b>3.10</b> Others</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="good-practices.html"><a href="good-practices.html"><i class="fa fa-check"></i><b>4</b> Good practices</a><ul>
+<li class="chapter" data-level="4.1" data-path="good-practices.html"><a href="good-practices.html#continuous-integration"><i class="fa fa-check"></i><b>4.1</b> Continuous integration</a></li>
+<li class="chapter" data-level="4.2" data-path="good-practices.html"><a href="good-practices.html#version-control"><i class="fa fa-check"></i><b>4.2</b> Version control</a></li>
+<li class="chapter" data-level="4.3" data-path="good-practices.html"><a href="good-practices.html#docker"><i class="fa fa-check"></i><b>4.3</b> Docker</a></li>
+<li class="chapter" data-level="4.4" data-path="good-practices.html"><a href="good-practices.html#code-style"><i class="fa fa-check"></i><b>4.4</b> Code style</a></li>
 </ul></li>
 </ul>
 
@@ -157,10 +197,10 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
             <section class="normal" id="section-">
 <div id="good-practices" class="section level1">
-<h1><span class="header-section-number">3</span> Good practices</h1>
+<h1><span class="header-section-number">4</span> Good practices</h1>
 <p>Continuous integration, version control and containerization are three of the many tools of a developer. Here, I quickly introduce how the three can be used for <code>R</code>.</p>
 <div id="continuous-integration" class="section level2">
-<h2><span class="header-section-number">3.1</span> Continuous integration</h2>
+<h2><span class="header-section-number">4.1</span> Continuous integration</h2>
 <p>To be honest, doing all the steps from the section above is tedious and annoying. For that reason I set up Travis CI to take care of running our tests, static analysis and code coverage in the project. Travis works for Mac and Unix.</p>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">  <span class="kw">cat</span> ./pkg/.travis.yml</code></pre></div>
 <pre><code>language: r
@@ -306,7 +346,7 @@ Done. Your build exited with 0.</code></pre>
 </div>
 </div>
 <div id="version-control" class="section level2">
-<h2><span class="header-section-number">3.2</span> Version control</h2>
+<h2><span class="header-section-number">4.2</span> Version control</h2>
 <p>Aside from he fact that version control is great, putting your project on GitHub has the most prominent advantage that you can add badges to your <code>README.md</code> to show others about the state of your package, for instance repository, CI or code coverage status.</p>
 <div align="center">
 <p><img src="https://rawgit.com/dirmeier/essential-R/master/fig/readme_me.jpg" alt="oh no" width="750px"></p>
@@ -346,11 +386,11 @@ There’s a wide variety of badges to describe your project.
 </div>
 </div>
 <div id="docker" class="section level2">
-<h2><span class="header-section-number">3.3</span> Docker</h2>
+<h2><span class="header-section-number">4.3</span> Docker</h2>
 <p>todo (needed for debugging c++)</p>
 </div>
 <div id="code-style" class="section level2">
-<h2><span class="header-section-number">3.4</span> Code style</h2>
+<h2><span class="header-section-number">4.4</span> Code style</h2>
 <p>I try to follow two general guidelines when writing code. These are primarily not my personal preferences, nut adopted form packages like <code>data.table</code>, <code>lme4</code>, <code>Matrix</code> or Bioconductor. Whatever you do, just be consistent. There seem to be a lot of different preference around.</p>
 <p>If I mainly write using <code>S3</code> classes and functions I prefer writing code like this:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my.var &lt;-<span class="st"> &quot;2&quot;</span>
@@ -374,7 +414,7 @@ plot.me &lt;-<span class="st"> </span>function(x, ...) <span class="kw">plot.def
           </div>
         </div>
       </div>
-<a href="programming-paradigma-in-r.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="r-libraries.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 
     </div>
   </div>
@@ -390,28 +430,29 @@ gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
 "sharing": {
 "github": false,
-"facebook": true,
+"facebook": false,
 "twitter": true,
 "google": false,
-"linkedin": false,
+"linkedin": true,
 "weibo": false,
 "instapper": false,
 "vk": false,
-"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+"all": false
 },
 "fontsettings": {
 "theme": "white",
 "family": "sans",
 "size": 2
 },
-"edit": {
-"link": null,
-"text": null
-},
+"edit": null,
 "download": null,
 "toc": {
 "collapse": "subsection"
-}
+},
+"toolbar": {
+"position": "fixed"
+},
+"search": true
 });
 });
 </script>

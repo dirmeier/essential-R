@@ -1,6 +1,4 @@
----
-title: "R libraries"
----
+# R libraries
 
 Much of R's popularity is due to its fantastic ecosystem. R users benefit heavily from CRAN and Bioconductor packages created by its community.
 For data analysis or statistics R is a good choice for various reasons:
@@ -22,8 +20,7 @@ There are a few things, however, R is not so great at:
 
 For stats, data analysis and writing reports I find R still superior to Python, partly due to `Rmarkdown`, `shiny`, `ggplot2` and `Rcpp`.
 
-
-# Data wrangling
+## Data wrangling
 
 Every analysis of data starts with preprocessing and parsing. For this I've found `dplyr` and `tidyr` tremendously useful. There are many more great tools in the tidyverse and Rstudio, such as `purrr` (explained later), `magrittr` or `tibble`, but these two simlify most of my work.
 
@@ -38,8 +35,7 @@ Every analysis of data starts with preprocessing and parsing. For this I've foun
   tidyr::gather(iris, Col, Val, -Species) %>% head
 ```
 
-
-# Extending to C++ using Rcpp
+## Extending to C++ using Rcpp
 
 Using Rcpp (and RcppEigen, RcppArmadillo, Boost) you can easily your extend your code to C++. It not only nicely wraps the standard C API, but also let's you use standard matrix libraries such as Eigen and Armadillo or Boost.
 
@@ -59,12 +55,12 @@ If you have a project that's not a package you can for instance create a functio
 Let's have a look at an Eigen example with sourceCpp:
 
 ```{bash}
-  cat ./square.cpp
+  cat ./_src/square.cpp
 ```
 
 ```{r}  
   library('RcppEigen')
-  Rcpp::sourceCpp("./square.cpp")
+  Rcpp::sourceCpp("./_src/square.cpp")
   square(matrix(rnorm(10), 2))
 ```
 
@@ -78,7 +74,7 @@ Even for small matrices, the speed up is already substantial.
   )
 ```
 
-## Rcpp in a package
+### Rcpp in a package
 
 Usually, you would want to put your source code into a `cpp` file in the `src` folder. Then you can call C++ from an R function, for instance as described below.
 
@@ -111,8 +107,7 @@ LinkingTo: Rcpp</code></pre>
 
 This should let you access the C++ function from your package. For more details check out the main <a href="http://www.rcpp.org/">documentation</a> or some of my packages, like <a href="https://github.com/dirmeier/netReg">netReg</a> or <a href="https://github.com/dirmeier/datastructures">datastructures</a>. The latter also has an example how to use modules and Boost.
 
-
-## Writing `C++`
+### Writing `C++`
 
 Here are some tools that help you develop your code:
 
@@ -148,28 +143,7 @@ C++ is a large, complex language. Chances that you mess up, introduce bugs and m
 - Print warnings. They are usually there for a reason.
 - Start a toy project or contribute to OSS projects.
 
-# Functional programming
-
-`purrr` is a functional programming toolkit, much like the `apply` class of functions. However, purrr does so in a more unified way with consistent return values. Furthermore, in combination with `magrittr`, the code you write is naturally more concise and easier to read.
-
-```{r, eval=TRUE, message=FALSE, include=TRUE, echo=TRUE, warnings=FALSE, fig.align = 'center'}
-  library('purrr')
-  library('ggplot2')
-  library('gganimate')
-  library('gapminder')
-  library('repurrrsive')
-  library('magrittr')  
-  library(DiagrammeR)
-  utils::head(sw_people[[1]])
-  df <- map_dfr(
-    sw_people,
-    .f = function(.) data.frame(color  = .[["eye_color"]],
-                                height = .[["height"]],
-                                mass   = .[["mass"]]))
-  utils::head(df)
-```
-
-# Plotting
+## Plotting
 
 One of the most significant reasons to use R is probably its plotting capabilities and people contributing to ggplot2 and the community's effort of adding package that integrate with it. Some nice packages for plotting are the following:
 
@@ -193,8 +167,7 @@ One of the most significant reasons to use R is probably its plotting capabiliti
 - `ggraph`, `ggnet` and `ggnetwork`
 - `gganimate` and `animattion`
 
-
-## Layout
+### Layout
 
 Use `hrbrthemes` for a nicer layout:
 
@@ -222,8 +195,7 @@ Tufte in R</a>. `ggthemes` offers some nice options to do so. For instance, if y
   print(g)
 ```
 
-
-## Publication ready plots
+### Publication ready plots
 
 `cowplot` and `ggpubr` are great for greating publication ready plots:
 
@@ -242,7 +214,7 @@ If these two are still not enough, I usually go with `patchwork`:
 
 ```
 
-## Colors
+### Colors
 
 I use `colorspace`  and `colorblindr` in order to remove some hue and chroma. `viridis` is a wonderful set of colors for continuous, sequential data. For discrete, qualitative data I mainly use `ggthemr` and the `fresh` colors. `ggsci` also has some wonderful color palettes. `scales` lets you have a look at a color palette easily.
 
@@ -272,8 +244,7 @@ Another great tool  is `swatches`:
   show_palette(omega_nebula)
 ```
 
-
-## Interactive and animated plots
+### Interactive and animated plots
 
 Often you want to create an interactive plot, for instance when serving on a `shiny` instance. One way to do that is using plotly:
 
@@ -283,7 +254,6 @@ Often you want to create an interactive plot, for instance when serving on a `sh
     ggthemes::theme_tufte()
   plotly::ggplotly(q)
 ```
-
 
 Recently I also stumbled upon `highcharter` and `ggvis`:
 
@@ -303,8 +273,8 @@ Recently I also stumbled upon `highcharter` and `ggvis`:
       layer_points()
 ```
 
-
 With `gganimate` you can directly create GIFs from you plots:
+
 ```{r, eval=FALSE}
   library('gganimate')
   library('gapminder')
@@ -318,7 +288,7 @@ With `gganimate` you can directly create GIFs from you plots:
 
 ![](https://rawgit.com/dirmeier/essential-R/master/fig/gganimate.gif)
 
-## Graphs
+### Graphs
 
 There are many wonderful graph and network libraries around. I primarily use `ggnetwork`/`ggnet2`, `igraph`, `ggraph` and `DiagrammeR`.
 
@@ -334,7 +304,7 @@ There are many wonderful graph and network libraries around. I primarily use `gg
 ```
 
 
-# data.table
+## data.table
 
 `data.table` is a fast implementation of R's classical `data.frame`. I hardly ever use data frame any more, and if so only, because it seems to work nicer with `dplyr` and `tidyr`. However, by using `dtplyr` this isn't much of a problem, really.
 
@@ -370,8 +340,7 @@ In the end it depends what style you prefer. I usually go with `data.table` alon
   )
 ```
 
-
-# mlR and openML
+## mlR and openML
 
 CRAN offers dozens of packages related to machine and statistical learning, many of which doing the same. `mlR` wraps many of these into one big library.
 `mlR` integrates with `openML`, an open machine learning platform where people share code, data and algorithms. Here we show an example where we use a Gaussian process to predict the Kyphosis label from the `gam` package.
@@ -390,15 +359,14 @@ CRAN offers dozens of packages related to machine and statistical learning, many
   performance(pred, measures = list(mmce, acc))
 ```
 
-
-# Markdown and Shiny
+## Markdown and Shiny
 
 `Rmarkdown` is a great way for documentation, reporting and working reproducibly. Rstudio provides tons of different output formats like web sites (like this one), Tufte style documents, blogs and others. If you want to present your work interactively you can do so by building a web page using `shiny`.
 For presentations that use R code I use either <a href="https://github.com/yihui/xaringan">xaringan</a>, <a href="http://slidify.org/">Slidify</a> or <a href="https://rmarkdown.rstudio.com/revealjs_presentation_format.html">reveal.js</a>.
 
 Find all the output formats by Rstudio [here](https://rmarkdown.rstudio.com/lesson-9.html).
 
-## Shiny
+### Shiny
 
 Setting up a Shiny instance for reporting is a great way to present data using interactive plots.
 Setting up shiny is fairly easy. You need to create a `server.R` file and `ui.R` file, e.g. like this:
@@ -413,7 +381,7 @@ Setting up shiny is fairly easy. You need to create a `server.R` file and `ui.R`
 
 You can publish your server on <a href="http://www.shinyapps.io/">shinyapps.io</a> so that it is accessible by everyone.
 
-# Pryr
+## Pryr
 
 In some cases it is interesting to have a look at the implementation of specific functions, get their sizes in byte or get the current memory consumption. It is especially useful to keep track of the addresses your objects point to. When I was new to R I found it confusing when a reference is dropped and when a new copy of an object is created.
 
@@ -433,7 +401,7 @@ In some cases it is interesting to have a look at the implementation of specific
   pryr::address(y)
 ```
 
-# datastructures
+## datastructures
 
 If you have a background in computer science you may wonder, that R does not have support for advanced data structures such as Fibonacci heaps or hashmaps.
 `datastructures` tries to solve this. It uses Rcpp modules to export Boost data structures to R:
@@ -448,7 +416,7 @@ If you have a background in computer science you may wonder, that R does not hav
   datastructures::pop(q)
 ```
 
-# Workflow management
+## Workflow management
 
 I recently came across [`drake`](https://ropensci.github.io/drake/index.html) as a workflow manager. It allows you to run a project and easily update output files.
 
@@ -456,7 +424,7 @@ I recently came across [`drake`](https://ropensci.github.io/drake/index.html) as
   <img src="https://rawgit.com/dirmeier/essential-R/master/fig/drake.jpg" alt="oh no" width="500px">
 </div>
 
-# Others
+## Others
 
 There are many other great tools I did not specifically mention due to the fact that they are probably more situational. Some of these are:
 

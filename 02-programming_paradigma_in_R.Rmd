@@ -1,9 +1,29 @@
 # Programming paradigma in R
 
+TODO
 
 ## Functional programming
 
 TODO
+
+`purrr` is a functional programming toolkit, much like the `apply` class of functions. However, purrr does so in a more unified way with consistent return values. Furthermore, in combination with `magrittr`, the code you write is naturally more concise and easier to read.
+
+```{r, eval=TRUE, message=FALSE, include=TRUE, echo=TRUE, warnings=FALSE, fig.align = 'center'}
+  library('purrr')
+  library('ggplot2')
+  library('gganimate')
+  library('gapminder')
+  library('repurrrsive')
+  library('magrittr')  
+  library(DiagrammeR)
+  utils::head(sw_people[[1]])
+  df <- map_dfr(
+    sw_people,
+    .f = function(.) data.frame(color  = .[["eye_color"]],
+                                height = .[["height"]],
+                                mass   = .[["mass"]]))
+  utils::head(df)
+```
 
 ## Object-oriented programming
 

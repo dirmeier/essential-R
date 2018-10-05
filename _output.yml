@@ -1,7 +1,26 @@
 bookdown::gitbook:
   css: _css/theme.css
+  highlight: pygments
   config:
     toc:
       before: |
-        <li><a href="./">essential-R</a></li>
+        <li><a href="/index.html">essential-R</a></li>
       after: |
+    download: null
+    edit : null
+    toolbar:
+      position: fixed
+    search: yes
+    fontsettings:
+      theme: white
+      family: sans
+      size: 2
+    sharing:
+      facebook: no
+      twitter: yes
+      linkedin: yes
+      google: no
+      weibo: no
+      instapper: no
+      vk: no
+      all: no
