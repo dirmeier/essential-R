@@ -2,23 +2,6 @@
 title: "R libraries"
 ---
 
-
-```{r knitr_init, echo=FALSE, cache=FALSE, message=FALSE}
-  library(knitr)
-  #library(rmdformats)  
-  library(magrittr)
-  library(devtools)
-  devtools::install("./newpkg")    
-  opts_chunk$set(prompt=FALSE,
-                 tidy=TRUE,
-                 comment=NA,
-                 message=FALSE,
-                 warning=FALSE)
-
-  library('gam')
-  data(kyphosis)
-```
-
 Much of R's popularity is due to its fantastic ecosystem. R users benefit heavily from CRAN and Bioconductor packages created by its community.
 For data analysis or statistics R is a good choice for various reasons:
 
@@ -457,7 +440,7 @@ If you have a background in computer science you may wonder, that R does not hav
 
 ```{r}
   library('datastructures')
-  q <- datastructures::fibonacci_heap("integer", "numeric")
+  q <- datastructures::fibonacci_heap("integer")
   q[1:3] <- list(rnorm(3), 2, rnorm(4))
   datastructures::pop(q)
   datastructures::pop(q)

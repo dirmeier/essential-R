@@ -3,7 +3,7 @@ module.exports = function (grunt) {
         pkg: grunt.file.readJSON("package.json"),
         exec: {
           build: {
-            cmd: "Rscript -e 'rmarkdown::render_site()'"
+            cmd: "Rscript -e \"bookdown::render_book('index.Rmd', 'bookdown::gitbook')\""
           }
         }
     });

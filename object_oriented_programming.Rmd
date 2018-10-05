@@ -1,0 +1,54 @@
+# Object-oriented programming
+
+R has three different native ways for object-oriented programming and as far as I know one additional library. `S3`, `S4` and `refClasses` (`R5`) come with the standard library, while `R6` can be installed from CRAN. I actually never use R5, because it feels incredibly bulky and slow, so we will not cover it here.
+
+## S3
+
+S3 methods dispatch on the first argument. If you come from other languages, such as `Java`, an S3 method is basically an overloaded function on the first argument. You can define an S3 function like this:
+
+```{r}
+  s3 <- function(x, y, ...) UseMethod("s3")
+
+  s3.matrix <- function(x, y, ...) apply(x, 1, sum)
+  s3.character <- function(x, y, ...) paste(x, y)
+
+  s3(matrix(1:6, 2))
+  s3("hello", "reader")
+```
+
+S3 classes are defines like this:
+
+```{r}
+  s3.list <- function(x, y, ...)
+  {
+    l <- list(x=x, y=y)
+    base::class(l) <- "my.s3"
+
+    l
+  }
+  s3(list(x=1), y=2)
+```
+
+The main issue here is of course that the user can easily overwrite a class and that method dispatching on one argument usually is not enough. However, often S3 functions are all you need.
+
+## S4
+
+Bioconductor seems to prefer S4 over S3, so if you want to submit your package, you could for instance define interfaces using S4 and the rest using S3 or w/o OO entirely. In that way the user of your package only sees the exported interface (the S4 method) and upon calling would receive an S4 object. The rest of the implementation would be hidden.
+
+```{r, eval=FALSE}
+  methods::setClass("normallist",
+         representation = list(.el = "list"),
+         prototype = methods::prototype(.el = list())
+  )
+
+  methods::setGeneric("put", function(obj, x) base::standardGeneric("insert"))
+
+  methods::setMethod(
+    "put",
+    signature = methods::signature(obj = "normallist", x = "vector"),
+    function(obj, x) obj@.el <- as.list(x)
+  )
+
+  d <- methods::new("normallist")
+  d <- put(d, seq(3))
+```

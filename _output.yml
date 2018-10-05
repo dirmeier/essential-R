@@ -1,0 +1,8 @@
+bookdown::gitbook:
+  css: css/theme.css
+  split_by: chapter
+  config:
+    toc:
+      before: |
+        <li><a href="./">essential-R</a></li>
+      after: |
