@@ -1,8 +1,14 @@
 # R package development
 
+```{r, echo=FALSE}
+devtools::install("./pkg")    
+```
+
+The following section covers tools that help and speed up developing R
+
 ## Creating R packages
 
-The following section covers tools that help and speed up developing R:
+A minimum `R`-package stack at least consists of the following packages of tools:
 
 - `yeoman`
 - `devtools`
@@ -16,10 +22,10 @@ If you have `yeoman` installed, you can use the `R-bones` generator in order to 
 
 ```{bash, eval=FALSE}
   yo r-bones
-  ls -la newpkg
+  ls -la pkg
 ```
 ```{bash, include=TRUE, eval=TRUE, echo=FALSE}
-  ls -la newpkg
+  ls -la pkg
 ```
 
 
@@ -28,7 +34,7 @@ If you have `yeoman` installed, you can use the `R-bones` generator in order to 
 When creating an R package `devtools` and `covr` cover almost any functionality required. The following functions delineate how my typical workflow looks:
 
 ```{r, include=TRUE, eval=FALSE, echo=TRUE}
-  devtools::create("newpkg")
+  devtools::create("pkg")
   devtools::use_rcpp()  
   devtools::document()  
   devtools::test()
@@ -72,13 +78,13 @@ to create a test suite automatically. A test would look like this:
 Let's test this.
 
 ```{r}
-  devtools::test("./newpkg")
+  devtools::test("./pkg")
 ```
 
 A function ideally does *one task and one task only*. Functions with side effects, multiple operations or exceedingly large method body easily introduce bugs. Keep your functions concise! This also simplifies testing, because it is easier to track down a bug in a shorter function.
 
 
-# Documenting code
+## Documenting code
 
 Having written the first unit test, we can create the actual function and its respective documentation using `roxygen2`:
 
@@ -100,7 +106,7 @@ Having written the first unit test, we can create the actual function and its re
 Then build the documentation:
 
 ```{r}
-  devtools::document("./newpkg")
+  devtools::document("./pkg")
 ```
 
 An excellent help for creating documentation (of S3 and S4) is for instance <a href="https://github.com/variani/pckdev">pckdev</a> or the official <a href="https://cran.r-project.org/web/packages/roxygen2/vignettes/roxygen2.html">vignette</a>.
@@ -111,7 +117,7 @@ An excellent help for creating documentation (of S3 and S4) is for instance <a h
 If you want to submit your package to CRAN or Bioconductor certain criteria must be fulfilled. Some of which can be tested by checking or package like this:
 
 ```{r,  eval=TRUE, message=TRUE,  include=TRUE, echo=TRUE}
-  devtools::check_cran("./newpkg")
+  devtools::check_cran("./pkg")
 ```
 
 This does not test for Bioconductor though. For this you have to install <a href="https://bioconductor.org/packages/release/bioc/html/BiocCheck.html"> BioCheck</a> manually and call `R CMD BiocCheck newpkg*.tar` on the command line.
@@ -134,11 +140,10 @@ What lintr considers worth reporting can be customized in a .lintr file in your 
 Let's see if our small package is lint free:
 
 ```{r, eval=TRUE, message=TRUE,  include=TRUE, echo=TRUE}
-  devtools::lint("./newpkg")
+  devtools::lint("./pkg")
 ```
 
 Whoops!
-
 
 ### Running examples
 
@@ -146,7 +151,7 @@ Examples are extremely helpful both for the user and debugging purposes. When
 we documented our function `g` we already have an example how to use the function. We can manually call all examples using:
 
 ```{r, eval=TRUE, message=TRUE, include=TRUE, echo=TRUE}
-  devtools::run_examples("./newpkg")
+  devtools::run_examples("./pkg")
 ```
 
 
@@ -155,13 +160,13 @@ we documented our function `g` we already have an example how to use the functio
 covr lets you check how much of your code is used and tested. If you created a package just run:
 
 ```{r, eval=TRUE, message=TRUE, include=TRUE, echo=TRUE}
-  covr::package_coverage("./newpkg")
+  covr::package_coverage("./pkg")
 ```
 
 Having high code coverage usually correlates with a good testing suite. The more functionality is tested, the larger the code coverage. You can customized reports by adding a file called `.codecov.yml` to your project's root:
 
 ```{bash}
-  cat ./newpkg/.codecov.yml
+  cat ./pkg/.codecov.yml
 ```
 
 
@@ -210,7 +215,7 @@ Often it however suffices to just benchmark two methods against each other.
 At this point you are finished writing your package and you want to provide it to a large user base. A nice landing page often helps gaining popularity. The easiest way to do so is using `pkgdown`.
 
 ```{r, eval=FALSE, message=TRUE, include=TRUE, echo=TRUE}
-  pkgdown::build_site(pkg= "./newpkg")
+  pkgdown::build_site(pkg = "./pkg")
 ```
 
 This creates a web-page like this:

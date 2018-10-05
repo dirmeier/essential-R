@@ -8,13 +8,19 @@ documentclass: book
 output: bookdown::gitbook
 ---
 
-# Welcome {-}
+# Abstract {-}
+
+<div class="quote" style="text-align: center; margin-top: 5%">
+  <i>The lyf so short, the craft so long to lerne.</i><br>
+</div>
+<div class="quote" style="text-align: right; margin-bottom: 5% ">
+  <span style="text-align: right;">-- Geoffrey Chaucer</span>
+</div>
 
 ```{r knitr_init, echo=FALSE, cache=FALSE, message=FALSE}
   library(knitr)
   library(magrittr)
   library(devtools)
-  devtools::install("./newpkg")    
   opts_chunk$set(prompt=FALSE,
                  tidy=TRUE,
                  comment=NA,
@@ -30,24 +36,7 @@ This book serves as a collection of
 * good practices for programming,
 * and my most frequently used packages.
 
-I don't claim at any point that the material treated here covers all of R, but rather serves as my personal list of essential things related to prgoraming in `R` that
-I found useful to know. The document is partly opinionated and subjective, so feel free to open up an <a href="https://github.com/dirmeier/essential-R/issues">issue</a> if you feel some parts should be clarified or reformulated.
-
-Programming is in my oppinion not about *getting the job done*, but more a craft and form of art which cannot be mastered in a few years only.
-
-<div style="margin-top: 2%">
-  <i>The lyf so short, the craft so long to lerne.</i>
-</div>
-<div class="quote" style="margin-bottom: 5%">
--- Geoffrey Chaucer
-</div>
-
-<div>
-  <i>Programs must be written for people to read, and only incidentally for machines to execute.</i>
-</div>
-<div class="quote">
--- Harold Abelson
-</div>
+The material treated here certainly does not cover all of `R`, but rather serves as my personal list of essential things related to programming in `R` that I found useful to know. The document is partly opinionated and subjective, so feel free to open up an <a href="https://github.com/dirmeier/essential-R/issues">issue</a> if you feel some parts should be clarified or reformulated.
 
 The book is no introduction on how to program functionally, procedurally or in an object-oriented way, how to write code in general, or how to speed it up. The interested reader is referred to:
 

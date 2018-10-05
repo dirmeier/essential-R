@@ -1,15 +1,13 @@
----
-title: "Good practices"
----
+# Good practices
 
 Continuous integration, version control and containerization are three of the many tools of a developer. Here, I quickly introduce how the three can be used for `R`.
 
-# Continuous integration
+## Continuous integration
 
 To be honest, doing all the steps from the section above is tedious and annoying. For that reason I set up Travis CI to take care of running our tests, static analysis and code coverage in the project. Travis works for Mac and Unix.
 
 ```{bash}
-  cat ./newpkg/.travis.yml
+  cat ./pkg/.travis.yml
 ```
 
 Check out Travis' <a href="https://docs.travis-ci.com/">docs</a> for more info. What we are basically telling Travis to do is to check our package `--as-cran`, run the unit tests, do the code coverage and finally do a static code analysis.
@@ -17,7 +15,7 @@ Check out Travis' <a href="https://docs.travis-ci.com/">docs</a> for more info. 
 In order to do the same for Windows machines, we also use AppVeyor.
 
 ```{bash}
-  cat ./newpkg/appveyor.yml
+  cat ./pkg/appveyor.yml
 ```
 
 Here, we only run some tests and checks, since we already got the code analysis and coverage.
@@ -62,20 +60,19 @@ R/bad_bad_file.R:3:85: style: Use <-, not =, for assignment.
                                                                                     ^
 Warning message:
 In readLines(filename) :
-  incomplete final line found on '/home/travis/build/dirmeier/essential-R/newpkg/R/emptypRoject-package.R'
+  incomplete final line found on '/home/travis/build/dirmeier/essential-R/pkg/R/emptypRoject-package.R'
 Done. Your build exited with 0.</code></pre>
 
 Fixing style related issues is essential since we want other people to be able to read our code easily. Good code also increases the number of users, because the package is more trusted than a *spaghetti code* package.
 
-<div>
-  <i>Beauty is more important in computing than anywhere else in technology because software is so complicated. Beauty is the ultimate defense against complexity.</i>
+<div class="quote" style="text-align: center; margin-top: 5%">
+  <i>Beauty is more important in computing than anywhere else in technology because software is so complicated. Beauty is the ultimate defense against complexity.</i><br>
 </div>
-<div class="quote" style="margin-bottom: 5%">
--- David Gelernter
+<div class="quote" style="text-align: right; margin-bottom: 5% ">
+  <span style="text-align: right;">-- David Gelernter
 </div>
 
-
-# Version control
+## Version control
 
 Aside from he fact that version control is great, putting your project on GitHub has the most prominent advantage that you can add badges to your `README.md` to show others about the state of your package, for instance repository, CI or code coverage status.
 
@@ -95,11 +92,11 @@ There's a wide variety of badges to describe your project.
 </div>
 
 
-# Docker
+## Docker
 
 todo (needed for debugging c++)
 
-# Code style
+## Code style
 
 I try to follow two general guidelines when writing code. These are primarily not my personal preferences, nut adopted form packages like
 `data.table`, `lme4`, `Matrix` or Bioconductor. 
@@ -130,6 +127,3 @@ For `S4` classes and functions I recommend using the [Bioconductor](https://www.
             signature=signature(iAmAList = "list"))
 
 ```
-
-
-

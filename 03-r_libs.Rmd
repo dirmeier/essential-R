@@ -102,11 +102,11 @@ Usually, you would want to put your source code into a `cpp` file in the `src` f
 <pre><code>Imports: Rcpp
 LinkingTo: Rcpp</code></pre>
 
-3) Add a comment `#' @useDynLib newpkg, .registration = TRUE` to the documentation of any function, better yet to the package doc.
+3) Add a comment `#' @useDynLib pkg, .registration = TRUE` to the documentation of any function, better yet to the package doc.
 
 4) Call `devtools::document()`
 
-5) Call `Rcpp::compileAttributes("./newpkg")`
+5) Call `Rcpp::compileAttributes("./pkg")`
 
 
 This should let you access the C++ function from your package. For more details check out the main <a href="http://www.rcpp.org/">documentation</a> or some of my packages, like <a href="https://github.com/dirmeier/netReg">netReg</a> or <a href="https://github.com/dirmeier/datastructures">datastructures</a>. The latter also has an example how to use modules and Boost.

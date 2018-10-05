@@ -1,6 +1,5 @@
 bookdown::gitbook:
-  css: css/theme.css
-  split_by: chapter
+  css: _css/theme.css
   config:
     toc:
       before: |
