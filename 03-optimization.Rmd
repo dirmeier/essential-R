@@ -1,3 +1,11 @@
 # Optimization
 
-CVXR, minqa and nloptr,
+## Convex optimization
+
+CVXR
+
+## Non-linear optimizaton
+
+minqa and nloptr,
+
+## LP solve

@@ -1,28 +1,6 @@
 # Miscellaneous
 
-
-
-## Pryr
-
-In some cases it is interesting to have a look at the implementation of specific functions, get their sizes in byte or get the current memory consumption. It is especially useful to keep track of the addresses your objects point to. When I was new to R I found it confusing when a reference is dropped and when a new copy of an object is created.
-
-```{r}
-  library('pryr')
-  pryr::inspect(list())
-  pryr::inspect(vector())
-
-  pryr::object_size(numeric())
-  pryr::object_size(numeric(1))
-
-  x <- stats::rnorm(10)
-  y <- x
-  pryr::address(x)
-  pryr::address(y)
-  y[1] <- 1
-  pryr::address(y)
-```
-
-
+The foll
 
 ## Workflow management
 
@@ -32,8 +10,31 @@ I recently came across [`drake`](https://ropensci.github.io/drake/index.html) as
   <img src="https://rawgit.com/dirmeier/essential-R/master/fig/drake.jpg" alt="oh no" width="500px">
 </div>
 
-## Tidyeval
 
-rlang
+## Pry back the covers of R 
 
-## Lobstr
+In some cases it is interesting to have a look at the implementation of specific functions, get their sizes in byte or get the current memory consumption. It is especially useful to keep track of the addresses your objects point to. When I was new to R I found it confusing when a reference is dropped and when a new copy of an object is created.
+
+```{r}
+library('pryr')
+pryr::inspect(list())
+pryr::inspect(vector())
+
+pryr::object_size(numeric())
+pryr::object_size(numeric(1))
+
+x <- stats::rnorm(10)
+y <- x
+pryr::address(x)
+pryr::address(y)
+y[1] <- 1
+pryr::address(y)
+```
+
+## Tidy evaluation
+
+TODO rlang
+
+## Understanding objects
+
+TODO lobstr

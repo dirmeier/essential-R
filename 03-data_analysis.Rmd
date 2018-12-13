@@ -12,7 +12,7 @@ The following few sections introduce packages I frequently use for data analysis
 
 ## MCMC
 
--  mcmctools, mcmcvis, mcmc, mcmcpack
+-  mcmctools, mcmcvis, mcmc, mcmcpack ,coda
 
 ## mlR and openML
 
@@ -33,6 +33,7 @@ CRAN offers dozens of packages related to machine and statistical learning, many
   performance(pred, measures = list(mmce, acc))
 ```
 
+
 ## Tensorflow
 
 ## Keras
@@ -51,4 +52,14 @@ CRAN offers dozens of packages related to machine and statistical learning, many
 
 ### mgcv
 
-### xgboost
+### xgboost and gbm
+
+### kernlab
+
+### topicmodels
+
+### tm
+
+tidytext
+
+### caret

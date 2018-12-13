@@ -111,6 +111,14 @@ C++ is a large, complex language. Chances that you mess up, introduce bugs and m
 - Print warnings. They are usually there for a reason.
 - Start a toy project or contribute to OSS projects.
 
+## Compile
+
+TODO
+
+## V8
+
+TODO
+
 ## Fortran
 
 TODO

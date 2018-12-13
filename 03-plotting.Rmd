@@ -142,14 +142,14 @@ Recently I also stumbled upon `highcharter` and `ggvis`:
 With `gganimate` you can directly create GIFs from you plots:
 
 ```{r, eval=FALSE}
-  library('gganimate')
-  library('gapminder')
-  g <- ggplot(gapminder, aes(gdpPercap, lifeExp, size = pop, frame = year)) +
-    geom_point() +
-    geom_smooth(aes(group = year), method = "lm", show.legend = FALSE) +
-    facet_wrap(~continent, scales = "free") +
-    ggthemes::theme_tufte()
-  gganimate(g)
+library('gganimate')
+library('gapminder')
+g <- ggplot(gapminder, aes(gdpPercap, lifeExp, size = pop, frame = year)) +
+  geom_point() +
+  geom_smooth(aes(group = year), method = "lm", show.legend = FALSE) +
+  facet_wrap(~continent, scales = "free") +
+  ggthemes::theme_tufte()
+gganimate(g)
 ```
 
 ![](https://rawgit.com/dirmeier/essential-R/master/fig/gganimate.gif)
@@ -213,3 +213,6 @@ plot(g, vertex.size=9, vertex.color="black", vertex.label.degree=0,
      edge.color="darkgrey", edge.width=.5, edge.arrow.size=.65, 
      layout=l)
 ```
+
+
+TODO r2d3 - 

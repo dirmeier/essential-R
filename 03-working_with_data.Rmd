@@ -55,7 +55,7 @@ In the end it depends what style you prefer. I usually go with `data.table` alon
   )
 ```
 
-## datastructures
+## Data structures
 
 If you have a background in computer science you may wonder, that R does not have support for advanced data structures such as Fibonacci heaps or hashmaps.
 `datastructures` tries to solve this. It uses Rcpp modules to export Boost data structures to R:
@@ -70,3 +70,6 @@ If you have a background in computer science you may wonder, that R does not hav
   datastructures::pop(q)
 ```
 
+## Databases
+
+neo4j, maria, sqltie, mongodb, dbplyr
