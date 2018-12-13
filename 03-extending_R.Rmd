@@ -1,3 +1,114 @@
+# Extending to C++ using Rcpp
+
+Using Rcpp (and RcppEigen, RcppArmadillo, Boost) you can easily your extend your code to C++. It not only nicely wraps the standard C API, but also let's you use standard matrix libraries such as Eigen and Armadillo or Boost.
+
+If you have a project that's not a package you can for instance create a function like this:
+
+```{r}  
+  Rcpp::cppFunction('double sum(std::vector<double>& vec) {
+      double sum = .0;
+      for (std::vector<double>::size_type i = 0; i < vec.size(); ++i)
+          sum += vec[i];
+      return sum;
+  }')
+
+  sum(as.numeric(seq(10)))
+```
+
+Let's have a look at an Eigen example with sourceCpp:
+
+```{bash}
+  cat ./_src/square.cpp
+```
+
+```{r}  
+  library('RcppEigen')
+  Rcpp::sourceCpp("./_src/square.cpp")
+  square(matrix(rnorm(10), 2))
+```
+
+Even for small matrices, the speed up is already substantial.
+
+```{r}  
+  m <- matrix(rnorm(100 * 100), 100)
+  microbenchmark::microbenchmark(
+    square(m),
+    t(m) %*% m
+  )
+```
+
+### Rcpp in a package
+
+Usually, you would want to put your source code into a `cpp` file in the `src` folder. Then you can call C++ from an R function, for instance as described below.
+
+1) Define a C++ source file and put it in `src`, like this:
+
+```{c++, eval=FALSE}
+  #include <Rcpp.h>
+  // [[Rcpp::export]]
+  Rcpp::List dostuff()
+  {
+    // some computations
+
+    return Rcpp::List::create(
+      Rcpp::Named("a") = ...
+    );
+  }
+```
+
+2) Add this to your `DESCRIPTION`:
+
+<pre><code>Imports: Rcpp
+LinkingTo: Rcpp</code></pre>
+
+3) Add a comment `#' @useDynLib pkg, .registration = TRUE` to the documentation of any function, better yet to the package doc.
+
+4) Call `devtools::document()`
+
+5) Call `Rcpp::compileAttributes("./pkg")`
+
+
+This should let you access the C++ function from your package. For more details check out the main <a href="http://www.rcpp.org/">documentation</a> or some of my packages, like <a href="https://github.com/dirmeier/netReg">netReg</a> or <a href="https://github.com/dirmeier/datastructures">datastructures</a>. The latter also has an example how to use modules and Boost.
+
+### Writing `C++`
+
+Here are some tools that help you develop your code:
+
+- gdb and lldb for debugging,
+- valgrind and gprof to check for memory leaks and for profiling,
+- Intel's Parallel Studio XE (<3) which is a toolbox for vectorization, debugging, memory checks, etc. If you can get hold of it, get it. It is magnificent.
+- Boost for unit tests, data structures and basically everything you ever need,
+- cppcheck for static code analysis,
+- doxygen for code documentation.
+
+Many C++ libraries, like Dlib, Eigen or tensorflow have an R interface, so before implementing functionality yourself check out if there is already an implementation for it.
+
+At this point it also makes sense to have a look at various C++ books such as
+
+- Scott Meyers: Effective Modern C++,
+- Scott Meyers: Effective C++,
+- Ben Klemens: 21. century C,
+- Kurt Guntheroth: Optimized C++,
+- Nicolai Josuttis: C++17 - the complete guide,
+- David Vandevoorde: C++ Templates - the compete guide.
+
+For fast numerical code OpenMP and advanced vector and streaming SIMD extensions (AVX/SSE) is often the way to go. Writing good code using AVX is however not very simple and knowledge of memory alignment is required. However, starting from version 4 (?), OpenMP easily allows vectorization using `#pragma simd`.
+
+**Note: the last lines in this section are heavily subjective and only state the author's opinion.** *More and more garbage code is forced onto the scientific community, mostly related to academic hubris and lack of knowledge about how to *program* (we don't mean how to *accomplish a task using a programming language*, but to embrace a language and its philosophy at its very core). If you aim to publish your code, make sure it follows *contemporary* good practices, standards and guidelines and that it is consistent, for instance by following people's code who are part of the community for ages. At this point we want to emphasize that the author doesn't claim to know C++, but rather that he is annoyed by this very trend.*
+
+C++ is a large, complex language. Chances that you mess up, introduce bugs and memory leaks are high, unless you have some experience. In academia in mostly results in bad, un-maintainable code. If your argument is *but it is faster than R*, at least have a look at Fortran, Julia or Python (and `numpy`). If you still prefer hacking in C++ try to stick to some guidelines:
+
+- don't include C headers in your C++ projects .. just don't. C and C++ are **two** languages. There is for need for `FILE*` or `malloc`.
+- modern C++ rarely needs pointers. Use `std::vector` or `std::unique_ptr`. No need to manually release pointers is an advantage of itself.
+- BOOST has (probably) everything you will ever need. Don't reinvent the wheel and learn to include libraries in your project.
+- Learn how to use Cmake, Meson or autotools. You should **never** need to directly invoke a compiler or write a hard-coded Makefile.
+- Only because you have a PhD or M. Sc. in CS does not make you a prolific programmer. It requires staying up to date, **reading other people's code** and embracing of new ideas and the very philosophy of the language and its community.
+- Print warnings. They are usually there for a reason.
+- Start a toy project or contribute to OSS projects.
+
+
+TODO
+
 R and C++ and Fortran!
 
 julia? java? LUBRIDATE!!!!
@@ -7,3 +118,5 @@ tensorflow stuff , keras stuff
 everything greta 
 
 tens, greta and keras also later
+
+

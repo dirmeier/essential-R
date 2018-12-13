@@ -1,0 +1,14 @@
+# Data wrangling
+
+Every analysis of data starts with preprocessing and parsing. For this I've found `dplyr` and `tidyr` tremendously useful. There are many more great tools in the tidyverse and Rstudio, such as `purrr` (explained later), `magrittr` or `tibble`, but these two simlify most of my work.
+
+```{r}
+  library(dplyr)
+  data(iris)
+  group_by(iris, Species) %>%
+    summarize(Petal.Length = mean(Petal.Length),
+              Sepal.Length = mean(Sepal.Length)) %>%
+    mutate(Species = toupper(Species))
+
+  tidyr::gather(iris, Col, Val, -Species) %>% head
+```

@@ -1,7 +1,7 @@
 # R package development
 
 ```{r, echo=FALSE}
-devtools::install("./pkg")    
+devtools::install("./pkg")
 ```
 
 The following section covers tools that help and speed up developing R

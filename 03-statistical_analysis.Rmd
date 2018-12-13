@@ -1,0 +1,24 @@
+# Analysis and reporting
+
+
+## Markdown and Shiny
+
+`Rmarkdown` is a great way for documentation, reporting and working reproducibly. Rstudio provides tons of different output formats like web sites (like this one), Tufte style documents, blogs and others. If you want to present your work interactively you can do so by building a web page using `shiny`.
+For presentations that use R code I use either <a href="https://github.com/yihui/xaringan">xaringan</a>, <a href="http://slidify.org/">Slidify</a> or <a href="https://rmarkdown.rstudio.com/revealjs_presentation_format.html">reveal.js</a>.
+
+Find all the output formats by Rstudio [here](https://rmarkdown.rstudio.com/lesson-9.html).
+
+### Shiny
+
+Setting up a Shiny instance for reporting is a great way to present data using interactive plots.
+Setting up shiny is fairly easy. You need to create a `server.R` file and `ui.R` file, e.g. like this:
+
+```{bash}
+  cat R/ui.R
+```
+
+```{bash}
+  cat R/ui.R
+```
+
+You can publish your server on <a href="http://www.shinyapps.io/">shinyapps.io</a> so that it is accessible by everyone.

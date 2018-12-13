@@ -1,0 +1,108 @@
+# Miscellaneous (or however you spell that word)
+
+Much of R's popularity is due to its fantastic ecosystem. R users benefit heavily from CRAN and Bioconductor packages created by its community.
+For data analysis or statistics R is a good choice for various reasons:
+
+- high-level,
+- easy to install packages,
+- can be extended to C++ without needing knowledge of linking or C++ build-systems,
+- probably the best plotting facility with ggplot, cowplot, hrbrthemes, ggsci and others,
+- Bioconductor, machine learning and statistics libraries,
+- small standard library.
+
+There are a few things, however, R is not so great at:
+
+- in general slow,
+- not really suited for large projects,
+- poor object orientation,
+- inconsistent function names,
+- very limited threading capabilities.
+
+For stats, data analysis and writing reports I find R still superior to Python, partly due to `Rmarkdown`, `shiny`, `ggplot2` and `Rcpp`.
+
+## data.table
+
+`data.table` is a fast implementation of R's classical `data.frame`. I hardly ever use data frame any more, and if so only, because it seems to work nicer with `dplyr` and `tidyr`. However, by using `dtplyr` this isn't much of a problem, really.
+
+```{r, fig.width=2, fig.height=2, fig.align = 'center'}
+  library('data.table')  
+  library('dplyr')
+  library('dtplyr')
+  library('grid')
+  library('gridExtra')
+
+  n    <- 1000
+  rn   <- stats::rnorm(n)
+  ltrs <- base::sample(letters[1:5], n, replace=TRUE)
+  dt   <- data.table::data.table(X=rn, Y=ltrs)
+  df   <- base::data.frame(X=rn, Y=ltrs)
+
+  dt[, .SD[sample(.N, 1)], by=c("Y")] %>%
+    tableGrob(rows=NULL) %>%
+    grid.arrange
+```
+
+In the end it depends what style you prefer. I usually go with `data.table` alone without needing the `dplyr/dtplyr` dependency. However, the latter is usually more readable. For large data, the fastest solution is probably preferable.
+
+```{r}
+  dt.only   <- function() dt[, .SD[sample(.N, 1)], by=c("Y")]
+  dt.dtplyr <- function() dt %>% dplyr::group_by(Y) %>% dplyr::sample_n(1)
+  df.dplyr  <- function() df %>% dplyr::group_by(Y) %>% dplyr::sample_n(1)
+
+  microbenchmark::microbenchmark(
+    dt.only(),
+    dt.dtplyr(),
+    df.dplyr()
+  )
+```
+
+
+## Pryr
+
+In some cases it is interesting to have a look at the implementation of specific functions, get their sizes in byte or get the current memory consumption. It is especially useful to keep track of the addresses your objects point to. When I was new to R I found it confusing when a reference is dropped and when a new copy of an object is created.
+
+```{r}
+  library('pryr')
+  pryr::inspect(list())
+  pryr::inspect(vector())
+
+  pryr::object_size(numeric())
+  pryr::object_size(numeric(1))
+
+  x <- stats::rnorm(10)
+  y <- x
+  pryr::address(x)
+  pryr::address(y)
+  y[1] <- 1
+  pryr::address(y)
+```
+
+## datastructures
+
+If you have a background in computer science you may wonder, that R does not have support for advanced data structures such as Fibonacci heaps or hashmaps.
+`datastructures` tries to solve this. It uses Rcpp modules to export Boost data structures to R:
+
+```{r}
+  library('datastructures')
+  q <- datastructures::fibonacci_heap("integer")
+  q[1:3] <- list(rnorm(3), 2, rnorm(4))
+  datastructures::pop(q)
+  datastructures::pop(q)
+  datastructures::pop(q)
+  datastructures::pop(q)
+```
+
+## Workflow management
+
+I recently came across [`drake`](https://ropensci.github.io/drake/index.html) as a workflow manager. It allows you to run a project and easily update output files.
+
+<div align="center">
+  <img src="https://rawgit.com/dirmeier/essential-R/master/fig/drake.jpg" alt="oh no" width="500px">
+</div>
+
+## Others
+
+There are many other great tools I did not specifically mention due to the fact that they are probably more situational. Some of these are:
+
+- rlang
+- CVXR, minqa and nloptr,

@@ -1,0 +1,26 @@
+# Data analysis and statistical modeling
+
+The following few sections introduce packages I frequently use for data analysis, modelling and machine learning.
+
+## mlR and openML
+
+CRAN offers dozens of packages related to machine and statistical learning, many of which doing the same. `mlR` wraps many of these into one big library.
+`mlR` integrates with `openML`, an open machine learning platform where people share code, data and algorithms. Here we show an example where we use a Gaussian process to predict the Kyphosis label from the `gam` package.
+
+```{r}
+  library(mlr)
+  task  <- mlr::makeClassifTask(data = kyphosis, target = "Kyphosis")
+  lrn   <- mlr::makeLearner("classif.gausspr")
+
+  n <- nrow(kyphosis)
+  train.set <- sample(n, size = 2/3*n)
+  test.set  <- setdiff(1:n, train.set)
+
+  model <- mlr::train(lrn, task, subset = train.set)
+  pred  <- stats::predict(model, task = task, subset = test.set)
+  performance(pred, measures = list(mmce, acc))
+```
+
+
+tensorflow and keras,
+- glmnet, lme4 and netReg.
