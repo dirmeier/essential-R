@@ -2,6 +2,18 @@
 
 The following few sections introduce packages I frequently use for data analysis, modelling and machine learning.
 
+## Stan
+
+### BRMS
+
+### Rstanarm
+
+## greta
+
+## MCMC
+
+-  mcmctools, mcmcvis, mcmc, mcmcpack
+
 ## mlR and openML
 
 CRAN offers dozens of packages related to machine and statistical learning, many of which doing the same. `mlR` wraps many of these into one big library.
@@ -21,13 +33,22 @@ CRAN offers dozens of packages related to machine and statistical learning, many
   performance(pred, measures = list(mmce, acc))
 ```
 
+## Tensorflow
 
-tensorflow and keras,
-- glmnet, lme4 and netReg.
--  mcmctools, mcmcvis, mcmc, mcmcpack
-rstanarm brms
-mgcv
-greta
-stan
-h20
-xgboost
+## Keras
+
+## h20
+
+## sparklyr
+
+## Others
+
+### glmnet
+
+### lme4
+
+### netReg
+
+### mgcv
+
+### xgboost

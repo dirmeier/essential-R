@@ -1,8 +1,9 @@
 # R extensions
 
-The following section treats how you can interface R with other languages, i.e. `C++` and `Python`.
+The following section treats how you can interface R with other languages, e.g. `C++`, `Fortran` or `Python`.
+The first two I use primarily for speeding up numerical code, although using Fortran become somewhat obsolete. I use Python mostly for interfacing machine learning libraries, such as tensorflow, keras or GPFlow.
 
-## Rcpp
+## C++ and Rcpp
 
 Using `Rcpp` (and `RcppEigen`, `RcppArmadillo`, `Boost`) you can easily extend your code to `C++`. It not only nicely wraps the standard C API, but also let's you use standard matrix libraries such as Eigen and Armadillo or Boost.
 
@@ -110,6 +111,9 @@ C++ is a large, complex language. Chances that you mess up, introduce bugs and m
 - Print warnings. They are usually there for a reason.
 - Start a toy project or contribute to OSS projects.
 
+## Fortran
+
+TODO
 
 ## Reticulate
 
@@ -136,5 +140,3 @@ ggplot(as.data.frame(py$x)) +
   geom_point(aes(V1, V2)) +
   theme_minimal()
 ```
-
-

@@ -1,6 +1,8 @@
-# Data wrangling
+# Working with data
 
 Every analysis of data starts with preprocessing and parsing. For this I've found `dplyr` and `tidyr` tremendously useful. There are many more great tools in the tidyverse and Rstudio, such as `purrr` (explained later), `magrittr` or `tibble`, but these two simlify most of my work.
+
+## dplyr
 
 ```{r}
   library(dplyr)
@@ -12,3 +14,59 @@ Every analysis of data starts with preprocessing and parsing. For this I've foun
 
   tidyr::gather(iris, Col, Val, -Species) %>% head
 ```
+
+## tidyr
+
+TODO
+
+## data.table
+
+`data.table` is a fast implementation of R's classical `data.frame`. I hardly ever use data frame any more, and if so only, because it seems to work nicer with `dplyr` and `tidyr`. However, by using `dtplyr` this isn't much of a problem, really.
+
+```{r, fig.width=2, fig.height=2, fig.align = 'center'}
+  library('data.table')  
+  library('dplyr')
+  library('dtplyr')
+  library('grid')
+  library('gridExtra')
+
+  n    <- 1000
+  rn   <- stats::rnorm(n)
+  ltrs <- base::sample(letters[1:5], n, replace=TRUE)
+  dt   <- data.table::data.table(X=rn, Y=ltrs)
+  df   <- base::data.frame(X=rn, Y=ltrs)
+
+  dt[, .SD[sample(.N, 1)], by=c("Y")] %>%
+    tableGrob(rows=NULL) %>%
+    grid.arrange
+```
+
+In the end it depends what style you prefer. I usually go with `data.table` alone without needing the `dplyr/dtplyr` dependency. However, the latter is usually more readable. For large data, the fastest solution is probably preferable.
+
+```{r}
+  dt.only   <- function() dt[, .SD[sample(.N, 1)], by=c("Y")]
+  dt.dtplyr <- function() dt %>% dplyr::group_by(Y) %>% dplyr::sample_n(1)
+  df.dplyr  <- function() df %>% dplyr::group_by(Y) %>% dplyr::sample_n(1)
+
+  microbenchmark::microbenchmark(
+    dt.only(),
+    dt.dtplyr(),
+    df.dplyr()
+  )
+```
+
+## datastructures
+
+If you have a background in computer science you may wonder, that R does not have support for advanced data structures such as Fibonacci heaps or hashmaps.
+`datastructures` tries to solve this. It uses Rcpp modules to export Boost data structures to R:
+
+```{r}
+  library('datastructures')
+  q <- datastructures::fibonacci_heap("integer")
+  q[1:3] <- list(rnorm(3), 2, rnorm(4))
+  datastructures::pop(q)
+  datastructures::pop(q)
+  datastructures::pop(q)
+  datastructures::pop(q)
+```
+

@@ -14,6 +14,5 @@ rmd_files: [
   "03-data_analysis.Rmd",
   "03-plotting.Rmd",
   "03-misc.Rmd",
-  "04-advanced_R.Rmd",
   "04-good_practices.Rmd"
 ]

@@ -8,7 +8,7 @@ documentclass: book
 output: bookdown::gitbook
 ---
 
-# Abstract {-}
+# About {-}
 
 <div class="quote" style="text-align: center; margin-top: 5%">
   <i>The lyf so short, the craft so long to lerne.</i><br>
@@ -52,4 +52,23 @@ The book is no introduction on how to program functionally, procedurally or in a
 - Dan Gusfield: Algorithms on Strings, Trees and Sequences,
 - Donald Knuth: The Art of Computer Programming,
 - a <a href="http://norvig.com/21-days.html">comment</a> by Peter Norvig,
+- ...
+
+Much of R's popularity is due to its fantastic ecosystem.
+For data analysis or statistics R is a good choice for various reasons:
+
+- high-level,
+- easy to install packages,
+- can be extended to C++ without needing knowledge of linking or C++ build-systems,
+- probably the best plotting facility of any language,
+- Bioconductor, machine learning and statistics libraries,
+- small standard library.
+
+There are a few things, however, R is not so great at:
+
+- in general slow,
+- not really suited for large projects,
+- poor object orientation,
+- inconsistent function names,
+- very limited threading capabilities,
 - ...

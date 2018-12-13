@@ -94,7 +94,7 @@ There's a wide variety of badges to describe your project.
 
 ## Docker
 
-todo (needed for debugging c++)
+TODO (needed for debugging c++)
 
 ## Code style
 
@@ -127,3 +127,5 @@ For `S4` classes and functions I recommend using the [Bioconductor](https://www.
             signature=signature(iAmAList = "list"))
 
 ```
+
+## Debugging C++ from R

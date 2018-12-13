@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="r-package-development.html">
-<link rel="next" href="r-extensions.html">
+<link rel="prev" href="programming-paradigma-in-r.html">
+<link rel="next" href="working-with-data.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -224,106 +224,129 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="programming-paradigma-in-r" class="section level1">
-<h1><span class="header-section-number">2</span> Programming paradigma in R</h1>
+<div id="r-extensions" class="section level1">
+<h1><span class="header-section-number">3</span> R extensions</h1>
+<p>The following section treats how you can interface R with other languages, e.g. <code>C++</code>, <code>Fortran</code> or <code>Python</code>. The first two I use primarily for speeding up numerical code, although using Fortran become somewhat obsolete. I use Python mostly for interfacing machine learning libraries, such as tensorflow, keras or GPFlow.</p>
+<div id="c-and-rcpp" class="section level2">
+<h2><span class="header-section-number">3.1</span> C++ and Rcpp</h2>
+<p>Using <code>Rcpp</code> (and <code>RcppEigen</code>, <code>RcppArmadillo</code>, <code>Boost</code>) you can easily extend your code to <code>C++</code>. It not only nicely wraps the standard C API, but also let’s you use standard matrix libraries such as Eigen and Armadillo or Boost.</p>
+<p>If you have a project that’s not a package you can for instance create a function like this:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Rcpp<span class="op">::</span><span class="kw">cppFunction</span>(<span class="st">&quot;double sum(std::vector&lt;double&gt;&amp; vec) {</span>
+<span class="st">      double sum = .0;</span>
+<span class="st">      for (std::vector&lt;double&gt;::size_type i = 0; i &lt; vec.size(); ++i)</span>
+<span class="st">          sum += vec[i];</span>
+<span class="st">      return sum;</span>
+<span class="st">  }&quot;</span>)
+
+<span class="kw">sum</span>(<span class="kw">as.numeric</span>(<span class="kw">seq</span>(<span class="dv">10</span>)))</code></pre></div>
+<pre><code>[1] 55</code></pre>
+<p>Let’s have a look at an Eigen example with sourceCpp:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">  <span class="fu">cat</span> ./_src/square.cpp</code></pre></div>
+<pre><code>// [[Rcpp::depends(RcppEigen)]]
+#include &lt;RcppEigen.h&gt;
+
+// [[Rcpp::export]]
+Eigen::MatrixXd square(Eigen::MatrixXd&amp; m)
+{
+    return m.transpose() * m;
+}</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;RcppEigen&quot;</span>)
+Rcpp<span class="op">::</span><span class="kw">sourceCpp</span>(<span class="st">&quot;./_src/square.cpp&quot;</span>)
+<span class="kw">square</span>(<span class="kw">matrix</span>(<span class="kw">rnorm</span>(<span class="dv">10</span>), <span class="dv">2</span>))</code></pre></div>
+<pre><code>           [,1]       [,2]       [,3]       [,4]       [,5]
+[1,]  2.8012953  0.9461934 -0.7164381 -1.3335289 -1.9532290
+[2,]  0.9461934  4.4279145 -1.4809154 -2.2317098  1.6623287
+[3,] -0.7164381 -1.4809154  0.5568466  0.8782257 -0.2007117
+[4,] -1.3335289 -2.2317098  0.8782257  1.4071418 -0.0769875
+[5,] -1.9532290  1.6623287 -0.2007117 -0.0769875  2.6743691</code></pre>
+<p>Even for small matrices, the speed up is already substantial.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">m &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">rnorm</span>(<span class="dv">100</span> <span class="op">*</span><span class="st"> </span><span class="dv">100</span>), <span class="dv">100</span>)
+microbenchmark<span class="op">::</span><span class="kw">microbenchmark</span>(<span class="kw">square</span>(m), <span class="kw">t</span>(m) <span class="op">%*%</span><span class="st"> </span>m)</code></pre></div>
+<pre><code>Unit: microseconds
+       expr     min      lq      mean   median       uq      max neval cld
+  square(m) 191.370 324.565  562.3824  432.003  609.969 3645.029   100  a 
+ t(m) %*% m 662.797 918.060 1563.2675 1287.385 1680.579 8113.396   100   b</code></pre>
+<div id="rcpp-in-a-package" class="section level3">
+<h3><span class="header-section-number">3.1.1</span> Rcpp in a package</h3>
+<p>Usually, you would want to put your source code into a <code>cpp</code> file in the <code>src</code> folder. Then you can call C++ from an R function, for instance as described below.</p>
+<ol style="list-style-type: decimal">
+<li>Define a C++ source file and put it in <code>src</code>, like this:</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode c"><code class="sourceCode c">  <span class="pp">#include </span><span class="im">&lt;Rcpp.h&gt;</span>
+  <span class="co">// [[Rcpp::export]]</span>
+  Rcpp::List dostuff()
+  {
+    <span class="co">// some computations</span>
+
+    <span class="cf">return</span> Rcpp::List::create(
+      Rcpp::Named(<span class="st">&quot;a&quot;</span>) = ...
+    );
+  }</code></pre></div>
+<ol start="2" style="list-style-type: decimal">
+<li>Add this to your <code>DESCRIPTION</code>:</li>
+</ol>
+<pre><code>Imports: Rcpp
+LinkingTo: Rcpp</code></pre>
+<ol start="3" style="list-style-type: decimal">
+<li><p>Add a comment <code>#' @useDynLib pkg, .registration = TRUE</code> to the documentation of any function, better yet to the package doc.</p></li>
+<li><p>Call <code>devtools::document()</code></p></li>
+<li><p>Call <code>Rcpp::compileAttributes(&quot;./pkg&quot;)</code></p></li>
+</ol>
+<p>This should let you access the C++ function from your package. For more details check out the main <a href="http://www.rcpp.org/">documentation</a> or some of my packages, like <a href="https://github.com/dirmeier/netReg">netReg</a> or <a href="https://github.com/dirmeier/datastructures">datastructures</a>. The latter also has an example how to use modules and Boost.</p>
+</div>
+<div id="writing-c" class="section level3">
+<h3><span class="header-section-number">3.1.2</span> Writing <code>C++</code></h3>
+<p>Here are some tools that help you develop your code:</p>
+<ul>
+<li>gdb and lldb for debugging,</li>
+<li>valgrind and gprof to check for memory leaks and for profiling,</li>
+<li>Intel’s Parallel Studio XE (&lt;3) which is a toolbox for vectorization, debugging, memory checks, etc. If you can get hold of it, get it. It is magnificent.</li>
+<li>Boost for unit tests, data structures and basically everything you ever need,</li>
+<li>cppcheck for static code analysis,</li>
+<li>doxygen for code documentation.</li>
+</ul>
+<p>Many C++ libraries, like Dlib, Eigen or tensorflow have an R interface, so before implementing functionality yourself check out if there is already an implementation for it.</p>
+<p>At this point it also makes sense to have a look at various C++ books such as</p>
+<ul>
+<li>Scott Meyers: Effective Modern C++,</li>
+<li>Scott Meyers: Effective C++,</li>
+<li>Ben Klemens: 21. century C,</li>
+<li>Kurt Guntheroth: Optimized C++,</li>
+<li>Nicolai Josuttis: C++17 - the complete guide,</li>
+<li>David Vandevoorde: C++ Templates - the compete guide.</li>
+</ul>
+<p>For fast numerical code OpenMP and advanced vector and streaming SIMD extensions (AVX/SSE) is often the way to go. Writing good code using AVX is however not very simple and knowledge of memory alignment is required. However, starting from version 4 (?), OpenMP easily allows vectorization using <code>#pragma simd</code>.</p>
+<p><strong>Note: the last lines in this section are heavily subjective and only state the author’s opinion.</strong> <em>More and more garbage code is forced onto the scientific community, mostly related to academic hubris and lack of knowledge about how to </em>program* (we don’t mean how to <em>accomplish a task using a programming language</em>, but to embrace a language and its philosophy at its very core). If you aim to publish your code, make sure it follows <em>contemporary</em> good practices, standards and guidelines and that it is consistent, for instance by following people’s code who are part of the community for ages. At this point we want to emphasize that the author doesn’t claim to know C++, but rather that he is annoyed by this very trend.*</p>
+<p>C++ is a large, complex language. Chances that you mess up, introduce bugs and memory leaks are high, unless you have some experience. In academia in mostly results in bad, un-maintainable code. If your argument is <em>but it is faster than R</em>, at least have a look at Fortran, Julia or Python (and <code>numpy</code>). If you still prefer hacking in C++ try to stick to some guidelines:</p>
+<ul>
+<li>don’t include C headers in your C++ projects .. just don’t. C and C++ are <strong>two</strong> languages. There is for need for <code>FILE*</code> or <code>malloc</code>.</li>
+<li>modern C++ rarely needs pointers. Use <code>std::vector</code> or <code>std::unique_ptr</code>. No need to manually release pointers is an advantage of itself.</li>
+<li>BOOST has (probably) everything you will ever need. Don’t reinvent the wheel and learn to include libraries in your project.</li>
+<li>Learn how to use Cmake, Meson or autotools. You should <strong>never</strong> need to directly invoke a compiler or write a hard-coded Makefile.</li>
+<li>Only because you have a PhD or M. Sc. in CS does not make you a prolific programmer. It requires staying up to date, <strong>reading other people’s code</strong> and embracing of new ideas and the very philosophy of the language and its community.</li>
+<li>Print warnings. They are usually there for a reason.</li>
+<li>Start a toy project or contribute to OSS projects.</li>
+</ul>
+</div>
+</div>
+<div id="fortran" class="section level2">
+<h2><span class="header-section-number">3.2</span> Fortran</h2>
 <p>TODO</p>
-<div id="functional-programming" class="section level2">
-<h2><span class="header-section-number">2.1</span> Functional programming</h2>
-<p>TODO</p>
-<p><code>purrr</code> is a functional programming toolkit, much like the <code>apply</code> class of functions. However, purrr does so in a more unified way with consistent return values. Furthermore, in combination with <code>magrittr</code>, the code you write is naturally more concise and easier to read.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;purrr&quot;</span>)
-<span class="kw">library</span>(<span class="st">&quot;ggplot2&quot;</span>)
-<span class="kw">library</span>(<span class="st">&quot;gganimate&quot;</span>)
-<span class="kw">library</span>(<span class="st">&quot;gapminder&quot;</span>)
-<span class="kw">library</span>(<span class="st">&quot;repurrrsive&quot;</span>)
-<span class="kw">library</span>(<span class="st">&quot;magrittr&quot;</span>)
-<span class="kw">library</span>(DiagrammeR)
-utils<span class="op">::</span><span class="kw">head</span>(sw_people[[<span class="dv">1</span>]])</code></pre></div>
-<pre><code>$name
-[1] &quot;Luke Skywalker&quot;
-
-$height
-[1] &quot;172&quot;
-
-$mass
-[1] &quot;77&quot;
-
-$hair_color
-[1] &quot;blond&quot;
-
-$skin_color
-[1] &quot;fair&quot;
-
-$eye_color
-[1] &quot;blue&quot;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df &lt;-<span class="st"> </span><span class="kw">map_dfr</span>(sw_people, <span class="dt">.f =</span> <span class="cf">function</span>(.) <span class="kw">data.frame</span>(<span class="dt">color =</span> .[[<span class="st">&quot;eye_color&quot;</span>]], 
-    <span class="dt">height =</span> .[[<span class="st">&quot;height&quot;</span>]], <span class="dt">mass =</span> .[[<span class="st">&quot;mass&quot;</span>]]))
-utils<span class="op">::</span><span class="kw">head</span>(df)</code></pre></div>
-<pre><code>   color height mass
-1   blue    172   77
-2 yellow    167   75
-3    red     96   32
-4 yellow    202  136
-5  brown    150   49
-6   blue    178  120</code></pre>
 </div>
-<div id="object-oriented-programming" class="section level2">
-<h2><span class="header-section-number">2.2</span> Object-oriented programming</h2>
-<p>R has three different native ways for object-oriented programming and as far as I know one additional library. <code>S3</code>, <code>S4</code> and <code>refClasses</code> (<code>R5</code>) come with the standard library, while <code>R6</code> can be installed from CRAN. I actually never use R5, because it feels incredibly bulky and slow, so we will not cover it here.</p>
-<div id="s3" class="section level3">
-<h3><span class="header-section-number">2.2.1</span> S3</h3>
-<p>S3 methods dispatch on the first argument. If you come from other languages, such as <code>Java</code>, an S3 method is basically an overloaded function on the first argument. You can define an S3 function like this:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">s3 &lt;-<span class="st"> </span><span class="cf">function</span>(x, y, ...) <span class="kw">UseMethod</span>(<span class="st">&quot;s3&quot;</span>)
+<div id="reticulate" class="section level2">
+<h2><span class="header-section-number">3.3</span> Reticulate</h2>
+<p>If you need to include Python code for analyses and then do, for instance, the plotting and reporting in R, check out <code>reticulate</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(reticulate)</code></pre></div>
+<p>For instance we can create random numbers in Python:</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="im">import</span> numpy
+mean <span class="op">=</span> [<span class="dv">0</span>, <span class="dv">0</span>]
+cov <span class="op">=</span> [[<span class="dv">1</span>, <span class="dv">0</span>], [<span class="dv">0</span>, <span class="dv">1</span>]]
+x <span class="op">=</span> numpy.random.multivariate_normal(mean, cov, <span class="dv">1000</span>)</code></pre></div>
+<p>And then plot stuff in <code>R</code>:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggplot2)
+<span class="kw">ggplot</span>(<span class="kw">as.data.frame</span>(py<span class="op">$</span>x)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(V1, V2)) <span class="op">+</span><span class="st"> </span><span class="kw">theme_minimal</span>()</code></pre></div>
+<p><img src="essential-R_files/figure-html/unnamed-chunk-30-1.png" width="672" /></p>
 
-s3.matrix &lt;-<span class="st"> </span><span class="cf">function</span>(x, y, ...) <span class="kw">apply</span>(x, <span class="dv">1</span>, sum)
-s3.character &lt;-<span class="st"> </span><span class="cf">function</span>(x, y, ...) <span class="kw">paste</span>(x, y)
-
-<span class="kw">s3</span>(<span class="kw">matrix</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">6</span>, <span class="dv">2</span>))</code></pre></div>
-<pre><code>[1]  9 12</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">s3</span>(<span class="st">&quot;hello&quot;</span>, <span class="st">&quot;reader&quot;</span>)</code></pre></div>
-<pre><code>[1] &quot;hello reader&quot;</code></pre>
-<p>S3 classes are defines like this:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">s3.list &lt;-<span class="st"> </span><span class="cf">function</span>(x, y, ...) {
-    l &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> y)
-    base<span class="op">::</span><span class="kw">class</span>(l) &lt;-<span class="st"> &quot;my.s3&quot;</span>
-    
-    l
-}
-<span class="kw">s3</span>(<span class="kw">list</span>(<span class="dt">x =</span> <span class="dv">1</span>), <span class="dt">y =</span> <span class="dv">2</span>)</code></pre></div>
-<pre><code>$x
-$x$x
-[1] 1
-
-
-$y
-[1] 2
-
-attr(,&quot;class&quot;)
-[1] &quot;my.s3&quot;</code></pre>
-<p>The main issue here is of course that the user can easily overwrite a class and that method dispatching on one argument usually is not enough. However, often S3 functions are all you need.</p>
-</div>
-<div id="s4" class="section level3">
-<h3><span class="header-section-number">2.2.2</span> S4</h3>
-<p>Bioconductor seems to prefer S4 over S3, so if you want to submit your package, you could for instance define interfaces using S4 and the rest using S3 or w/o OO entirely. In that way the user of your package only sees the exported interface (the S4 method) and upon calling would receive an S4 object. The rest of the implementation would be hidden.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">methods<span class="op">::</span><span class="kw">setClass</span>(<span class="st">&quot;normallist&quot;</span>, <span class="dt">representation =</span> <span class="kw">list</span>(<span class="dt">.el =</span> <span class="st">&quot;list&quot;</span>), <span class="dt">prototype =</span> methods<span class="op">::</span><span class="kw">prototype</span>(<span class="dt">.el =</span> <span class="kw">list</span>()))
-
-methods<span class="op">::</span><span class="kw">setGeneric</span>(<span class="st">&quot;put&quot;</span>, <span class="cf">function</span>(obj, x) base<span class="op">::</span><span class="kw">standardGeneric</span>(<span class="st">&quot;insert&quot;</span>))
-
-methods<span class="op">::</span><span class="kw">setMethod</span>(<span class="st">&quot;put&quot;</span>, <span class="dt">signature =</span> methods<span class="op">::</span><span class="kw">signature</span>(<span class="dt">obj =</span> <span class="st">&quot;normallist&quot;</span>, 
-    <span class="dt">x =</span> <span class="st">&quot;vector&quot;</span>), <span class="cf">function</span>(obj, x) obj<span class="op">@</span>.el &lt;-<span class="st"> </span><span class="kw">as.list</span>(x))
-
-d &lt;-<span class="st"> </span>methods<span class="op">::</span><span class="kw">new</span>(<span class="st">&quot;normallist&quot;</span>)
-d &lt;-<span class="st"> </span><span class="kw">put</span>(d, <span class="kw">seq</span>(<span class="dv">3</span>))</code></pre></div>
-</div>
-<div id="r5" class="section level3">
-<h3><span class="header-section-number">2.2.3</span> R5</h3>
-<p>TODO</p>
-</div>
-<div id="r6" class="section level3">
-<h3><span class="header-section-number">2.2.4</span> R6</h3>
-<p>TODO</p>
-
-</div>
 </div>
 </div>
             </section>
@@ -331,8 +354,8 @@ d &lt;-<span class="st"> </span><span class="kw">put</span>(d, <span class="kw">
           </div>
         </div>
       </div>
-<a href="r-package-development.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="r-extensions.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="programming-paradigma-in-r.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="working-with-data.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

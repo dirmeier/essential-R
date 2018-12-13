@@ -1,29 +1,34 @@
 # Plotting, reporting and visualizing
 
-One of the most significant reasons to use R is probably its plotting capabilities and people contributing to ggplot2 and the community's effort of adding package that integrate with it. Some nice packages for plotting are the following:
+One of the most significant reasons to use R is probably its plotting capabilities, people contributing to `ggplot2` and the community's effort of adding package that integrate with it. Below you'll find some nice packages for plotting are the following:
 
-- `hrbrthemes`
-- `ggthemes`
-- `cowplot`
-- `ggpubr`
-- `ggthemr`
-- `ggsci`
-- `viridis` and `viridisLite`
-- `colorspace` and `colorblindr`
-- `highcharter`
-- `patchwork`
-- `animation`
-- `plotly`
-- `lattice`
-- `magick`
-- `imager`
-- `scales`
-- `tweenr`
-- `ggraph`, `ggnet` and `ggnetwork`
-- `gganimate` and `animattion`
+TODO add these below
+also diagrammr/igraph plot nice/gganimate
+- `ggsuite`
+    - `ggthemes`
+    - `hrbrthemes`
+    - `cowplot`
+    - `ggpubr`
+    - `ggthemr`
+    - `ggsci`
+    - `viridis` and `viridisLite`
+    - `patchwork`
+    - `ggraph`, `ggnet` and `ggnetwork`
+    - `gganimate`
+    - `tweenr`
+    - `ggpixel`
+- Others
+    - `animattion`
+    - `colorspace` and `colorblindr`
+    - `highcharter`
+    - `animation`
+    - `plotly`
+    - `lattice`
+    - `magick`
+    - `imager`
+    - `scales`
 
-### Layout
-
+## Layout
 
 ```{r, echo=FALSE}
 df <- purrr::map_dfr(sw_people, .f = function(.) data.frame(color = .[["eye_color"]], 
@@ -56,7 +61,7 @@ Tufte in R</a>. `ggthemes` offers some nice options to do so. For instance, if y
   print(g)
 ```
 
-### Publication ready plots
+## Publication ready plots
 
 `cowplot` and `ggpubr` are great for greating publication ready plots:
 
@@ -75,7 +80,7 @@ If these two are still not enough, I usually go with `patchwork`:
 
 ```
 
-### Colors
+## Colors
 
 I use `colorspace`  and `colorblindr` in order to remove some hue and chroma. `viridis` is a wonderful set of colors for continuous, sequential data. For discrete, qualitative data I mainly use `ggthemr` and the `fresh` colors. `ggsci` also has some wonderful color palettes. `scales` lets you have a look at a color palette easily.
 
@@ -105,7 +110,7 @@ Another great tool  is `swatches`:
   show_palette(omega_nebula)
 ```
 
-### Interactive and animated plots
+## Interactive and animated plots
 
 Often you want to create an interactive plot, for instance when serving on a `shiny` instance. One way to do that is using plotly:
 
@@ -149,7 +154,7 @@ With `gganimate` you can directly create GIFs from you plots:
 
 ![](https://rawgit.com/dirmeier/essential-R/master/fig/gganimate.gif)
 
-### Graphs
+## Graphs
 
 There are many wonderful graph and network libraries around. I primarily use `ggnetwork`/`ggnet2`, `igraph`, `ggraph` and `DiagrammeR`.
 
@@ -164,21 +169,15 @@ There are many wonderful graph and network libraries around. I primarily use `gg
     render_graph(layout = "tree")
 ```
 
-# Analysis and reporting
 
-R as a language is great in many ways, terrible in others, but outstanding when it comes to reporting, documentation or plotting.
+## RMarkdown
 
+`Rmarkdown` is a great way for documentation, reporting and working reproducibly. Rstudio provides tons of different output formats like web sites (like this one), Tufte style documents, blogs and others. 
+For presentations that use R code I use either <a href="https://github.com/yihui/xaringan">xaringan</a>, <a href="http://slidify.org/">Slidify</a> or <a href="https://rmarkdown.rstudio.com/revealjs_presentation_format.html">reveal.js</a>. Find all the output formats by Rstudio [here](https://rmarkdown.rstudio.com/lesson-9.html).
 
-## Markdown and Shiny
+## Shiny
 
-`Rmarkdown` is a great way for documentation, reporting and working reproducibly. Rstudio provides tons of different output formats like web sites (like this one), Tufte style documents, blogs and others. If you want to present your work interactively you can do so by building a web page using `shiny`.
-For presentations that use R code I use either <a href="https://github.com/yihui/xaringan">xaringan</a>, <a href="http://slidify.org/">Slidify</a> or <a href="https://rmarkdown.rstudio.com/revealjs_presentation_format.html">reveal.js</a>.
-
-Find all the output formats by Rstudio [here](https://rmarkdown.rstudio.com/lesson-9.html).
-
-### Shiny
-
-Setting up a Shiny instance for reporting is a great way to present data using interactive plots.
+If you want to present your work interactively you can do so by building a web page using `shiny`. Setting up a Shiny instance for reporting is a great way to present data using interactive plots.
 Setting up shiny is fairly easy. You need to create a `server.R` file and `ui.R` file, e.g. like this:
 
 ```{bash}
@@ -199,7 +198,10 @@ You can publish your server on <a href="http://www.shinyapps.io/">shinyapps.io</
 
 - Add nice graph plotting with :
 
+
 ```{r}
+library(igraph)
+
 g <- igraph::graph_from_data_frame(df)
 l <-layout.reingold.tilford(g) 
 l[1, 1:2] <- c(1, 1)

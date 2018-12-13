@@ -28,7 +28,6 @@ If you have `yeoman` installed, you can use the `R-bones` generator in order to 
   ls -la pkg
 ```
 
-
 ## Writing R packages
 
 When creating an R package `devtools` and `covr` cover almost any functionality required. The following functions delineate how my typical workflow looks:
@@ -54,6 +53,10 @@ This basically covers your complete development life cycle. devtools is tremendo
   usethis::use_vignette()
   usethis::use_gpl3_license()
 ```
+
+## Debugging
+
+TODO
 
 ## Testing code
 
@@ -145,6 +148,8 @@ Let's see if our small package is lint free:
 
 Whoops!
 
+TODO add styler etc
+
 ### Running examples
 
 Examples are extremely helpful both for the user and debugging purposes. When
@@ -208,7 +213,6 @@ Often it however suffices to just benchmark two methods against each other.
 
   microbenchmark::microbenchmark(f(10000), g(10000))
 ```
-
 
 ## Creating a landing page
 
