@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="r-package-development.html">
-<link rel="next" href="extending-to-c-using-rcpp.html">
+<link rel="prev" href="data-wrangling.html">
+<link rel="next" href="analysis-and-reporting.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -201,104 +201,28 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="programming-paradigma-in-r" class="section level1">
-<h1><span class="header-section-number">2</span> Programming paradigma in R</h1>
-<p>TODO</p>
-<div id="functional-programming" class="section level2">
-<h2><span class="header-section-number">2.1</span> Functional programming</h2>
-<p>TODO</p>
-<p><code>purrr</code> is a functional programming toolkit, much like the <code>apply</code> class of functions. However, purrr does so in a more unified way with consistent return values. Furthermore, in combination with <code>magrittr</code>, the code you write is naturally more concise and easier to read.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;purrr&quot;</span>)
-<span class="kw">library</span>(<span class="st">&quot;ggplot2&quot;</span>)
-<span class="kw">library</span>(<span class="st">&quot;gganimate&quot;</span>)
-<span class="kw">library</span>(<span class="st">&quot;gapminder&quot;</span>)
-<span class="kw">library</span>(<span class="st">&quot;repurrrsive&quot;</span>)
-<span class="kw">library</span>(<span class="st">&quot;magrittr&quot;</span>)
-<span class="kw">library</span>(DiagrammeR)
-utils<span class="op">::</span><span class="kw">head</span>(sw_people[[<span class="dv">1</span>]])</code></pre></div>
-<pre><code>$name
-[1] &quot;Luke Skywalker&quot;
+<div id="data-analysis-and-statistical-modeling" class="section level1">
+<h1><span class="header-section-number">5</span> Data analysis and statistical modeling</h1>
+<p>The following few sections introduce packages I frequently use for data analysis, modelling and machine learning.</p>
+<div id="mlr-and-openml" class="section level2">
+<h2><span class="header-section-number">5.1</span> mlR and openML</h2>
+<p>CRAN offers dozens of packages related to machine and statistical learning, many of which doing the same. <code>mlR</code> wraps many of these into one big library. <code>mlR</code> integrates with <code>openML</code>, an open machine learning platform where people share code, data and algorithms. Here we show an example where we use a Gaussian process to predict the Kyphosis label from the <code>gam</code> package.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(mlr)
+task &lt;-<span class="st"> </span>mlr<span class="op">::</span><span class="kw">makeClassifTask</span>(<span class="dt">data =</span> kyphosis, <span class="dt">target =</span> <span class="st">&quot;Kyphosis&quot;</span>)
+lrn &lt;-<span class="st"> </span>mlr<span class="op">::</span><span class="kw">makeLearner</span>(<span class="st">&quot;classif.gausspr&quot;</span>)
 
-$height
-[1] &quot;172&quot;
+n &lt;-<span class="st"> </span><span class="kw">nrow</span>(kyphosis)
+train.set &lt;-<span class="st"> </span><span class="kw">sample</span>(n, <span class="dt">size =</span> <span class="dv">2</span><span class="op">/</span><span class="dv">3</span> <span class="op">*</span><span class="st"> </span>n)
+test.set &lt;-<span class="st"> </span><span class="kw">setdiff</span>(<span class="dv">1</span><span class="op">:</span>n, train.set)
 
-$mass
-[1] &quot;77&quot;
+model &lt;-<span class="st"> </span>mlr<span class="op">::</span><span class="kw">train</span>(lrn, task, <span class="dt">subset =</span> train.set)</code></pre></div>
+<pre><code>Using automatic sigma estimation (sigest) for RBF or laplace kernel </code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pred &lt;-<span class="st"> </span>stats<span class="op">::</span><span class="kw">predict</span>(model, <span class="dt">task =</span> task, <span class="dt">subset =</span> test.set)
+<span class="kw">performance</span>(pred, <span class="dt">measures =</span> <span class="kw">list</span>(mmce, acc))</code></pre></div>
+<pre><code>     mmce       acc 
+0.1851852 0.8148148 </code></pre>
+<p>tensorflow and keras, - glmnet, lme4 and netReg.</p>
 
-$hair_color
-[1] &quot;blond&quot;
-
-$skin_color
-[1] &quot;fair&quot;
-
-$eye_color
-[1] &quot;blue&quot;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df &lt;-<span class="st"> </span><span class="kw">map_dfr</span>(sw_people, <span class="dt">.f =</span> <span class="cf">function</span>(.) <span class="kw">data.frame</span>(<span class="dt">color =</span> .[[<span class="st">&quot;eye_color&quot;</span>]], 
-    <span class="dt">height =</span> .[[<span class="st">&quot;height&quot;</span>]], <span class="dt">mass =</span> .[[<span class="st">&quot;mass&quot;</span>]]))
-utils<span class="op">::</span><span class="kw">head</span>(df)</code></pre></div>
-<pre><code>   color height mass
-1   blue    172   77
-2 yellow    167   75
-3    red     96   32
-4 yellow    202  136
-5  brown    150   49
-6   blue    178  120</code></pre>
-</div>
-<div id="object-oriented-programming" class="section level2">
-<h2><span class="header-section-number">2.2</span> Object-oriented programming</h2>
-<p>R has three different native ways for object-oriented programming and as far as I know one additional library. <code>S3</code>, <code>S4</code> and <code>refClasses</code> (<code>R5</code>) come with the standard library, while <code>R6</code> can be installed from CRAN. I actually never use R5, because it feels incredibly bulky and slow, so we will not cover it here.</p>
-<div id="s3" class="section level3">
-<h3><span class="header-section-number">2.2.1</span> S3</h3>
-<p>S3 methods dispatch on the first argument. If you come from other languages, such as <code>Java</code>, an S3 method is basically an overloaded function on the first argument. You can define an S3 function like this:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">s3 &lt;-<span class="st"> </span><span class="cf">function</span>(x, y, ...) <span class="kw">UseMethod</span>(<span class="st">&quot;s3&quot;</span>)
-
-s3.matrix &lt;-<span class="st"> </span><span class="cf">function</span>(x, y, ...) <span class="kw">apply</span>(x, <span class="dv">1</span>, sum)
-s3.character &lt;-<span class="st"> </span><span class="cf">function</span>(x, y, ...) <span class="kw">paste</span>(x, y)
-
-<span class="kw">s3</span>(<span class="kw">matrix</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">6</span>, <span class="dv">2</span>))</code></pre></div>
-<pre><code>[1]  9 12</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">s3</span>(<span class="st">&quot;hello&quot;</span>, <span class="st">&quot;reader&quot;</span>)</code></pre></div>
-<pre><code>[1] &quot;hello reader&quot;</code></pre>
-<p>S3 classes are defines like this:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">s3.list &lt;-<span class="st"> </span><span class="cf">function</span>(x, y, ...) {
-    l &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> y)
-    base<span class="op">::</span><span class="kw">class</span>(l) &lt;-<span class="st"> &quot;my.s3&quot;</span>
-    
-    l
-}
-<span class="kw">s3</span>(<span class="kw">list</span>(<span class="dt">x =</span> <span class="dv">1</span>), <span class="dt">y =</span> <span class="dv">2</span>)</code></pre></div>
-<pre><code>$x
-$x$x
-[1] 1
-
-
-$y
-[1] 2
-
-attr(,&quot;class&quot;)
-[1] &quot;my.s3&quot;</code></pre>
-<p>The main issue here is of course that the user can easily overwrite a class and that method dispatching on one argument usually is not enough. However, often S3 functions are all you need.</p>
-</div>
-<div id="s4" class="section level3">
-<h3><span class="header-section-number">2.2.2</span> S4</h3>
-<p>Bioconductor seems to prefer S4 over S3, so if you want to submit your package, you could for instance define interfaces using S4 and the rest using S3 or w/o OO entirely. In that way the user of your package only sees the exported interface (the S4 method) and upon calling would receive an S4 object. The rest of the implementation would be hidden.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">methods<span class="op">::</span><span class="kw">setClass</span>(<span class="st">&quot;normallist&quot;</span>, <span class="dt">representation =</span> <span class="kw">list</span>(<span class="dt">.el =</span> <span class="st">&quot;list&quot;</span>), <span class="dt">prototype =</span> methods<span class="op">::</span><span class="kw">prototype</span>(<span class="dt">.el =</span> <span class="kw">list</span>()))
-
-methods<span class="op">::</span><span class="kw">setGeneric</span>(<span class="st">&quot;put&quot;</span>, <span class="cf">function</span>(obj, x) base<span class="op">::</span><span class="kw">standardGeneric</span>(<span class="st">&quot;insert&quot;</span>))
-
-methods<span class="op">::</span><span class="kw">setMethod</span>(<span class="st">&quot;put&quot;</span>, <span class="dt">signature =</span> methods<span class="op">::</span><span class="kw">signature</span>(<span class="dt">obj =</span> <span class="st">&quot;normallist&quot;</span>, 
-    <span class="dt">x =</span> <span class="st">&quot;vector&quot;</span>), <span class="cf">function</span>(obj, x) obj<span class="op">@</span>.el &lt;-<span class="st"> </span><span class="kw">as.list</span>(x))
-
-d &lt;-<span class="st"> </span>methods<span class="op">::</span><span class="kw">new</span>(<span class="st">&quot;normallist&quot;</span>)
-d &lt;-<span class="st"> </span><span class="kw">put</span>(d, <span class="kw">seq</span>(<span class="dv">3</span>))</code></pre></div>
-</div>
-<div id="r5" class="section level3">
-<h3><span class="header-section-number">2.2.3</span> R5</h3>
-</div>
-<div id="r6" class="section level3">
-<h3><span class="header-section-number">2.2.4</span> R6</h3>
-
-</div>
 </div>
 </div>
             </section>
@@ -306,8 +230,8 @@ d &lt;-<span class="st"> </span><span class="kw">put</span>(d, <span class="kw">
           </div>
         </div>
       </div>
-<a href="r-package-development.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="extending-to-c-using-rcpp.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="data-wrangling.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="analysis-and-reporting.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

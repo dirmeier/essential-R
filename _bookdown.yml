@@ -9,6 +9,11 @@ rmd_files: [
   "index.Rmd",
   "01-r_devel.Rmd",
   "02-programming_paradigma_in_r.Rmd",
-  "03-r_libs.Rmd",
+  "03-extending_R.Rmd",
+  "03-working_with_data.Rmd",
+  "03-data_analysis.Rmd",
+  "03-plotting.Rmd",
+  "03-misc.Rmd",
+  "04-advanced_R.Rmd",
   "04-good_practices.Rmd"
 ]

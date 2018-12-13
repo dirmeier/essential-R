@@ -1,6 +1,10 @@
-# Extending to C++ using Rcpp
+# R extensions
 
-Using Rcpp (and RcppEigen, RcppArmadillo, Boost) you can easily your extend your code to C++. It not only nicely wraps the standard C API, but also let's you use standard matrix libraries such as Eigen and Armadillo or Boost.
+The following section treats how you can interface R with other languages, i.e. `C++` and `Python`.
+
+## Rcpp
+
+Using `Rcpp` (and `RcppEigen`, `RcppArmadillo`, `Boost`) you can easily extend your code to `C++`. It not only nicely wraps the standard C API, but also let's you use standard matrix libraries such as Eigen and Armadillo or Boost.
 
 If you have a project that's not a package you can for instance create a function like this:
 
@@ -107,16 +111,30 @@ C++ is a large, complex language. Chances that you mess up, introduce bugs and m
 - Start a toy project or contribute to OSS projects.
 
 
-TODO
+## Reticulate
 
-R and C++ and Fortran!
+If you need to include Python code for analyses and then do, for instance, the plotting and reporting in R, check out `reticulate`.
 
-julia? java? LUBRIDATE!!!!
+```{R}
+library(reticulate)
+```
 
-tensorflow stuff , keras stuff
+For instance we can create random numbers in Python:
 
-everything greta 
+```{python}
+import numpy
+mean = [0, 0]
+cov = [[1, 0], [0, 1]]
+x = numpy.random.multivariate_normal(mean, cov, 1000)
+```
 
-tens, greta and keras also later
+And then plot stuff in `R`:
+
+```{r, fig.height=3}
+library(ggplot2)
+ggplot(as.data.frame(py$x)) +
+  geom_point(aes(V1, V2)) +
+  theme_minimal()
+```
 
 

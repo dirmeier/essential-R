@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="r-package-development.html">
-<link rel="next" href="extending-to-c-using-rcpp.html">
+<link rel="prev" href="analysis-and-reporting.html">
+<link rel="next" href="plotting.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -201,104 +201,114 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="programming-paradigma-in-r" class="section level1">
-<h1><span class="header-section-number">2</span> Programming paradigma in R</h1>
-<p>TODO</p>
-<div id="functional-programming" class="section level2">
-<h2><span class="header-section-number">2.1</span> Functional programming</h2>
-<p>TODO</p>
-<p><code>purrr</code> is a functional programming toolkit, much like the <code>apply</code> class of functions. However, purrr does so in a more unified way with consistent return values. Furthermore, in combination with <code>magrittr</code>, the code you write is naturally more concise and easier to read.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;purrr&quot;</span>)
-<span class="kw">library</span>(<span class="st">&quot;ggplot2&quot;</span>)
-<span class="kw">library</span>(<span class="st">&quot;gganimate&quot;</span>)
-<span class="kw">library</span>(<span class="st">&quot;gapminder&quot;</span>)
-<span class="kw">library</span>(<span class="st">&quot;repurrrsive&quot;</span>)
-<span class="kw">library</span>(<span class="st">&quot;magrittr&quot;</span>)
-<span class="kw">library</span>(DiagrammeR)
-utils<span class="op">::</span><span class="kw">head</span>(sw_people[[<span class="dv">1</span>]])</code></pre></div>
-<pre><code>$name
-[1] &quot;Luke Skywalker&quot;
+<div id="miscellaneous-or-however-you-spell-that-word" class="section level1">
+<h1><span class="header-section-number">7</span> Miscellaneous (or however you spell that word)</h1>
+<p>Much of R’s popularity is due to its fantastic ecosystem. R users benefit heavily from CRAN and Bioconductor packages created by its community. For data analysis or statistics R is a good choice for various reasons:</p>
+<ul>
+<li>high-level,</li>
+<li>easy to install packages,</li>
+<li>can be extended to C++ without needing knowledge of linking or C++ build-systems,</li>
+<li>probably the best plotting facility with ggplot, cowplot, hrbrthemes, ggsci and others,</li>
+<li>Bioconductor, machine learning and statistics libraries,</li>
+<li>small standard library.</li>
+</ul>
+<p>There are a few things, however, R is not so great at:</p>
+<ul>
+<li>in general slow,</li>
+<li>not really suited for large projects,</li>
+<li>poor object orientation,</li>
+<li>inconsistent function names,</li>
+<li>very limited threading capabilities.</li>
+</ul>
+<p>For stats, data analysis and writing reports I find R still superior to Python, partly due to <code>Rmarkdown</code>, <code>shiny</code>, <code>ggplot2</code> and <code>Rcpp</code>.</p>
+<div id="data.table" class="section level2">
+<h2><span class="header-section-number">7.1</span> data.table</h2>
+<p><code>data.table</code> is a fast implementation of R’s classical <code>data.frame</code>. I hardly ever use data frame any more, and if so only, because it seems to work nicer with <code>dplyr</code> and <code>tidyr</code>. However, by using <code>dtplyr</code> this isn’t much of a problem, really.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;data.table&quot;</span>)
+<span class="kw">library</span>(<span class="st">&quot;dplyr&quot;</span>)
+<span class="kw">library</span>(<span class="st">&quot;dtplyr&quot;</span>)
+<span class="kw">library</span>(<span class="st">&quot;grid&quot;</span>)
+<span class="kw">library</span>(<span class="st">&quot;gridExtra&quot;</span>)
 
-$height
-[1] &quot;172&quot;
+n &lt;-<span class="st"> </span><span class="dv">1000</span>
+rn &lt;-<span class="st"> </span>stats<span class="op">::</span><span class="kw">rnorm</span>(n)
+ltrs &lt;-<span class="st"> </span>base<span class="op">::</span><span class="kw">sample</span>(letters[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>], n, <span class="dt">replace =</span> <span class="ot">TRUE</span>)
+dt &lt;-<span class="st"> </span>data.table<span class="op">::</span><span class="kw">data.table</span>(<span class="dt">X =</span> rn, <span class="dt">Y =</span> ltrs)
+df &lt;-<span class="st"> </span>base<span class="op">::</span><span class="kw">data.frame</span>(<span class="dt">X =</span> rn, <span class="dt">Y =</span> ltrs)
 
-$mass
-[1] &quot;77&quot;
+dt[, .SD[<span class="kw">sample</span>(.N, <span class="dv">1</span>)], by =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Y&quot;</span>)] <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">tableGrob</span>(<span class="dt">rows =</span> <span class="ot">NULL</span>) <span class="op">%&gt;%</span><span class="st"> </span>grid.arrange</code></pre></div>
+<p><img src="essential-R_files/figure-html/unnamed-chunk-32-1.png" width="192" style="display: block; margin: auto;" /></p>
+<p>In the end it depends what style you prefer. I usually go with <code>data.table</code> alone without needing the <code>dplyr/dtplyr</code> dependency. However, the latter is usually more readable. For large data, the fastest solution is probably preferable.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dt.only &lt;-<span class="st"> </span><span class="cf">function</span>() dt[, .SD[<span class="kw">sample</span>(.N, <span class="dv">1</span>)], by =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Y&quot;</span>)]
+dt.dtplyr &lt;-<span class="st"> </span><span class="cf">function</span>() dt <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">group_by</span>(Y) <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">sample_n</span>(<span class="dv">1</span>)
+df.dplyr &lt;-<span class="st"> </span><span class="cf">function</span>() df <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">group_by</span>(Y) <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">sample_n</span>(<span class="dv">1</span>)
 
-$hair_color
-[1] &quot;blond&quot;
-
-$skin_color
-[1] &quot;fair&quot;
-
-$eye_color
-[1] &quot;blue&quot;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df &lt;-<span class="st"> </span><span class="kw">map_dfr</span>(sw_people, <span class="dt">.f =</span> <span class="cf">function</span>(.) <span class="kw">data.frame</span>(<span class="dt">color =</span> .[[<span class="st">&quot;eye_color&quot;</span>]], 
-    <span class="dt">height =</span> .[[<span class="st">&quot;height&quot;</span>]], <span class="dt">mass =</span> .[[<span class="st">&quot;mass&quot;</span>]]))
-utils<span class="op">::</span><span class="kw">head</span>(df)</code></pre></div>
-<pre><code>   color height mass
-1   blue    172   77
-2 yellow    167   75
-3    red     96   32
-4 yellow    202  136
-5  brown    150   49
-6   blue    178  120</code></pre>
+microbenchmark<span class="op">::</span><span class="kw">microbenchmark</span>(<span class="kw">dt.only</span>(), <span class="kw">dt.dtplyr</span>(), <span class="kw">df.dplyr</span>())</code></pre></div>
+<pre><code>Unit: milliseconds
+        expr      min       lq     mean   median       uq      max neval
+   dt.only() 1.611314 2.139304 4.593442 3.255818 5.341449 24.56744   100
+ dt.dtplyr() 2.031369 2.863535 6.232974 4.052950 7.085350 41.21738   100
+  df.dplyr() 1.227632 1.888046 4.309475 2.814256 5.104705 50.31747   100
+ cld
+  ab
+   b
+  a </code></pre>
 </div>
-<div id="object-oriented-programming" class="section level2">
-<h2><span class="header-section-number">2.2</span> Object-oriented programming</h2>
-<p>R has three different native ways for object-oriented programming and as far as I know one additional library. <code>S3</code>, <code>S4</code> and <code>refClasses</code> (<code>R5</code>) come with the standard library, while <code>R6</code> can be installed from CRAN. I actually never use R5, because it feels incredibly bulky and slow, so we will not cover it here.</p>
-<div id="s3" class="section level3">
-<h3><span class="header-section-number">2.2.1</span> S3</h3>
-<p>S3 methods dispatch on the first argument. If you come from other languages, such as <code>Java</code>, an S3 method is basically an overloaded function on the first argument. You can define an S3 function like this:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">s3 &lt;-<span class="st"> </span><span class="cf">function</span>(x, y, ...) <span class="kw">UseMethod</span>(<span class="st">&quot;s3&quot;</span>)
-
-s3.matrix &lt;-<span class="st"> </span><span class="cf">function</span>(x, y, ...) <span class="kw">apply</span>(x, <span class="dv">1</span>, sum)
-s3.character &lt;-<span class="st"> </span><span class="cf">function</span>(x, y, ...) <span class="kw">paste</span>(x, y)
-
-<span class="kw">s3</span>(<span class="kw">matrix</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">6</span>, <span class="dv">2</span>))</code></pre></div>
-<pre><code>[1]  9 12</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">s3</span>(<span class="st">&quot;hello&quot;</span>, <span class="st">&quot;reader&quot;</span>)</code></pre></div>
-<pre><code>[1] &quot;hello reader&quot;</code></pre>
-<p>S3 classes are defines like this:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">s3.list &lt;-<span class="st"> </span><span class="cf">function</span>(x, y, ...) {
-    l &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> y)
-    base<span class="op">::</span><span class="kw">class</span>(l) &lt;-<span class="st"> &quot;my.s3&quot;</span>
-    
-    l
-}
-<span class="kw">s3</span>(<span class="kw">list</span>(<span class="dt">x =</span> <span class="dv">1</span>), <span class="dt">y =</span> <span class="dv">2</span>)</code></pre></div>
-<pre><code>$x
-$x$x
-[1] 1
-
-
-$y
-[1] 2
-
-attr(,&quot;class&quot;)
-[1] &quot;my.s3&quot;</code></pre>
-<p>The main issue here is of course that the user can easily overwrite a class and that method dispatching on one argument usually is not enough. However, often S3 functions are all you need.</p>
+<div id="pryr" class="section level2">
+<h2><span class="header-section-number">7.2</span> Pryr</h2>
+<p>In some cases it is interesting to have a look at the implementation of specific functions, get their sizes in byte or get the current memory consumption. It is especially useful to keep track of the addresses your objects point to. When I was new to R I found it confusing when a reference is dropped and when a new copy of an object is created.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;pryr&quot;</span>)
+pryr<span class="op">::</span><span class="kw">inspect</span>(<span class="kw">list</span>())</code></pre></div>
+<pre><code>&lt;VECSXP 0x7fe87b1f5638&gt;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pryr<span class="op">::</span><span class="kw">inspect</span>(<span class="kw">vector</span>())</code></pre></div>
+<pre><code>&lt;LGLSXP 0x7fe862d8b0b0&gt;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pryr<span class="op">::</span><span class="kw">object_size</span>(<span class="kw">numeric</span>())</code></pre></div>
+<pre><code>48 B</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pryr<span class="op">::</span><span class="kw">object_size</span>(<span class="kw">numeric</span>(<span class="dv">1</span>))</code></pre></div>
+<pre><code>56 B</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span>stats<span class="op">::</span><span class="kw">rnorm</span>(<span class="dv">10</span>)
+y &lt;-<span class="st"> </span>x
+pryr<span class="op">::</span><span class="kw">address</span>(x)</code></pre></div>
+<pre><code>[1] &quot;0x7fe8652e8f68&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pryr<span class="op">::</span><span class="kw">address</span>(y)</code></pre></div>
+<pre><code>[1] &quot;0x7fe8652e8f68&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">y[<span class="dv">1</span>] &lt;-<span class="st"> </span><span class="dv">1</span>
+pryr<span class="op">::</span><span class="kw">address</span>(y)</code></pre></div>
+<pre><code>[1] &quot;0x7fe86371bf08&quot;</code></pre>
 </div>
-<div id="s4" class="section level3">
-<h3><span class="header-section-number">2.2.2</span> S4</h3>
-<p>Bioconductor seems to prefer S4 over S3, so if you want to submit your package, you could for instance define interfaces using S4 and the rest using S3 or w/o OO entirely. In that way the user of your package only sees the exported interface (the S4 method) and upon calling would receive an S4 object. The rest of the implementation would be hidden.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">methods<span class="op">::</span><span class="kw">setClass</span>(<span class="st">&quot;normallist&quot;</span>, <span class="dt">representation =</span> <span class="kw">list</span>(<span class="dt">.el =</span> <span class="st">&quot;list&quot;</span>), <span class="dt">prototype =</span> methods<span class="op">::</span><span class="kw">prototype</span>(<span class="dt">.el =</span> <span class="kw">list</span>()))
-
-methods<span class="op">::</span><span class="kw">setGeneric</span>(<span class="st">&quot;put&quot;</span>, <span class="cf">function</span>(obj, x) base<span class="op">::</span><span class="kw">standardGeneric</span>(<span class="st">&quot;insert&quot;</span>))
-
-methods<span class="op">::</span><span class="kw">setMethod</span>(<span class="st">&quot;put&quot;</span>, <span class="dt">signature =</span> methods<span class="op">::</span><span class="kw">signature</span>(<span class="dt">obj =</span> <span class="st">&quot;normallist&quot;</span>, 
-    <span class="dt">x =</span> <span class="st">&quot;vector&quot;</span>), <span class="cf">function</span>(obj, x) obj<span class="op">@</span>.el &lt;-<span class="st"> </span><span class="kw">as.list</span>(x))
-
-d &lt;-<span class="st"> </span>methods<span class="op">::</span><span class="kw">new</span>(<span class="st">&quot;normallist&quot;</span>)
-d &lt;-<span class="st"> </span><span class="kw">put</span>(d, <span class="kw">seq</span>(<span class="dv">3</span>))</code></pre></div>
+<div id="datastructures" class="section level2">
+<h2><span class="header-section-number">7.3</span> datastructures</h2>
+<p>If you have a background in computer science you may wonder, that R does not have support for advanced data structures such as Fibonacci heaps or hashmaps. <code>datastructures</code> tries to solve this. It uses Rcpp modules to export Boost data structures to R:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;datastructures&quot;</span>)
+q &lt;-<span class="st"> </span>datastructures<span class="op">::</span><span class="kw">fibonacci_heap</span>(<span class="st">&quot;integer&quot;</span>)
+q[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>] &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="kw">rnorm</span>(<span class="dv">3</span>), <span class="dv">2</span>, <span class="kw">rnorm</span>(<span class="dv">4</span>))
+datastructures<span class="op">::</span><span class="kw">pop</span>(q)</code></pre></div>
+<pre><code>$`1`
+[1] 0.8783644 0.1512666 0.2791505</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">datastructures<span class="op">::</span><span class="kw">pop</span>(q)</code></pre></div>
+<pre><code>$`2`
+[1] 2</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">datastructures<span class="op">::</span><span class="kw">pop</span>(q)</code></pre></div>
+<pre><code>$`3`
+[1]  0.8766004  0.4405784 -0.9867432  0.2160438</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">datastructures<span class="op">::</span><span class="kw">pop</span>(q)</code></pre></div>
+<pre><code>NULL</code></pre>
 </div>
-<div id="r5" class="section level3">
-<h3><span class="header-section-number">2.2.3</span> R5</h3>
+<div id="workflow-management" class="section level2">
+<h2><span class="header-section-number">7.4</span> Workflow management</h2>
+<p>I recently came across <a href="https://ropensci.github.io/drake/index.html"><code>drake</code></a> as a workflow manager. It allows you to run a project and easily update output files.</p>
+<div align="center">
+<p><img src="https://rawgit.com/dirmeier/essential-R/master/fig/drake.jpg" alt="oh no" width="500px"></p>
 </div>
-<div id="r6" class="section level3">
-<h3><span class="header-section-number">2.2.4</span> R6</h3>
+</div>
+<div id="others" class="section level2">
+<h2><span class="header-section-number">7.5</span> Others</h2>
+<p>There are many other great tools I did not specifically mention due to the fact that they are probably more situational. Some of these are:</p>
+<ul>
+<li>rlang</li>
+<li>CVXR, minqa and nloptr,</li>
+</ul>
 
-</div>
 </div>
 </div>
             </section>
@@ -306,8 +316,8 @@ d &lt;-<span class="st"> </span><span class="kw">put</span>(d, <span class="kw">
           </div>
         </div>
       </div>
-<a href="r-package-development.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="extending-to-c-using-rcpp.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="analysis-and-reporting.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="plotting.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
