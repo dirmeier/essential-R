@@ -106,3 +106,7 @@ There are many other great tools I did not specifically mention due to the fact 
 
 - rlang
 - CVXR, minqa and nloptr,
+
+
+- tidyeval
+- lobstr

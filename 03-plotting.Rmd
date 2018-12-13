@@ -191,3 +191,23 @@ Setting up shiny is fairly easy. You need to create a `server.R` file and `ui.R`
 
 You can publish your server on <a href="http://www.shinyapps.io/">shinyapps.io</a> so that it is accessible by everyone.
 
+- base plots from R tufte looking nice
+- add colorschemes
+- magick and imagr
+- scico
+- tidygraph
+
+- Add nice graph plotting with :
+
+```{r}
+g <- igraph::graph_from_data_frame(df)
+l <-layout.reingold.tilford(g) 
+l[1, 1:2] <- c(1, 1)
+l[2, 1:2] <- c(0, 0)
+l[3, 1:2] <- c(1, 0)
+l[4, 1:2] <- c(3, 0)
+plot(g, vertex.size=9, vertex.color="black", vertex.label.degree=0,
+     vertex.label.cex=1, vertex.label.dist=1, vertex.label.color="black", 
+     edge.color="darkgrey", edge.width=.5, edge.arrow.size=.65, 
+     layout=l)
+```

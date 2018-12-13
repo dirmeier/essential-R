@@ -24,3 +24,10 @@ CRAN offers dozens of packages related to machine and statistical learning, many
 
 tensorflow and keras,
 - glmnet, lme4 and netReg.
+-  mcmctools, mcmcvis, mcmc, mcmcpack
+rstanarm brms
+mgcv
+greta
+stan
+h20
+xgboost
