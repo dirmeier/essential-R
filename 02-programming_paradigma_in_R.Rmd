@@ -63,27 +63,53 @@ The main issue here is of course that the user can easily overwrite a class and 
 Bioconductor seems to prefer S4 over S3, so if you want to submit your package, you could for instance define interfaces using S4 and the rest using S3 or w/o OO entirely. In that way the user of your package only sees the exported interface (the S4 method) and upon calling would receive an S4 object. The rest of the implementation would be hidden.
 
 ```{r, eval=FALSE}
-  methods::setClass("normallist",
-         representation = list(.el = "list"),
-         prototype = methods::prototype(.el = list())
-  )
+methods::setClass("normallist",
+       representation = list(.el = "list"),
+       prototype = methods::prototype(.el = list())
+)
 
-  methods::setGeneric("put", function(obj, x) base::standardGeneric("insert"))
+methods::setGeneric("put", function(obj, x) base::standardGeneric("insert"))
 
-  methods::setMethod(
-    "put",
-    signature = methods::signature(obj = "normallist", x = "vector"),
-    function(obj, x) obj@.el <- as.list(x)
-  )
+methods::setMethod(
+  "put",
+  signature = methods::signature(obj = "normallist", x = "vector"),
+  function(obj, x) obj@.el <- as.list(x)
+)
 
-  d <- methods::new("normallist")
-  d <- put(d, seq(3))
+d <- methods::new("normallist")
+d <- put(d, seq(3))
 ```
-
-### R5
-
-TODO
 
 ### R6
 
-TODO
+As a more modern, faster alternative to reference classes, R6 is a good option. R6 comes with proper encapsulation, are mutable and not copied on modification. In my experience, a statistical language like R does not need much proper object orientation and S3 or S4 suffice as interface methods. 
+Computations as below, where we could for instance construct a graph, are mostly done in C++ or so anyways.
+
+```{r, eval=FALSE}
+node <- R6Class("node", list(
+  id = NA_integer_,
+  neighbors = list(),
+  initialize = function(id, neighbors=NULL) {
+    self$id <- id
+    self$neighbors <- neighbors
+  },
+  print = function(...) {
+    cat("ID: ", self$id, "\n", sep = "")
+    neighs <- paste(sapply(self$neighbors, function(.) .$id), collapse=", ", sep=", ")
+    cat("\tneighbors: ", neighs, "\n", sep = "")
+  },
+  add = function(node) {
+    self$neighbors <- c(self$neighbors, node)
+    node$neighbors <- c(node$neighbors, self)
+  }
+))
+
+n1 <- node$new(1L)
+n2 <- node$new(2L)
+
+n1$add(n2)
+n1
+n2
+n1$neighbors[[1]]$id <- 3
+n2
+```

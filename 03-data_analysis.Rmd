@@ -33,7 +33,6 @@ CRAN offers dozens of packages related to machine and statistical learning, many
   performance(pred, measures = list(mmce, acc))
 ```
 
-
 ## Tensorflow
 
 ## Keras
@@ -43,6 +42,8 @@ CRAN offers dozens of packages related to machine and statistical learning, many
 ## sparklyr
 
 ## Others
+
+## modelr
 
 ### glmnet
 
