@@ -82,7 +82,7 @@ d <- put(d, seq(3))
 
 ### R6
 
-As a more modern, faster alternative to reference classes, R6 is a good option. R6 comes with proper encapsulation, are mutable and not copied on modification. In my experience, a statistical language like R does not need much proper object orientation and S3 or S4 suffice as interface methods. 
+As a more modern, faster alternative to reference classes (not covered here), R6 is a good option. R6 comes with proper encapsulation, are mutable and not copied on modification. In my experience, a statistical language like R does not need much proper object orientation and S3 or S4 suffice as interface methods. 
 Computations as below, where we could for instance construct a graph, are mostly done in C++ or so anyways.
 
 ```{r, eval=FALSE}

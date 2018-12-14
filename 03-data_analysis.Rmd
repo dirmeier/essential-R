@@ -4,11 +4,87 @@ The following few sections introduce packages I frequently use for data analysis
 
 ## Stan
 
-### BRMS
+`Stan` is a great package for Bayesian modelling and inference. Compared to statistical packages that are fit to one model, such as `glmnet` or `lme4`, Stan allows to easily define custom Bayesian models for which posterior distributions are automatically inferred using HMC. 
+
+A simple liner regression model could look like this:
+```{r}
+library(rstan)
+library(lme4)
+
+model <- "
+data {
+  int<lower=1> n;
+  vector[n] x;
+  vector[n] y;
+}
+
+parameters {
+  real beta;
+  real<lower=0> sigma;
+  real alpha;
+}
+
+model {
+  beta ~ normal(0, 5);
+  sigma ~ cauchy(0, 5);
+  y ~ normal(alpha + x * beta, sigma);
+}
+"
+
+n <- nrow(sleepstudy)
+x <- sleepstudy$Days
+y <- sleepstudy$Reaction
+
+fit <- stan(model_code=model, data=list(n=n, x=x, y=y), warmup=100, iter=1100, chains=1)
+summary(fit)
+```
 
 ### Rstanarm
 
+`rstanarm` is a package for applied Bayesian modelling that wraps around Stan for easier usage. 
+
+```{r}
+library(rstanarm)
+
+fit <- rstanarm::stan_glm(Reaction ~ Days, sleepstudy, chains = 1,
+                          iter = 1100, warmup = 100, family = gaussian())
+summary(fit)
+```
+
+### brms
+
+For non-linear multi-level models `brms` is also a great option. 
+
+```{r}
+library(brms)
+
+fit <- brm(Reaction ~ Days + (Days | Subject), sleepstudy, chains=1, iter=1000)
+summary(fit)
+```
+
 ## greta
+
+Model definitions in Stan are arguable difficult in the beginning. As an alternative with `greta` is not only easier to compose models, but also often faster owing to the fact that it's developed against tensorflow.
+
+The same model we used for stan above, looks like this with greta:
+```{r}
+library(greta)
+library(lme4)
+
+n <- nrow(sleepstudy)
+x <- sleepstudy$Days
+y <- sleepstudy$Reaction
+
+alpha <- variable()
+beta <- greta::normal(0, 5)
+sigma <- greta::cauchy(0, 5, truncation=c(0, Inf))
+
+y <- greta::as_data(y)
+greta::distribution(y) <- greta::normal(alpha + x * beta, sigma)
+
+mod <- greta::model(beta)
+samples <- greta::mcmc(model, n_samples=1000, warmup=100, chains=1)
+```
 
 ## MCMC
 
