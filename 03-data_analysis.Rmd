@@ -58,8 +58,26 @@ For non-linear multi-level models `brms` is also a great option.
 ```{r}
 library(brms)
 
-fit <- brm(Reaction ~ Days + (Days | Subject), sleepstudy, chains=1, iter=1000)
-summary(fit)
+fit.multilevel <- brm(Reaction ~ Days + (Days | Subject), sleepstudy, chains=1, iter=1000)
+summary(fit.multilevel)
+```
+
+### bayesplot
+
+For plotting of Bayesian models inferred using the tools mentioned above, you probably want to use `bayesplot`. For instance, to compare posterior predictive intervals between the `rstanarm` linear model and the mixed model form `brms`:
+
+```{r, fig.width=10, fig.height=4}
+library(bayesplot)
+library(cowplot)
+
+p1 <- ppc_intervals(y = sleepstudy$Reaction,
+              yrep = posterior_predict(fit)) +
+  labs(title="Linear model")
+p2 <- ppc_intervals(y = sleepstudy$Reaction,
+                    yrep = posterior_predict(fit.multilevel)) +
+  labs(title="Linear mixed model")
+
+cowplot::plot_grid(p1, p2, ncol=2, align="h")
 ```
 
 ## greta
@@ -83,12 +101,35 @@ y <- greta::as_data(y)
 greta::distribution(y) <- greta::normal(alpha + x * beta, sigma)
 
 mod <- greta::model(beta)
-samples <- greta::mcmc(model, n_samples=1000, warmup=100, chains=1)
+samples <- greta::mcmc(mod, n_samples=1000, warmup=100, chains=1)
+summary(samples)
 ```
 
 ## MCMC
 
--  mcmctools, mcmcvis, mcmc, mcmcpack ,coda
+There are a couple of packages on CRAN especially for Markov Chain Monte Carlo and Bayesian methods, some of which are mentioned below.
+
+`coda` is a package for analysis and diagnostics of MCMC chains. Mostly it takes arguments of class mcmc.list, so put your results into an object of it to be able to use `coda`:
+```{r}
+library(coda)
+
+coda::autocorr(samples)
+coda::traceplot(samples)
+```
+
+`MCMCpack` offer an alternative to rstanarm for applied Bayesian modelling. It also comes with a set of useful distributions used frequently in Bayesian modelling, such as the Dirichlet, inverse gamma, etc. 
+
+```{r}
+library(MCMCpack)
+invg <- MCMCpack::rinvgamma(1000, 5, 1)
+hist(invg, breaks=50, xlab="X", main="", col="darkgrey", family="serif")
+```
+
+For plotting `mcmc.list` objects (from `coda`) `MCMCvis` is great:
+
+```{r}
+MCMCvis::MCMCplot(samples)
+```
 
 ## mlR and openML
 
@@ -96,22 +137,68 @@ CRAN offers dozens of packages related to machine and statistical learning, many
 `mlR` integrates with `openML`, an open machine learning platform where people share code, data and algorithms. Here we show an example where we use a Gaussian process to predict the Kyphosis label from the `gam` package.
 
 ```{r}
-  library(mlr)
-  task  <- mlr::makeClassifTask(data = kyphosis, target = "Kyphosis")
-  lrn   <- mlr::makeLearner("classif.gausspr")
+library(mlr)
+task  <- mlr::makeClassifTask(data = kyphosis, target = "Kyphosis")
+lrn   <- mlr::makeLearner("classif.gausspr")
 
-  n <- nrow(kyphosis)
-  train.set <- sample(n, size = 2/3*n)
-  test.set  <- setdiff(1:n, train.set)
+n <- nrow(kyphosis)
+train.set <- sample(n, size = 2/3*n)
+test.set  <- setdiff(1:n, train.set)
 
-  model <- mlr::train(lrn, task, subset = train.set)
-  pred  <- stats::predict(model, task = task, subset = test.set)
-  performance(pred, measures = list(mmce, acc))
+model <- mlr::train(lrn, task, subset = train.set)
+pred  <- stats::predict(model, task = task, subset = test.set)
+performance(pred, measures = list(mmce, acc))
 ```
 
 ## Tensorflow
 
+Thanks to Rstudio, R users are able to use `tensorflow`, a library for high performance numerical computations (which for instance greta uses). For instance, a linear model could look like this:
+
+```{r}
+library(tensorflow)
+
+n <- nrow(sleepstudy)
+x <- sleepstudy$Days
+y <- sleepstudy$Reaction
+
+# define model
+beta  <- tf$Variable(tf$random_normal(shape(1L), 0, 10))
+alpha <- tf$Variable(tf$zeros(shape(1L)))
+y.hat <- alpha + beta * x
+
+# Minimize the mean squared errors.
+loss <- tf$reduce_mean((y - y.hat) ^ 2)
+optimizer <- tf$train$GradientDescentOptimizer(.5)
+train <- optimizer$minimize(loss)
+
+# Launch the graph and initialize the variables.
+sess <- tf$Session()
+sess$run(tf$global_variables_initializer())
+
+for (step in 1:100)
+{
+  sess$run(train)
+}
+cat(step, "-", sess$run(alpha), sess$run(beta), "\n")
+```
+
 ## Keras
+
+`Keras` is an interface to popular numerical libraries such as tensorflow and theano for which model/network definitions are independent of the library on the backend.
+Our tensorflow model from above would look the following in keras:
+
+```{r}
+library(keras)
+
+model <- keras_model_sequential() %>%
+  layer_dense(units = 1, activation = "linear", input_shape = 1)
+model %>%
+  compile(loss = "mse",
+          optimizer = optimizer_sgd(0.5),
+          metrics = list("mean_absolute_error"))
+
+summary(model)
+```
 
 ## h20
 
@@ -119,7 +206,7 @@ CRAN offers dozens of packages related to machine and statistical learning, many
 
 ## Others
 
-## modelr
+### modelr
 
 ### glmnet
 
