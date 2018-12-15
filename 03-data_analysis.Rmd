@@ -200,30 +200,62 @@ model %>%
 summary(model)
 ```
 
-## h20
+## Regression models and machine learning
 
-## sparklyr
+Some packages for regression:
+
+* `glmnet` for $\ell_1$- and $\ell_2$-penalized linear regression models,
+* `lme4` for frequentist mixed models,
+* `mgcv` for generalized additive models,
+* `netReg` for graph regularized linear models,
+* `xgboost` and `gbm` for boosting.
+* `h20` for general machine learning algorithms,
+
+## Big data analytics
+
+For Big data analytics I recommend Rstudio's `sparklyr` since it nicelt itegrates with the other methods from the `tidyverse`. For instance, following an example from [Rstudio's tutorials](https://spark.rstudio.com/mlib/):
+
+```{r, eval=FALSE}
+library(sparklyr)
+
+sc <- spark_connect(master = "local")
+kmeans_model <- copy_to(sc, iris, "iris", overwrite = TRUE) %>%
+  select(Petal_Width, Petal_Length) %>%
+  ml_kmeans(centers = 3)git add -A
+```
 
 ## Others
 
+Some other great packages for various data-related things:
+
 ### modelr
 
-### glmnet
+`modelr` defines multiple helper functions related to statistical modelling:
 
-### lme4
+```{r}
+library(modelr)
 
-### netReg
-
-### mgcv
-
-### xgboost and gbm
+sleepstudy %>% modelr::fit_with(
+  lm, 
+  modelr::formulas(~Reaction,
+                   no_intercept = ~0 + Days, 
+                   intercept = ~1 + Days))
+```
 
 ### kernlab
 
-### topicmodels
+Use `kernlab` for tasks related to kernels, such as Gaussian process regression or merely computing a Gram-matrix.
 
-### tm
+```{r}
+library(kernlab)
 
-tidytext
+x <- matrix(rnorm(25), 5)
+rbf <- kernlab::rbfdot()
+(K <- kernlab::kernelMatrix(rbf, x))
 
-### caret
+x <- sort(rnorm(100))
+y <- 3 + 0.5 * x^2 + 1 * x + rnorm(100, 0, 0.05)
+gpr <- kernlab::gausspr(x, y)
+plot(x, y, family="serif", a)
+lines(x, predict(gpr, x), col="red")
+```
