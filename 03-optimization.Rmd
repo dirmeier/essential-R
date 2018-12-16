@@ -1,5 +1,7 @@
 # Optimization
 
+Much of statistical and machine learning boils down to function optimization (if you are not necessarily interested in Bayesian inefrence). In you don't want to implement an optimizer for yourself, the following couple of libraries might be of interest to you.
+
 ## Convex optimization
 
 CVXR
