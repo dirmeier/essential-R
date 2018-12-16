@@ -1,6 +1,6 @@
 # Miscellaneous
 
-The foll
+The following chapter covers miscellaneous, useful tools and libraries for working with R some of which belong to my favourites.
 
 ## Workflow management
 
@@ -10,13 +10,12 @@ I recently came across [`drake`](https://ropensci.github.io/drake/index.html) as
   <img src="https://rawgit.com/dirmeier/essential-R/master/fig/drake.jpg" alt="oh no" width="500px">
 </div>
 
-
 ## Pry back the covers of R 
 
 In some cases it is interesting to have a look at the implementation of specific functions, get their sizes in byte or get the current memory consumption. It is especially useful to keep track of the addresses your objects point to. When I was new to R I found it confusing when a reference is dropped and when a new copy of an object is created.
 
 ```{r}
-library('pryr')
+library(pryr)
 pryr::inspect(list())
 pryr::inspect(vector())
 
@@ -35,6 +34,34 @@ pryr::address(y)
 
 TODO rlang
 
-## Understanding objects
+## Compile
 
-TODO lobstr
+Base `R` can be frustratingly slow at times, especially when you cannot vectorize your code or don't want to extend it ro C++ or Fortran. Using `compiler` you can however improve your code a little:
+
+```{r}
+library(compiler)
+jit <- enableJIT(0)
+
+slow.mean <- function(x) {
+  sum <- 0
+  n <- length(x)
+  for(i in 1:n) sum <- sum + x[i]
+  sum / n
+}
+
+fast.mean <- compiler::cmpfun(slow.mean)
+
+array <- rnorm(1000)
+microbenchmark::microbenchmark(
+  slow.mean(array),
+  fast.mean(array),
+  mean(array)
+)
+
+enableJIT(jit)
+```
+
+## Others
+
+* In case you ever need to use Google's `V8` JavaScript enginge, it has R bindings thanks to Jeroen Ooms.
+* Understanding R on the backend has its benefits of its own. A fantastic package for this is `lobstr`.
