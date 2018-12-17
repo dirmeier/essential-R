@@ -1,3 +1,82 @@
+---
+title: "Essential R"
+author: "Simon Dirmeier"
+github-repo: "dirmeier/essential-R"
+date: "`r Sys.Date()`" 
+site: bookdown::bookdown_site
+documentclass: book
+output: bookdown::gitbook
+---
+
+# About {-}
+
+Placeholder
+
+
+
+<!--chapter:end:index.Rmd-->
+
+
+# R package development
+
+Placeholder
+
+
+## Creating R packages
+## Writing R packages
+## Debugging
+## Testing code
+## Documenting code
+## Checking code
+## Static code analysis
+### Running examples
+## Code coverage
+## Profiling and benchmarking
+## Creating a landing page
+
+<!--chapter:end:01-r_devel.Rmd-->
+
+
+# Programming paradigma in R
+
+Placeholder
+
+
+## Functional programming
+## Object-oriented programming
+### S3
+### S4
+### R6
+
+<!--chapter:end:02-programming_paradigma_in_r.Rmd-->
+
+
+# R extensions
+
+Placeholder
+
+
+## C++ and Rcpp
+### Rcpp in a package
+### Writing `C++`
+## Fortran
+## Reticulate
+
+<!--chapter:end:03-extending_R.Rmd-->
+
+
+# Working with data
+
+Placeholder
+
+
+## tidyverse
+## data.table
+## Data structures
+## Databases
+
+<!--chapter:end:03-working_with_data.Rmd-->
+
 # Data analysis and statistical modeling
 
 The following few sections introduce packages I frequently use for data analysis, modelling and machine learning.
@@ -82,16 +161,9 @@ cowplot::plot_grid(p1, p2, ncol=2, align="h")
 
 ## greta
 
-Model definitions in Stan are arguable difficult in the beginning. As an alternative with `greta` is not only easier to compose models, but also often faster owing to the fact that it's developed against tensorflow. Installation can be a bit tedious. For `greta` version `v.0.3` I would install tensorflow from the command line:
-
-```{bash, eval=FALSE}
-conda create -y -n r-tensorflow python=3.6
-conda install tensorflow==1.10.0
-pip install tensorflow-probability==0.30.0
-```
+Model definitions in Stan are arguable difficult in the beginning. As an alternative with `greta` is not only easier to compose models, but also often faster owing to the fact that it's developed against tensorflow.
 
 The same model we used for stan above, looks like this with greta:
-
 ```{r}
 library(greta)
 library(lme4)
@@ -266,3 +338,50 @@ gpr <- kernlab::gausspr(x, y)
 plot(x, y, family="serif", a)
 lines(x, predict(gpr, x), col="red")
 ```
+
+<!--chapter:end:03-data_analysis.Rmd-->
+
+
+# Plotting, reporting and visualizing
+
+Placeholder
+
+
+## Layout
+## Publication ready plots
+## Colors
+## Interactive and animated plots
+## Graphs
+## RMarkdown
+## Shiny
+
+<!--chapter:end:03-plotting.Rmd-->
+
+
+# Miscellaneous
+
+Placeholder
+
+
+## Workflow management
+## Pry back the covers of R 
+## Tidy evaluation
+## Compile
+## Others
+
+<!--chapter:end:03-misc.Rmd-->
+
+
+# Good practices
+
+Placeholder
+
+
+## Continuous integration
+## Version control
+## Docker
+## Code style
+## Debugging C++ from R
+
+<!--chapter:end:04-good_practices.Rmd-->
+

@@ -19,6 +19,8 @@ tidyr::gather(iris, Col, Val, -Species) %>%
   head()
 ```
 
+TODO some examples
+
 ## data.table
 
 `data.table` is a fast implementation of R's classical `data.frame`. I hardly ever use data frame any more, and if so only, because it seems to work nicer with `dplyr` and `tidyr`. However, by using `dtplyr` this isn't much of a problem, really.
@@ -70,6 +72,8 @@ If you have a background in computer science you may wonder, that R does not hav
   datastructures::pop(q)
 ```
 
+TODO examples
+
 ## Databases
 
-neo4j, maria, sqltie, mongodb, dbplyr
+TODO neo4j, maria, sqltie, mongodb, dbplyr
