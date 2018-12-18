@@ -1,31 +1,6 @@
 # Plotting, reporting and visualizing
 
-One of the most significant reasons to use R is probably its plotting capabilities, people contributing to `ggplot2` and the community's effort of adding package that integrate with it. Below you'll find some nice packages for plotting are the following:
-
-TODO add these below also diagrammr/igraph plot nice/gganimate
-- `ggsuite`
-    - `ggthemes`
-    - `hrbrthemes`
-    - `cowplot`
-    - `ggpubr`
-    - `ggthemr`
-    - `ggsci`
-    - `viridis` and `viridisLite`
-    - `patchwork`
-    - `ggraph`, `ggnet` and `ggnetwork`
-    - `gganimate`
-    - `tweenr`
-    - `ggpixel`
-- Others
-    - `animattion`
-    - `colorspace` and `colorblindr`
-    - `highcharter`
-    - `animation`
-    - `plotly`
-    - `lattice`
-    - `magick`
-    - `imager`
-    - `scales`
+One of the most significant reasons to use R is probably its plotting capabilities, people contributing to `ggplot2` and the community's effort of adding package that integrate with it. Below you'll find some packages for plotting.
 
 ## Layout
 
@@ -160,7 +135,7 @@ gganimate(g)
 
 ## Graphs
 
-There are many wonderful graph and network libraries around. I primarily use `ggnetwork`/`ggnet2`, `igraph`, `ggraph` and `DiagrammeR`.
+There are many wonderful graph and network libraries around for plotting. For HTML `DiagrammeR` produces beautiful graphs:
 
 ```{r diagrammer,fig.height=2, fig.align = 'center'}
 library(DiagrammeR)
@@ -174,6 +149,26 @@ create_graph() %>%
   render_graph(layout = "tree")
 ```
 
+For PDFs I primarily use `igraph` (which you can also use for graph algorithms).
+
+```{r}
+library(igraph)
+
+set.seed(1)
+g <- igraph::random.graph.game(5, p.or.m=.4)
+l <- igraph::layout.reingold.tilford(g) 
+l[1, 1:2] <- c(1, 1)
+l[2, 1:2] <- c(0, 0)
+l[3, 1:2] <- c(1, 0)
+l[4, 1:2] <- c(3, 0)
+#l[5, 1:2] <- c(2, 2)
+plot(g, vertex.size=9, vertex.color="black", vertex.label.degree=0,
+     vertex.label.cex=1, vertex.label.dist=1, vertex.label.color="black", 
+     edge.color="darkgrey", edge.width=.5, edge.arrow.size=.65, 
+     layout=l)
+```
+
+Other packages for graphi visualisations include `ggnetwork`/`ggnet`, `tidygraph`, or `ggraph`.
 
 ## RMarkdown
 
@@ -195,31 +190,24 @@ Setting up shiny is fairly easy. You need to create a `server.R` file and `ui.R`
 
 You can publish your server on <a href="http://www.shinyapps.io/">shinyapps.io</a> so that it is accessible by everyone.
 
-TODO
+## Others
 
-- base plots from R tufte looking nice
+TODO add some other packages
+
+- `ggraph`, `ggnet` and `ggnetwork`
+- `gganimate`
+- `tweenr`
+- `ggpixel`
+- `animation`
+- `lattice`
+- `magick`
+- `imager`
+  
+TODO add
+
+- add beautified base plots (tufte or so)
 - add colorschemes
 - magick and imagr
 - scico
 - tidygraph
-
-- Add nice graph plotting with :
-
-
-```{r}
-library(igraph)
-
-g <- igraph::graph_from_data_frame(df)
-l <-layout.reingold.tilford(g) 
-l[1, 1:2] <- c(1, 1)
-l[2, 1:2] <- c(0, 0)
-l[3, 1:2] <- c(1, 0)
-l[4, 1:2] <- c(3, 0)
-plot(g, vertex.size=9, vertex.color="black", vertex.label.degree=0,
-     vertex.label.cex=1, vertex.label.dist=1, vertex.label.color="black", 
-     edge.color="darkgrey", edge.width=.5, edge.arrow.size=.65, 
-     layout=l)
-```
-
-
-TODO r2d3 - 
+- r2d3

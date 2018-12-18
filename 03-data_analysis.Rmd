@@ -205,7 +205,7 @@ model %>%
           metrics = list("mean_absolute_error"))
 ```
 
-## Regression models and machine learning
+## Statistical learning
 
 Some packages for regression:
 
@@ -215,6 +215,8 @@ Some packages for regression:
 * `netReg` for graph regularized linear models,
 * `xgboost` and `gbm` for boosting.
 * `h20` for general machine learning algorithms,
+
+TODO some examples
 
 ## Big data analytics
 
@@ -226,7 +228,7 @@ library(sparklyr)
 sc <- spark_connect(master = "local")
 kmeans_model <- copy_to(sc, iris, "iris", overwrite = TRUE) %>%
   select(Petal_Width, Petal_Length) %>%
-  ml_kmeans(centers = 3)git add -A
+  ml_kmeans(centers = 3)
 ```
 
 ## Others
