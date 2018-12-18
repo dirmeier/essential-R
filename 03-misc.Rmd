@@ -16,6 +16,7 @@ In some cases it is interesting to have a look at the implementation of specific
 
 ```{r}
 library(pryr)
+
 pryr::inspect(list())
 pryr::inspect(vector())
 
@@ -40,6 +41,7 @@ Base `R` can be frustratingly slow at times, especially when you cannot vectoriz
 
 ```{r}
 library(compiler)
+
 jit <- enableJIT(0)
 
 slow.mean <- function(x) {

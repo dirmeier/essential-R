@@ -7,7 +7,7 @@ Continuous integration, version control and containerization are three of the ma
 To be honest, doing all the steps from the section above is tedious and annoying. For that reason I set up Travis CI to take care of running our tests, static analysis and code coverage in the project. Travis works for Mac and Unix.
 
 ```{bash}
-  cat ./pkg/.travis.yml
+cat ./pkg/.travis.yml
 ```
 
 Check out Travis' <a href="https://docs.travis-ci.com/">docs</a> for more info. What we are basically telling Travis to do is to check our package `--as-cran`, run the unit tests, do the code coverage and finally do a static code analysis.
@@ -15,7 +15,7 @@ Check out Travis' <a href="https://docs.travis-ci.com/">docs</a> for more info. 
 In order to do the same for Windows machines, we also use AppVeyor.
 
 ```{bash}
-  cat ./pkg/appveyor.yml
+cat ./pkg/appveyor.yml
 ```
 
 Here, we only run some tests and checks, since we already got the code analysis and coverage.
@@ -104,27 +104,26 @@ Whatever you do, just be consistent. There seem to be a lot of different prefere
 If I mainly write using `S3` classes and functions I prefer writing code like this:
 
 ```{r ,eval=FALSE}
-  my.var <- "2"
-  
-  i.am.a.function <- function(i) 
-  {
-    sapply(seq(10), function(i) {
-      i + 1
-    })  
-  }
-  
-  plot.me <- function(x, ...) plot.default(x)
-  
-  .i.am.private <- "2"
+my.var <- "2"
+
+i.am.a.function <- function(i) 
+{
+  sapply(seq(10), function(i) {
+    i + 1
+  })  
+}
+
+plot.me <- function(x, ...) plot.default(x)
+
+.i.am.private <- "2"
 ```
 
 For `S4` classes and functions I recommend using the [Bioconductor](https://www.bioconductor.org/developers/how-to/coding-style/) style guide or how 
 `lme4` and `Matrix` do it:
 
 ```{r, eval=FALSE}
-  setMethod("camelCaps", 
-            signature=signature(iAmAList = "list"))
-
+setMethod("camelCaps",
+          signature=signature(iAmAList = "list"))
 ```
 
 ## Debugging C++ from R

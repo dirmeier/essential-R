@@ -35,7 +35,8 @@ n <- nrow(sleepstudy)
 x <- sleepstudy$Days
 y <- sleepstudy$Reaction
 
-fit <- stan(model_code=model, data=list(n=n, x=x, y=y), warmup=100, iter=1100, chains=1)
+fit <- stan(model_code=model, data=list(n=n, x=x, y=y), 
+            warmup=100, iter=1100, chains=1)
 summary(fit)
 ```
 
@@ -46,9 +47,10 @@ summary(fit)
 ```{r}
 library(rstanarm)
 
-fit <- rstanarm::stan_glm(Reaction ~ Days, sleepstudy, chains = 1,
-                          iter = 1100, warmup = 100, family = gaussian())
-summary(fit)
+fit.arm <- rstanarm::stan_glm(
+  Reaction ~ Days, sleepstudy, chains = 1,
+  iter = 1100, warmup = 100, family = gaussian())
+summary(fit.arm)
 ```
 
 ### brms
@@ -71,7 +73,7 @@ library(bayesplot)
 library(cowplot)
 
 p1 <- ppc_intervals(y = sleepstudy$Reaction,
-              yrep = posterior_predict(fit)) +
+              yrep = posterior_predict(fit.arm)) +
   labs(title="Linear model")
 p2 <- ppc_intervals(y = sleepstudy$Reaction,
                     yrep = posterior_predict(fit.multilevel)) +
@@ -92,7 +94,7 @@ pip install tensorflow-probability==0.30.0
 
 The same model we used for stan above, looks like this with greta:
 
-```{r}
+```{r, eval=FALSE}
 library(greta)
 library(lme4)
 
@@ -109,7 +111,6 @@ greta::distribution(y) <- greta::normal(alpha + x * beta, sigma)
 
 mod <- greta::model(beta)
 samples <- greta::mcmc(mod, n_samples=1000, warmup=100, chains=1)
-summary(samples)
 ```
 
 ## MCMC
@@ -120,8 +121,8 @@ There are a couple of packages on CRAN especially for Markov Chain Monte Carlo a
 ```{r}
 library(coda)
 
-coda::autocorr(samples)
-coda::traceplot(samples)
+coda::autocorr(As.mcmc.list(fit))
+coda::traceplot(As.mcmc.list(fit))
 ```
 
 `MCMCpack` offer an alternative to rstanarm for applied Bayesian modelling. It also comes with a set of useful distributions used frequently in Bayesian modelling, such as the Dirichlet, inverse gamma, etc. 
@@ -135,7 +136,7 @@ hist(invg, breaks=50, xlab="X", main="", col="darkgrey", family="serif")
 For plotting `mcmc.list` objects (from `coda`) `MCMCvis` is great:
 
 ```{r}
-MCMCvis::MCMCplot(samples)
+MCMCvis::MCMCplot(As.mcmc.list(fit))
 ```
 
 ## mlR and openML
@@ -161,7 +162,7 @@ performance(pred, measures = list(mmce, acc))
 
 Thanks to Rstudio, R users are able to use `tensorflow`, a library for high performance numerical computations (which for instance greta uses). For instance, a linear model could look like this:
 
-```{r}
+```{r, eval=FALSE}
 library(tensorflow)
 
 n <- nrow(sleepstudy)
@@ -186,7 +187,6 @@ for (step in 1:100)
 {
   sess$run(train)
 }
-cat(step, "-", sess$run(alpha), sess$run(beta), "\n")
 ```
 
 ## Keras
@@ -194,7 +194,7 @@ cat(step, "-", sess$run(alpha), sess$run(beta), "\n")
 `Keras` is an interface to popular numerical libraries such as tensorflow and theano for which model/network definitions are independent of the library on the backend.
 Our tensorflow model from above would look the following in keras:
 
-```{r}
+```{r, eval=FALSE}
 library(keras)
 
 model <- keras_model_sequential() %>%
@@ -203,8 +203,6 @@ model %>%
   compile(loss = "mse",
           optimizer = optimizer_sgd(0.5),
           metrics = list("mean_absolute_error"))
-
-summary(model)
 ```
 
 ## Regression models and machine learning
@@ -263,6 +261,6 @@ rbf <- kernlab::rbfdot()
 x <- sort(rnorm(100))
 y <- 3 + 0.5 * x^2 + 1 * x + rnorm(100, 0, 0.05)
 gpr <- kernlab::gausspr(x, y)
-plot(x, y, family="serif", a)
+plot(x, y, family="serif")
 lines(x, predict(gpr, x), col="red")
 ```

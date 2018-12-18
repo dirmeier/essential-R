@@ -2,8 +2,7 @@
 
 One of the most significant reasons to use R is probably its plotting capabilities, people contributing to `ggplot2` and the community's effort of adding package that integrate with it. Below you'll find some nice packages for plotting are the following:
 
-TODO add these below
-also diagrammr/igraph plot nice/gganimate
+TODO add these below also diagrammr/igraph plot nice/gganimate
 - `ggsuite`
     - `ggthemes`
     - `hrbrthemes`
@@ -31,6 +30,7 @@ also diagrammr/igraph plot nice/gganimate
 ## Layout
 
 ```{r, echo=FALSE}
+library(repurrrsive)
 df <- purrr::map_dfr(sw_people, .f = function(.) data.frame(color = .[["eye_color"]], 
     height = .[["height"]], mass = .[["mass"]]))
 ```
@@ -38,27 +38,27 @@ df <- purrr::map_dfr(sw_people, .f = function(.) data.frame(color = .[["eye_colo
 Use `hrbrthemes` for a nicer layout:
 
 ```{r, fig.align = 'center', fig.height=6}
-  library('hrbrthemes')
-  library('ggsci')
-  import_roboto_condensed()
+library(hrbrthemes)
+library(ggsci)
+import_roboto_condensed()
 
-  g <- ggplot(df) +
-    geom_point(aes(x=height, y=mass, color=color)) +
-    hrbrthemes::theme_ipsum_rc() +
-    ggsci::scale_color_rickandmorty()
-  print(g)
+g <- ggplot(df) +
+  geom_point(aes(x=height, y=mass, color=color)) +
+  hrbrthemes::theme_ipsum_rc() +
+  ggsci::scale_color_rickandmorty()
+print(g)
 ```
 
 Recently I started changing to simpler layouts and themes, for instance as described on <a href="http://motioninsocial.com/tufte/">
 Tufte in R</a>. `ggthemes` offers some nice options to do so. For instance, if you are feeling jealous that you cannot draft some Excel plots, cause you are working with R:
 
 ```{r blub, fig.align = 'center', fig.height=6}
-  library('ggthemes')
+library(ggthemes)
 
-  g <- ggplot(df) +
-    geom_point(aes(x=height, y=mass), color="green") +
-    ggthemes::theme_excel()
-  print(g)
+g <- ggplot(df) +
+  geom_point(aes(x=height, y=mass), color="green") +
+  ggthemes::theme_excel()
+print(g)
 ```
 
 ## Publication ready plots
@@ -66,18 +66,18 @@ Tufte in R</a>. `ggthemes` offers some nice options to do so. For instance, if y
 `cowplot` and `ggpubr` are great for greating publication ready plots:
 
 ```{r cow, fig.align = 'center', fig.height=6}
-  p1 <- ggplot(mtcars, aes(hp, disp)) + geom_point() + ggthemes::theme_tufte()
-  p2 <- ggplot(mtcars, aes(hp, disp)) + geom_point() + ggthemes::theme_gdocs()
+p1 <- ggplot(mtcars, aes(hp, disp)) + geom_point() + ggthemes::theme_tufte()
+p2 <- ggplot(mtcars, aes(hp, disp)) + geom_point() + ggthemes::theme_gdocs()
 
-  cowplot::plot_grid(p1, p2, ncol=2, align="vh", labels=c("Nice", "Meh"))
+cowplot::plot_grid(p1, p2, ncol=2, align="vh", labels=c("Nice", "Meh"))
 ```
 
 If these two are still not enough, I usually go with `patchwork`:
 
 ```{r patch, fig.align = 'center', fig.height=6}
-  library(patchwork)
-  g + (p1 + p2) + plot_layout(ncol = 1)
+library(patchwork)
 
+g + (p1 + p2) + plot_layout(ncol = 1)
 ```
 
 ## Colors
@@ -85,29 +85,30 @@ If these two are still not enough, I usually go with `patchwork`:
 I use `colorspace`  and `colorblindr` in order to remove some hue and chroma. `viridis` is a wonderful set of colors for continuous, sequential data. For discrete, qualitative data I mainly use `ggthemr` and the `fresh` colors. `ggsci` also has some wonderful color palettes. `scales` lets you have a look at a color palette easily.
 
 ```{r, fig.align = 'center', fig.height=6}
-  library('colorspace')
-  library('colorblindr')
-  library('viridis')
-  library('ggthemr')
-  library('scales')
-  library('cowplot')
-  ggthemr::ggthemr("fresh", "scientific", spacing = 2, type = 'inner')
+library(colorspace)
+library(colorblindr)
+library(viridis)
+library(ggthemr)
+library(scales)
+library(cowplot)
+ggthemr::ggthemr("fresh", "scientific", spacing = 2, type = 'inner')
 
-   p1 <- colorblindr::gg_color_gradient() + colorspace::scale_fill_continuous_sequential("viridis", c1=20, c2=70, l1=25, l2=100)
-   p2 <- colorblindr::gg_color_gradient() + colorspace::scale_fill_continuous_sequential("Blues", c1=20, c2=70, l1=25, l2=100)
-   p3 <- colorblindr::gg_color_gradient() +  colorspace::scale_fill_continuous_diverging(c1=40)
-   df <- data.frame(Col=ggthemr::swatch()[1:10], X=1, Y=seq(10))
-   p4 <- ggplot(df) + geom_tile(aes(x=Y, y=X), fill=df$Col) + theme_void()
+ p1 <- colorblindr::gg_color_gradient() + colorspace::scale_fill_continuous_sequential("viridis", c1=20, c2=70, l1=25, l2=100)
+ p2 <- colorblindr::gg_color_gradient() + colorspace::scale_fill_continuous_sequential("Blues", c1=20, c2=70, l1=25, l2=100)
+ p3 <- colorblindr::gg_color_gradient() +  colorspace::scale_fill_continuous_diverging(c1=40)
+ df <- data.frame(Col=ggthemr::swatch()[1:10], X=1, Y=seq(10))
+ p4 <- ggplot(df) + geom_tile(aes(x=Y, y=X), fill=df$Col) + theme_void()
 
-   cowplot::plot_grid(p1, p2, p3, p4, ncol=2, align="vh")
+ cowplot::plot_grid(p1, p2, p3, p4, ncol=2, align="vh")
 ```
 
 Another great tool  is `swatches`:
 
 ```{r swatch}
-  library(swatches)
-  omega_nebula <- read_ase(system.file("palettes", "omega_nebula.ase", package="swatches"))
-  show_palette(omega_nebula)
+library(swatches)
+
+omega_nebula <- read_ase(system.file("palettes", "omega_nebula.ase", package="swatches"))
+show_palette(omega_nebula)
 ```
 
 ## Interactive and animated plots
@@ -115,18 +116,20 @@ Another great tool  is `swatches`:
 Often you want to create an interactive plot, for instance when serving on a `shiny` instance. One way to do that is using plotly:
 
 ```{r plotly, fig.align = 'center', fig.height=6}
-  library('plotly')
-  q <- qplot(data=iris, x=Sepal.Length, y=Sepal.Width, color=Species) +
-    ggthemes::theme_tufte()
-  plotly::ggplotly(q)
+library(plotly)
+
+q <- qplot(data=iris, x=Sepal.Length, y=Sepal.Width, color=Species) +
+  ggthemes::theme_tufte()
+plotly::ggplotly(q)
 ```
 
 Recently I also stumbled upon `highcharter` and `ggvis`:
 
 ```{r highcharter, fig.align = 'center', fig.height=6, eval=FALSE}
-  library('highcharter')
-  hchart(iris, "scatter", hcaes(x = Sepal.Length, y = Sepal.Width,  group=Species)) %>%
-    hc_add_theme(hc_theme_tufte())
+library(highcharter)
+
+hchart(iris, "scatter", hcaes(x = Sepal.Length, y = Sepal.Width,  group=Species)) %>%
+  hc_add_theme(hc_theme_tufte())
 ```
 
 ```{r ggvis, fig.align = 'center', fig.height=6}
@@ -142,8 +145,9 @@ Recently I also stumbled upon `highcharter` and `ggvis`:
 With `gganimate` you can directly create GIFs from you plots:
 
 ```{r, eval=FALSE}
-library('gganimate')
-library('gapminder')
+library(gganimate)
+library(gapminder)
+
 g <- ggplot(gapminder, aes(gdpPercap, lifeExp, size = pop, frame = year)) +
   geom_point() +
   geom_smooth(aes(group = year), method = "lm", show.legend = FALSE) +
@@ -159,14 +163,15 @@ gganimate(g)
 There are many wonderful graph and network libraries around. I primarily use `ggnetwork`/`ggnet2`, `igraph`, `ggraph` and `DiagrammeR`.
 
 ```{r diagrammer,fig.height=2, fig.align = 'center'}
-  library(DiagrammeR)
-  create_graph() %>%
-    add_node(label=expression(Z),
-             node_aes = node_aes(penwidth=2, fontname="Arial Narrow", fontcolor = "black", fillcolor="white", color="black")) %>%
-    add_node(label="X",
-              node_aes = node_aes(penwidth=2, fontname="Arial Narrow", fontcolor = "black", fillcolor="grey", color="black")) %>%
-    add_edge(from = 1, to = 2, edge_aes=edge_aes(color="black")) %>%
-    render_graph(layout = "tree")
+library(DiagrammeR)
+
+create_graph() %>%
+  add_node(label=expression(Z),
+           node_aes = node_aes(penwidth=2, fontname="Arial Narrow", fontcolor = "black", fillcolor="white", color="black")) %>%
+  add_node(label="X",
+            node_aes = node_aes(penwidth=2, fontname="Arial Narrow", fontcolor = "black", fillcolor="grey", color="black")) %>%
+  add_edge(from = 1, to = 2, edge_aes=edge_aes(color="black")) %>%
+  render_graph(layout = "tree")
 ```
 
 
@@ -189,6 +194,8 @@ Setting up shiny is fairly easy. You need to create a `server.R` file and `ui.R`
 ```
 
 You can publish your server on <a href="http://www.shinyapps.io/">shinyapps.io</a> so that it is accessible by everyone.
+
+TODO
 
 - base plots from R tufte looking nice
 - add colorschemes
