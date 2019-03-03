@@ -10,9 +10,10 @@ rmd_files: [
   "01-r_devel.Rmd",
   "02-programming_paradigma_in_r.Rmd",
   "03-extending_R.Rmd",
-  "03-working_with_data.Rmd",
-  "03-data_analysis.Rmd",
-  "03-plotting.Rmd",
-  "03-misc.Rmd",
-  "04-good_practices.Rmd"
+  "04-working_with_data.Rmd",
+  "05-data_analysis.Rmd",
+  "06-optimization.Rmd",
+  "07-plotting.Rmd",
+  "08-misc.Rmd",
+  "09-good_practices.Rmd"
 ]
