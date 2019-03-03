@@ -1,0 +1,1415 @@
+---
+title: "Essential R"
+author: "Simon Dirmeier"
+github-repo: "dirmeier/essential-R"
+date: "`r Sys.Date()`" 
+site: bookdown::bookdown_site
+documentclass: book
+output: bookdown::gitbook
+---
+
+# About {-}
+
+<div class="quote" style="text-align: center; margin-top: 5%">
+  <i>The lyf so short, the craft so long to lerne.</i><br>
+</div>
+<div class="quote" style="text-align: right; margin-bottom: 5% ">
+  <span style="text-align: right;">-- Geoffrey Chaucer</span>
+</div>
+
+```{r knitr_init, echo=FALSE, cache=FALSE, message=FALSE}
+library(knitr)
+library(magrittr)
+library(devtools)
+opts_chunk$set(prompt=FALSE,
+               tidy=TRUE,
+               comment=NA,
+               message=FALSE,
+               warning=FALSE)
+library(gam)
+data(kyphosis)
+```
+
+This book serves as a collection of
+
+* tools for package development,
+* good practices for programming,
+* and my most frequently used packages.
+
+The material treated here certainly does not cover all of `R`, but rather serves as my personal list of essential things related to programming in `R` that I found useful to know. The document is partly opinionated and subjective, so feel free to open up an <a href="https://github.com/dirmeier/essential-R/issues">issue</a> if you feel some parts should be clarified or reformulated.
+
+The book is no introduction on how to program functionally, procedurally or in an object-oriented way, how to write code in general, or how to speed it up. The interested reader is referred to:
+
+- Robert Martin: Clean Code,
+- Andrew Hunt: The Pragmatic Programmer,
+- Gang of Four: Design Patterns,
+- Colin Gillespie: Efficient R programming,
+- Patrick Burns: The R Inferno,
+- Hadley Wickham: R packages,
+- Hadley Wickham: Advanced R,
+- Dirk Eddelbuettel: Seamless R and C++ Integration with Rcpp,
+- Thomas Cormen: Introduction to Algorithms,
+- Dan Gusfield: Algorithms on Strings, Trees and Sequences,
+- Donald Knuth: The Art of Computer Programming,
+- a <a href="http://norvig.com/21-days.html">comment</a> by Peter Norvig,
+- ...
+
+Much of R's popularity is due to its fantastic ecosystem.
+For data analysis or statistics R is a good choice for various reasons:
+
+- high-level,
+- easy to install packages,
+- can be extended to C++ without needing knowledge of linking or C++ build-systems,
+- probably the best plotting facility of any language,
+- Bioconductor, machine learning and statistics libraries,
+- small standard library.
+
+There are a few things, however, R is not so great at:
+
+- in general slow,
+- not really suited for large projects,
+- poor object orientation,
+- inconsistent function names,
+- very limited threading capabilities,
+- ...
+
+<!--chapter:end:00-index.Rmd-->
+
+# R package development
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+devtools::install("./pkg")
+```
+
+The following section covers tools that help and speed up developing R
+
+## Creating R packages
+
+A minimum `R`-package stack at least consists of the following packages of tools:
+
+- `yeoman`
+- `devtools`
+- `testthat`
+- `roxygen2`
+- `covr`
+- `lintr`
+- `usethis`
+
+If you have `yeoman` installed, you can use the `R-bones` generator in order to initialize a complete project. This gives you the following barebone:
+
+```{bash, eval=FALSE}
+  yo r-bones
+  ls -la pkg
+```
+```{bash, include=TRUE, eval=TRUE, echo=FALSE}
+  ls -la pkg
+```
+
+## Writing R packages
+
+When creating an R package `devtools` and `covr` cover almost any functionality required. The following functions delineate how my typical workflow looks:
+
+```{r, include=TRUE, eval=FALSE, echo=TRUE}
+  devtools::create("pkg")
+  devtools::use_rcpp()  
+  devtools::document()  
+  devtools::test()
+  devtools::check_cran()
+  devtools::lint()
+  devtools::run_examples()
+  covr::package_coverage()
+  devtools::install()
+```
+
+This basically covers your complete development life cycle. devtools is tremendously useful. If you look for something that helps you write a package, devtools usually has a function for it. For all other things, use usethis.
+
+```{r, include=TRUE, eval=FALSE, echo=TRUE}
+  usethis::use_namespace()
+  usethis::use_code_of_conduct()
+  usethis::use_travis()
+  usethis::use_vignette()
+  usethis::use_gpl3_license()
+```
+
+## Debugging
+
+TODO
+
+## Testing code
+
+Right after creating your package, you should write your first test (yes, really). Testing is essential*for writing good software. The same way as programming languages change your way of thinking, unit tests change your way of writing functions. testthat is probably the best way to go here. Tests are usually put in `tests/testthat`. You can use:
+
+```{r, eval=FALSE}
+  devtools::use_testthat()
+```
+
+to create a test suite automatically. A test would look like this:
+
+```{r, eval=FALSE}
+  testthat::test_that("i know my math", {
+    testthat::expect_equal(g(), 2)
+  })
+
+  testthat::test_that("i know my math", {
+      testthat::expect_false("wrong" == "right")
+  })
+```
+
+Let's test this.
+
+```{r}
+  devtools::test("./pkg")
+```
+
+A function ideally does *one task and one task only*. Functions with side effects, multiple operations or exceedingly large method body easily introduce bugs. Keep your functions concise! This also simplifies testing, because it is easier to track down a bug in a shorter function.
+
+
+## Documenting code
+
+Having written the first unit test, we can create the actual function and its respective documentation using `roxygen2`:
+
+```{r}
+  #' @title Adds 1 and 1
+  #'
+  #' @description This magnificent function computes the sum of 1 and 1.
+  #'
+  #' @export  
+  #'
+  #' @return  returns 2
+  #'  
+  #' @examples
+  #'   a <- g()
+  #'   print(a)
+  g <- function() 1 + 1
+```
+
+Then build the documentation:
+
+```{r}
+  devtools::document("./pkg")
+```
+
+An excellent help for creating documentation (of S3 and S4) is for instance <a href="https://github.com/variani/pckdev">pckdev</a> or the official <a href="https://cran.r-project.org/web/packages/roxygen2/vignettes/roxygen2.html">vignette</a>.
+
+
+## Checking code
+
+If you want to submit your package to CRAN or Bioconductor certain criteria must be fulfilled. Some of which can be tested by checking or package like this:
+
+```{r,  eval=TRUE, message=TRUE,  include=TRUE, echo=TRUE}
+  devtools::check_cran("./pkg")
+```
+
+This does not test for Bioconductor though. For this you have to install <a href="https://bioconductor.org/packages/release/bioc/html/BiocCheck.html"> BioCheck</a> manually and call `R CMD BiocCheck newpkg*.tar` on the command line.
+
+
+## Static code analysis
+
+lintr checks your code for style, syntax error and possible issues. You can also incorporate lintr in your unit tests and let them fail, if lints are discovered.
+
+```{r, eval=FALSE}
+if (requireNamespace("lintr", quietly = TRUE)) {
+  test_that("this is lint free", {  
+    lintr::expect_lint_free()
+  })
+}
+```
+
+What lintr considers worth reporting can be customized in a .lintr file in your package root directory.
+
+Let's see if our small package is lint free:
+
+```{r, eval=TRUE, message=TRUE,  include=TRUE, echo=TRUE}
+  devtools::lint("./pkg")
+```
+
+Whoops!
+
+TODO add styler etc
+
+### Running examples
+
+Examples are extremely helpful both for the user and debugging purposes. When
+we documented our function `g` we already have an example how to use the function. We can manually call all examples using:
+
+```{r, eval=TRUE, message=TRUE, include=TRUE, echo=TRUE}
+  devtools::run_examples("./pkg")
+```
+
+
+## Code coverage
+
+covr lets you check how much of your code is used and tested. If you created a package just run:
+
+```{r, eval=TRUE, message=TRUE, include=TRUE, echo=TRUE}
+  covr::package_coverage("./pkg")
+```
+
+Having high code coverage usually correlates with a good testing suite. The more functionality is tested, the larger the code coverage. You can customized reports by adding a file called `.codecov.yml` to your project's root:
+
+```{bash}
+  cat ./pkg/.codecov.yml
+```
+
+
+## Profiling and benchmarking
+
+If you think your code runs slowly, you can try to find the bottleneck, for instance, using `profvis` and `microbenchmark`.
+
+```{r, eval=TRUE, message=TRUE, include=TRUE, echo=TRUE, fig.width=4}
+  library('profvis')
+  library('ggthemes')
+  library('gam')
+  data(kyphosis)
+  profvis::profvis({
+    sp <- stats::spline(kyphosis$Age, kyphosis$Number, method="n")
+    gm <- gam::gam(Number ~ Age, family=poisson, data=kyphosis)
+
+    df <- data.frame(
+      X = c(sp$x, kyphosis$Age),
+      Y = c(sp$y, predict(gm, kyphosis)),
+      model = c(rep("Spline", length(sp$x)),
+                rep("GAM",    length(kyphosis$Age))))
+
+    g <- ggplot2::ggplot(df) +
+      ggplot2::geom_point(ggplot2::aes(x=X, y=Y, color=model)) +
+      ggthemes::theme_tufte()
+
+    print(g)
+  })
+```
+
+Often it however suffices to just benchmark two methods against each other.
+
+```{r, eval=TRUE, message=TRUE, include=TRUE, echo=TRUE}
+  f <- function(n) {
+    sum <- 0
+    for (i in seq(n)) sum <- sum + i
+  }
+  g <- function(.) sum(.)
+
+  microbenchmark::microbenchmark(f(10000), g(10000))
+```
+
+## Creating a landing page
+
+At this point you are finished writing your package and you want to provide it to a large user base. A nice landing page often helps gaining popularity. The easiest way to do so is using `pkgdown`.
+
+```{r, eval=FALSE, message=TRUE, include=TRUE, echo=TRUE}
+  pkgdown::build_site(pkg = "./pkg")
+```
+
+This creates a web-page like this:
+
+<div align="center">
+  <img src="https://rawgit.com/dirmeier/essential-R/master/fig/pkgdown.jpg" alt="oh no" width="500px">
+</div>
+
+A good example can be found <a href="https://dirmeier.github.io/netReg/">here</a>.
+
+
+<!--chapter:end:01-r_devel.Rmd-->
+
+# Programming paradigma in R
+
+TODO
+
+## Functional programming
+
+TODO
+
+`purrr` is a functional programming toolkit, much like the `apply` class of functions. However, purrr does so in a more unified way with consistent return values. Furthermore, in combination with `magrittr`, the code you write is naturally more concise and easier to read.
+
+```{r, eval=TRUE, message=FALSE, include=TRUE, echo=TRUE, warnings=FALSE, fig.align = 'center'}
+  library('purrr')
+  library('ggplot2')
+  library('gganimate')
+  library('gapminder')
+  library('repurrrsive')
+  library('magrittr')  
+  library(DiagrammeR)
+  utils::head(sw_people[[1]])
+  df <- map_dfr(
+    sw_people,
+    .f = function(.) data.frame(color  = .[["eye_color"]],
+                                height = .[["height"]],
+                                mass   = .[["mass"]]))
+  utils::head(df)
+```
+
+## Object-oriented programming
+
+R has three different native ways for object-oriented programming and as far as I know one additional library. `S3`, `S4` and `refClasses` (`R5`) come with the standard library, while `R6` can be installed from CRAN. I actually never use R5, because it feels incredibly bulky and slow, so we will not cover it here.
+
+### S3
+
+S3 methods dispatch on the first argument. If you come from other languages, such as `Java`, an S3 method is basically an overloaded function on the first argument. You can define an S3 function like this:
+
+```{r}
+  s3 <- function(x, y, ...) UseMethod("s3")
+
+  s3.matrix <- function(x, y, ...) apply(x, 1, sum)
+  s3.character <- function(x, y, ...) paste(x, y)
+
+  s3(matrix(1:6, 2))
+  s3("hello", "reader")
+```
+
+S3 classes are defines like this:
+
+```{r}
+  s3.list <- function(x, y, ...)
+  {
+    l <- list(x=x, y=y)
+    base::class(l) <- "my.s3"
+
+    l
+  }
+  s3(list(x=1), y=2)
+```
+
+The main issue here is of course that the user can easily overwrite a class and that method dispatching on one argument usually is not enough. However, often S3 functions are all you need.
+
+### S4
+
+Bioconductor seems to prefer S4 over S3, so if you want to submit your package, you could for instance define interfaces using S4 and the rest using S3 or w/o OO entirely. In that way the user of your package only sees the exported interface (the S4 method) and upon calling would receive an S4 object. The rest of the implementation would be hidden.
+
+```{r, eval=FALSE}
+methods::setClass("normallist",
+       representation = list(.el = "list"),
+       prototype = methods::prototype(.el = list())
+)
+
+methods::setGeneric("put", function(obj, x) base::standardGeneric("insert"))
+
+methods::setMethod(
+  "put",
+  signature = methods::signature(obj = "normallist", x = "vector"),
+  function(obj, x) obj@.el <- as.list(x)
+)
+
+d <- methods::new("normallist")
+d <- put(d, seq(3))
+```
+
+### R6
+
+As a more modern, faster alternative to reference classes (not covered here), R6 is a good option. R6 comes with proper encapsulation, are mutable and not copied on modification. In my experience, a statistical language like R does not need much proper object orientation and S3 or S4 suffice as interface methods. 
+Computations as below, where we could for instance construct a graph, are mostly done in C++ or so anyways.
+
+```{r, eval=FALSE}
+node <- R6Class("node", list(
+  id = NA_integer_,
+  neighbors = list(),
+  initialize = function(id, neighbors=NULL) {
+    self$id <- id
+    self$neighbors <- neighbors
+  },
+  print = function(...) {
+    cat("ID: ", self$id, "\n", sep = "")
+    neighs <- paste(sapply(self$neighbors, function(.) .$id), collapse=", ", sep=", ")
+    cat("\tneighbors: ", neighs, "\n", sep = "")
+  },
+  add = function(node) {
+    self$neighbors <- c(self$neighbors, node)
+    node$neighbors <- c(node$neighbors, self)
+  }
+))
+
+n1 <- node$new(1L)
+n2 <- node$new(2L)
+
+n1$add(n2)
+n1
+n2
+n1$neighbors[[1]]$id <- 3
+n2
+```
+
+<!--chapter:end:02-programming_paradigma_in_R.Rmd-->
+
+# R extensions
+
+The following section treats how you can interface R with other languages, e.g. `C++`, `Fortran` or `Python`.
+The first two I use primarily for speeding up numerical code, although using Fortran become somewhat obsolete. I use Python mostly for interfacing machine learning libraries, such as tensorflow, keras or GPFlow.
+
+## C++ and Rcpp
+
+Using `Rcpp` (and `RcppEigen`, `RcppArmadillo`, `Boost`) you can easily extend your code to `C++`. It not only nicely wraps the standard C API, but also let's you use standard matrix libraries such as Eigen and Armadillo or Boost.
+
+If you have a project that's not a package you can for instance create a function like this:
+
+```{r}  
+  Rcpp::cppFunction('double sum(std::vector<double>& vec) {
+      double sum = .0;
+      for (std::vector<double>::size_type i = 0; i < vec.size(); ++i)
+          sum += vec[i];
+      return sum;
+  }')
+
+  sum(as.numeric(seq(10)))
+```
+
+Let's have a look at an Eigen example with sourceCpp:
+
+```{bash}
+  cat ./_src/square.cpp
+```
+
+```{r}  
+  library('RcppEigen')
+  Rcpp::sourceCpp("./_src/square.cpp")
+  square(matrix(rnorm(10), 2))
+```
+
+Even for small matrices, the speed up is already substantial.
+
+```{r}  
+  m <- matrix(rnorm(100 * 100), 100)
+  microbenchmark::microbenchmark(
+    square(m),
+    t(m) %*% m
+  )
+```
+
+### Rcpp in a package
+
+Usually, you would want to put your source code into a `cpp` file in the `src` folder. Then you can call C++ from an R function, for instance as described below.
+
+1) Define a C++ source file and put it in `src`, like this:
+
+```{c++, eval=FALSE}
+  #include <Rcpp.h>
+  // [[Rcpp::export]]
+  Rcpp::List dostuff()
+  {
+    // some computations
+
+    return Rcpp::List::create(
+      Rcpp::Named("a") = ...
+    );
+  }
+```
+
+2) Add this to your `DESCRIPTION`:
+
+<pre><code>Imports: Rcpp
+LinkingTo: Rcpp</code></pre>
+
+3) Add a comment `#' @useDynLib pkg, .registration = TRUE` to the documentation of any function, better yet to the package doc.
+
+4) Call `devtools::document()`
+
+5) Call `Rcpp::compileAttributes("./pkg")`
+
+This should let you access the C++ function from your package. For more details check out the main <a href="http://www.rcpp.org/">documentation</a> or some of my packages, like <a href="https://github.com/dirmeier/netReg">netReg</a> or <a href="https://github.com/dirmeier/datastructures">datastructures</a>. The latter also has an example how to use modules and Boost.
+
+### Writing `C++`
+
+Here are some tools that help you develop your code:
+
+- gdb and lldb for debugging,
+- valgrind and gprof to check for memory leaks and for profiling,
+- Intel's Parallel Studio XE (<3) which is a toolbox for vectorization, debugging, memory checks, etc. If you can get hold of it, get it. It is magnificent.
+- Boost for unit tests, data structures and basically everything you ever need,
+- cppcheck for static code analysis,
+- doxygen for code documentation.
+
+Many C++ libraries, like Dlib, Eigen or tensorflow have an R interface, so before implementing functionality yourself check out if there is already an implementation for it.
+
+At this point it also makes sense to have a look at various C++ books such as
+
+- Scott Meyers: Effective Modern C++,
+- Scott Meyers: Effective C++,
+- Ben Klemens: 21. century C,
+- Kurt Guntheroth: Optimized C++,
+- Nicolai Josuttis: C++17 - the complete guide,
+- David Vandevoorde: C++ Templates - the compete guide.
+
+For fast numerical code OpenMP and advanced vector and streaming SIMD extensions (AVX/SSE) is often the way to go. Writing good code using AVX is however not very simple and knowledge of memory alignment is required. However, starting from version 4 (?), OpenMP easily allows vectorization using `#pragma simd`.
+
+**Note: the last lines in this section are heavily subjective and only state the author's opinion.** *More and more garbage code is forced onto the scientific community, mostly related to academic hubris and lack of knowledge about how to *program* (we don't mean how to *accomplish a task using a programming language*, but to embrace a language and its philosophy at its very core). If you aim to publish your code, make sure it follows *contemporary* good practices, standards and guidelines and that it is consistent, for instance by following people's code who are part of the community for ages. At this point we want to emphasize that the author doesn't claim to know C++, but rather that he is annoyed by this very trend.*
+
+C++ is a large, complex language. Chances that you mess up, introduce bugs and memory leaks are high, unless you have some experience. In academia in mostly results in bad, un-maintainable code. If your argument is *but it is faster than R*, at least have a look at Fortran, Julia or Python (and `numpy`). If you still prefer hacking in C++ try to stick to some guidelines:
+
+- don't include C headers in your C++ projects .. just don't. C and C++ are *two* languages. There is for need for `FILE*` or `malloc`.
+- modern C++ rarely needs pointers. Use `std::vector` or `std::unique_ptr`. No need to manually release pointers is an advantage of itself.
+- BOOST has (probably) everything you will ever need. Don't reinvent the wheel and learn to include libraries in your project.
+- Learn how to use Cmake, Meson or autotools. You should *never* need to directly invoke a compiler or write a hard-coded Makefile.
+- Only because you have a PhD or M. Sc. in CS does not make you a prolific programmer. It requires staying up to date, *reading other people's code* and embracing of new ideas and the very philosophy of the language and its community.
+- Print warnings. They are usually there for a reason.
+- Start a toy project or contribute to OSS projects.
+
+## Fortran
+
+If you don't want to include extra libraries like RcppArmadillo to keep your package small, you can either use the native C API, or, if you want to make use of BLAS and LAPACK, the Fortran API. Fortran has similar memory management as C, but is overall a far easier language to write numerical code with. I recommend this [manual](https://cran.r-project.org/doc/manuals/r-release/R-exts.html#System-and-foreign-language-interfaces) for more details.
+
+TODO: some examples like above?
+
+## Reticulate
+
+If you need to include Python code for analyses and then do, for instance, the plotting and reporting in R, check out `reticulate`.
+
+```{R}
+library(reticulate)
+```
+
+For instance we can create random numbers in Python:
+
+```{python}
+import numpy
+mean = [0, 0]
+cov = [[1, 0], [0, 1]]
+x = numpy.random.multivariate_normal(mean, cov, 1000)
+```
+
+And then plot stuff in `R`:
+
+```{r, fig.height=3}
+library(ggplot2)
+ggplot(as.data.frame(py$x)) +
+  geom_point(aes(V1, V2)) +
+  theme_minimal()
+```
+
+<!--chapter:end:03-extending_R.Rmd-->
+
+# Working with data
+
+Every analysis of data starts with preprocessing and parsing. The following chapter covers some packages that simplify working with data.
+
+## tidyverse
+
+```{r}
+library(tidyverse)
+data(iris)
+head(iris)
+
+dplyr::group_by(iris, Species) %>%
+  dplyr::summarize(Petal.Length = mean(Petal.Length),
+            Sepal.Length = mean(Sepal.Length)) %>%
+  dplyr::mutate(Species = toupper(Species)) %>%
+  head()
+
+tidyr::gather(iris, Col, Val, -Species) %>%
+  head()
+```
+
+TODO some examples
+
+## data.table
+
+`data.table` is a fast implementation of R's classical `data.frame`. I hardly ever use data frame any more, and if so only, because it seems to work nicer with `dplyr` and `tidyr`. However, by using `dtplyr` this isn't much of a problem, really.
+
+```{r, fig.width=2, fig.height=2, fig.align = 'center'}
+library(data.table)  
+library(dplyr)
+library(dtplyr)
+library(grid)
+library(gridExtra)
+
+n    <- 1000
+rn   <- stats::rnorm(n)
+ltrs <- base::sample(letters[1:5], n, replace=TRUE)
+dt   <- data.table::data.table(X=rn, Y=ltrs)
+df   <- base::data.frame(X=rn, Y=ltrs)
+
+dt[, .SD[sample(.N, 1)], by=c("Y")] %>%
+  tableGrob(rows=NULL) %>%
+  grid.arrange
+```
+
+In the end it depends what style you prefer. I usually go with `data.table` alone without needing the `dplyr/dtplyr` dependency. However, the latter is usually more readable. For large data, the fastest solution is probably preferable.
+
+```{r}
+  dt.only   <- function() dt[, .SD[sample(.N, 1)], by=c("Y")]
+  dt.dtplyr <- function() dt %>% dplyr::group_by(Y) %>% dplyr::sample_n(1)
+  df.dplyr  <- function() df %>% dplyr::group_by(Y) %>% dplyr::sample_n(1)
+
+  microbenchmark::microbenchmark(
+    dt.only(),
+    dt.dtplyr(),
+    df.dplyr()
+  )
+```
+
+## Data structures
+
+If you have a background in computer science you may wonder, that R does not have support for advanced data structures such as Fibonacci heaps or hashmaps.
+`datastructures` tries to solve this. It uses Rcpp modules to export Boost data structures to R:
+
+```{r}
+  library(datastructures)
+  q <- datastructures::fibonacci_heap("integer")
+  q[1:3] <- list(rnorm(3), 2, rnorm(4))
+  datastructures::pop(q)
+  datastructures::pop(q)
+  datastructures::pop(q)
+  datastructures::pop(q)
+```
+
+TODO examples
+
+## Databases
+
+TODO neo4j, maria, sqltie, mongodb, dbplyr
+
+<!--chapter:end:04-working_with_data.Rmd-->
+
+# Data analysis and statistical modeling
+
+The following few sections introduce packages I frequently use for data analysis, modelling and machine learning.
+
+## Stan
+
+`Stan` is a great package for Bayesian modelling and inference. Compared to statistical packages that are fit to one model, such as `glmnet` or `lme4`, Stan allows to easily define custom Bayesian models for which posterior distributions are automatically inferred using HMC. 
+
+A simple liner regression model could look like this:
+```{r}
+library(rstan)
+library(lme4)
+
+model <- "
+data {
+  int<lower=1> n;
+  vector[n] x;
+  vector[n] y;
+}
+
+parameters {
+  real beta;
+  real<lower=0> sigma;
+  real alpha;
+}
+
+model {
+  beta ~ normal(0, 5);
+  sigma ~ cauchy(0, 5);
+  y ~ normal(alpha + x * beta, sigma);
+}
+"
+
+n <- nrow(sleepstudy)
+x <- sleepstudy$Days
+y <- sleepstudy$Reaction
+
+fit <- stan(model_code=model, data=list(n=n, x=x, y=y), 
+            warmup=100, iter=1100, chains=1)
+summary(fit)
+```
+
+### Rstanarm
+
+`rstanarm` is a package for applied Bayesian modelling that wraps around Stan for easier usage. 
+
+```{r}
+library(rstanarm)
+
+fit.arm <- rstanarm::stan_glm(
+  Reaction ~ Days, sleepstudy, chains = 1,
+  iter = 1100, warmup = 100, family = gaussian())
+summary(fit.arm)
+```
+
+### brms
+
+For non-linear multi-level models `brms` is also a great option. 
+
+```{r}
+library(brms)
+
+fit.multilevel <- brm(Reaction ~ Days + (Days | Subject), sleepstudy, chains=1, iter=1000)
+summary(fit.multilevel)
+```
+
+### bayesplot
+
+For plotting of Bayesian models inferred using the tools mentioned above, you probably want to use `bayesplot`. For instance, to compare posterior predictive intervals between the `rstanarm` linear model and the mixed model form `brms`:
+
+```{r, fig.width=10, fig.height=4}
+library(bayesplot)
+library(cowplot)
+
+p1 <- ppc_intervals(y = sleepstudy$Reaction,
+              yrep = posterior_predict(fit.arm)) +
+  labs(title="Linear model")
+p2 <- ppc_intervals(y = sleepstudy$Reaction,
+                    yrep = posterior_predict(fit.multilevel)) +
+  labs(title="Linear mixed model")
+
+cowplot::plot_grid(p1, p2, ncol=2, align="h")
+```
+
+## greta
+
+Model definitions in Stan are arguable difficult in the beginning. As an alternative with `greta` is not only easier to compose models, but also often faster owing to the fact that it's developed against tensorflow. Installation can be a bit tedious. For `greta` version `v.0.3` I would install tensorflow from the command line:
+
+```{bash, eval=FALSE}
+conda create -y -n r-tensorflow python=3.6
+conda install tensorflow==1.10.0
+pip install tensorflow-probability==0.30.0
+```
+
+The same model we used for stan above, looks like this with greta:
+
+```{r, eval=FALSE}
+library(greta)
+library(lme4)
+
+n <- nrow(sleepstudy)
+x <- sleepstudy$Days
+y <- sleepstudy$Reaction
+
+alpha <- variable()
+beta <- greta::normal(0, 5)
+sigma <- greta::cauchy(0, 5, truncation=c(0, Inf))
+
+y <- greta::as_data(y)
+greta::distribution(y) <- greta::normal(alpha + x * beta, sigma)
+
+mod <- greta::model(beta)
+samples <- greta::mcmc(mod, n_samples=1000, warmup=100, chains=1)
+```
+
+## MCMC
+
+There are a couple of packages on CRAN especially for Markov Chain Monte Carlo and Bayesian methods, some of which are mentioned below.
+
+`coda` is a package for analysis and diagnostics of MCMC chains. Mostly it takes arguments of class mcmc.list, so put your results into an object of it to be able to use `coda`:
+```{r}
+library(coda)
+
+coda::autocorr(As.mcmc.list(fit))
+coda::traceplot(As.mcmc.list(fit))
+```
+
+`MCMCpack` offer an alternative to rstanarm for applied Bayesian modelling. It also comes with a set of useful distributions used frequently in Bayesian modelling, such as the Dirichlet, inverse gamma, etc. 
+
+```{r}
+library(MCMCpack)
+invg <- MCMCpack::rinvgamma(1000, 5, 1)
+hist(invg, breaks=50, xlab="X", main="", col="darkgrey", family="serif")
+```
+
+For plotting `mcmc.list` objects (from `coda`) `MCMCvis` is great:
+
+```{r}
+MCMCvis::MCMCplot(As.mcmc.list(fit))
+```
+
+## mlR and openML
+
+CRAN offers dozens of packages related to machine and statistical learning, many of which doing the same. `mlR` wraps many of these into one big library.
+`mlR` integrates with `openML`, an open machine learning platform where people share code, data and algorithms. Here we show an example where we use a Gaussian process to predict the Kyphosis label from the `gam` package.
+
+```{r}
+library(mlr)
+task  <- mlr::makeClassifTask(data = kyphosis, target = "Kyphosis")
+lrn   <- mlr::makeLearner("classif.gausspr")
+
+n <- nrow(kyphosis)
+train.set <- sample(n, size = 2/3*n)
+test.set  <- setdiff(1:n, train.set)
+
+model <- mlr::train(lrn, task, subset = train.set)
+pred  <- stats::predict(model, task = task, subset = test.set)
+performance(pred, measures = list(mmce, acc))
+```
+
+## Tensorflow
+
+Thanks to Rstudio, R users are able to use `tensorflow`, a library for high performance numerical computations (which for instance greta uses). For instance, a linear model could look like this:
+
+```{r, eval=FALSE}
+library(tensorflow)
+
+n <- nrow(sleepstudy)
+x <- sleepstudy$Days
+y <- sleepstudy$Reaction
+
+# define model
+beta  <- tf$Variable(tf$random_normal(shape(1L), 0, 10))
+alpha <- tf$Variable(tf$zeros(shape(1L)))
+y.hat <- alpha + beta * x
+
+# Minimize the mean squared errors.
+loss <- tf$reduce_mean((y - y.hat) ^ 2)
+optimizer <- tf$train$GradientDescentOptimizer(.5)
+train <- optimizer$minimize(loss)
+
+# Launch the graph and initialize the variables.
+sess <- tf$Session()
+sess$run(tf$global_variables_initializer())
+
+for (step in 1:100)
+{
+  sess$run(train)
+}
+```
+
+## Keras
+
+`Keras` is an interface to popular numerical libraries such as tensorflow and theano for which model/network definitions are independent of the library on the backend.
+Our tensorflow model from above would look the following in keras:
+
+```{r, eval=FALSE}
+library(keras)
+
+model <- keras_model_sequential() %>%
+  layer_dense(units = 1, activation = "linear", input_shape = 1)
+model %>%
+  compile(loss = "mse",
+          optimizer = optimizer_sgd(0.5),
+          metrics = list("mean_absolute_error"))
+```
+
+## Statistical learning
+
+Some packages for regression:
+
+* `glmnet` for $\ell_1$- and $\ell_2$-penalized linear regression models,
+* `lme4` for frequentist mixed models,
+* `mgcv` for generalized additive models,
+* `netReg` for graph regularized linear models,
+* `xgboost` and `gbm` for boosting.
+* `h20` for general machine learning algorithms,
+
+TODO some examples
+
+## Big data analytics
+
+For Big data analytics I recommend Rstudio's `sparklyr` since it nicelt itegrates with the other methods from the `tidyverse`. For instance, following an example from [Rstudio's tutorials](https://spark.rstudio.com/mlib/):
+
+```{r, eval=FALSE}
+library(sparklyr)
+
+sc <- spark_connect(master = "local")
+kmeans_model <- copy_to(sc, iris, "iris", overwrite = TRUE) %>%
+  select(Petal_Width, Petal_Length) %>%
+  ml_kmeans(centers = 3)
+```
+
+## Others
+
+Some other great packages for various data-related things:
+
+### modelr
+
+`modelr` defines multiple helper functions related to statistical modelling:
+
+```{r}
+library(modelr)
+
+sleepstudy %>% modelr::fit_with(
+  lm, 
+  modelr::formulas(~Reaction,
+                   no_intercept = ~0 + Days, 
+                   intercept = ~1 + Days))
+```
+
+### kernlab
+
+Use `kernlab` for tasks related to kernels, such as Gaussian process regression or merely computing a Gram-matrix.
+
+```{r}
+library(kernlab)
+
+x <- matrix(rnorm(25), 5)
+rbf <- kernlab::rbfdot()
+(K <- kernlab::kernelMatrix(rbf, x))
+
+x <- sort(rnorm(100))
+y <- 3 + 0.5 * x^2 + 1 * x + rnorm(100, 0, 0.05)
+gpr <- kernlab::gausspr(x, y)
+plot(x, y, family="serif")
+lines(x, predict(gpr, x), col="red")
+```
+
+<!--chapter:end:05-data_analysis.Rmd-->
+
+# Optimization
+
+Much of statistical and machine learning boils down to function optimization (if you are not necessarily interested in Bayesian inefrence). In you don't want to implement an optimizer for yourself, the following couple of libraries might be of interest to you.
+
+## Convex optimization
+
+`CVXR` is a package for discplined convex optimization. As log as you can formulate your objective following the conventions from the package, `CVXR` automatically verifies convexity and chooses a solver. As an example, below we compare linear regression models solved using OLS and Huber loss:
+
+```{r}
+library(CVXR)
+library(lme4)
+
+x <- rnorm(100)
+y <- 1 + 2 * x + rnorm(100)
+beta <- Variable(1)
+
+obj.ols      <- sum((y - x %*% beta)^2)
+result.ols   <- solve(Problem(Minimize(obj.ols)))
+obj.huber    <- sum(CVXR::huber(y - x %*% beta, 1))
+result.huber <- solve(Problem(Minimize(obj.huber)))
+
+beta.hat.ols   <- result.ols$getValue(beta)
+beta.hat.huber <- result.huber$getValue(beta)
+
+beta.hat.ols
+beta.hat.huber
+```
+
+TODO more examples and references
+
+## Non-linear optimizaton
+
+In cases, where your objective is not differentiable, you have box-constraints, or whatsoever `nloptr` is an excellent choice for function minimization. Following the example from above:
+
+```{r}
+library(nloptr)
+
+ols <- function(x, m, n) {
+  0.5 * sum((m - n * x)^2)
+}
+
+huaba <- function(x, m, n) {
+  thresh <- sum(abs(m - n * x))
+  if (thresh <= 1)
+    ols(x, m, n)
+  else
+    thresh - 0.5
+}
+
+result.hat.ols <- nloptr::nloptr(
+  1, ols, lb = -10, ub = 10, 
+  opts=list("algorithm" = "NLOPT_LN_SBPLX", maxeval=1000), m=y, n=x)
+result.hat.huaba <- nloptr::nloptr(
+  1, huaba, lb = -10, ub = 10, 
+  opts=list("algorithm" = "NLOPT_LN_SBPLX", maxeval=1000), m=y, n=x)
+
+result.hat.ols$solution
+result.hat.huaba$solution
+```
+
+TODO more examples and references
+
+<!--chapter:end:06-optimization.Rmd-->
+
+# Plotting, reporting and visualizing
+
+One of the most significant reasons to use R is probably its plotting capabilities, people contributing to `ggplot2` and the community's effort of adding package that integrate with it. Below you'll find some packages for plotting.
+
+## Layout
+
+```{r, echo=FALSE}
+library(repurrrsive)
+df <- purrr::map_dfr(sw_people, .f = function(.) data.frame(color = .[["eye_color"]], 
+    height = .[["height"]], mass = .[["mass"]]))
+```
+
+Use `hrbrthemes` for a nicer layout:
+
+```{r, fig.align = 'center', fig.height=6}
+library(hrbrthemes)
+library(ggsci)
+import_roboto_condensed()
+
+g <- ggplot(df) +
+  geom_point(aes(x=height, y=mass, color=color)) +
+  hrbrthemes::theme_ipsum_rc() +
+  ggsci::scale_color_rickandmorty()
+print(g)
+```
+
+Recently I started changing to simpler layouts and themes, for instance as described on <a href="http://motioninsocial.com/tufte/">
+Tufte in R</a>. `ggthemes` offers some nice options to do so. For instance, if you are feeling jealous that you cannot draft some Excel plots, cause you are working with R:
+
+```{r blub, fig.align = 'center', fig.height=6}
+library(ggthemes)
+
+g <- ggplot(df) +
+  geom_point(aes(x=height, y=mass), color="green") +
+  ggthemes::theme_excel()
+print(g)
+```
+
+## Publication ready plots
+
+`cowplot` and `ggpubr` are great for greating publication ready plots:
+
+```{r cow, fig.align = 'center', fig.height=6}
+p1 <- ggplot(mtcars, aes(hp, disp)) + geom_point() + ggthemes::theme_tufte()
+p2 <- ggplot(mtcars, aes(hp, disp)) + geom_point() + ggthemes::theme_gdocs()
+
+cowplot::plot_grid(p1, p2, ncol=2, align="vh", labels=c("Nice", "Meh"))
+```
+
+If these two are still not enough, I usually go with `patchwork`:
+
+```{r patch, fig.align = 'center', fig.height=6}
+library(patchwork)
+
+g + (p1 + p2) + plot_layout(ncol = 1)
+```
+
+## Colors
+
+I use `colorspace`  and `colorblindr` in order to remove some hue and chroma. `viridis` is a wonderful set of colors for continuous, sequential data. For discrete, qualitative data I mainly use `ggthemr` and the `fresh` colors. `ggsci` also has some wonderful color palettes. `scales` lets you have a look at a color palette easily.
+
+```{r, fig.align = 'center', fig.height=6}
+library(colorspace)
+library(colorblindr)
+library(viridis)
+library(ggthemr)
+library(scales)
+library(cowplot)
+ggthemr::ggthemr("fresh", "scientific", spacing = 2, type = 'inner')
+
+ p1 <- colorblindr::gg_color_gradient() + colorspace::scale_fill_continuous_sequential("viridis", c1=20, c2=70, l1=25, l2=100)
+ p2 <- colorblindr::gg_color_gradient() + colorspace::scale_fill_continuous_sequential("Blues", c1=20, c2=70, l1=25, l2=100)
+ p3 <- colorblindr::gg_color_gradient() +  colorspace::scale_fill_continuous_diverging(c1=40)
+ df <- data.frame(Col=ggthemr::swatch()[1:10], X=1, Y=seq(10))
+ p4 <- ggplot(df) + geom_tile(aes(x=Y, y=X), fill=df$Col) + theme_void()
+
+ cowplot::plot_grid(p1, p2, p3, p4, ncol=2, align="vh")
+```
+
+Another great tool  is `swatches`:
+
+```{r swatch}
+library(swatches)
+
+omega_nebula <- read_ase(system.file("palettes", "omega_nebula.ase", package="swatches"))
+show_palette(omega_nebula)
+```
+
+## Interactive and animated plots
+
+Often you want to create an interactive plot, for instance when serving on a `shiny` instance. One way to do that is using plotly:
+
+```{r plotly, fig.align = 'center', fig.height=6}
+library(plotly)
+
+q <- qplot(data=iris, x=Sepal.Length, y=Sepal.Width, color=Species) +
+  ggthemes::theme_tufte()
+plotly::ggplotly(q)
+```
+
+Recently I also stumbled upon `highcharter` and `ggvis`:
+
+```{r highcharter, fig.align = 'center', fig.height=6, eval=FALSE}
+library(highcharter)
+
+hchart(iris, "scatter", hcaes(x = Sepal.Length, y = Sepal.Width,  group=Species)) %>%
+  hc_add_theme(hc_theme_tufte())
+```
+
+```{r ggvis, fig.align = 'center', fig.height=6}
+  library('ggvis')
+  data("mtcars")
+  mtcars %>%
+    ggvis(~wt, ~mpg,  
+          size := input_slider(10, 100),
+          opacity := input_slider(0, 1) ) %>%  
+      layer_points()
+```
+
+With `gganimate` you can directly create GIFs from you plots:
+
+```{r, eval=FALSE}
+library(gganimate)
+library(gapminder)
+
+g <- ggplot(gapminder, aes(gdpPercap, lifeExp, size = pop, frame = year)) +
+  geom_point() +
+  geom_smooth(aes(group = year), method = "lm", show.legend = FALSE) +
+  facet_wrap(~continent, scales = "free") +
+  ggthemes::theme_tufte()
+gganimate(g)
+```
+
+![](https://rawgit.com/dirmeier/essential-R/master/fig/gganimate.gif)
+
+## Graphs
+
+There are many wonderful graph and network libraries around for plotting. For HTML `DiagrammeR` produces beautiful graphs:
+
+```{r diagrammer,fig.height=2, fig.align = 'center'}
+library(DiagrammeR)
+
+create_graph() %>%
+  add_node(label=expression(Z),
+           node_aes = node_aes(penwidth=2, fontname="Arial Narrow", fontcolor = "black", fillcolor="white", color="black")) %>%
+  add_node(label="X",
+            node_aes = node_aes(penwidth=2, fontname="Arial Narrow", fontcolor = "black", fillcolor="grey", color="black")) %>%
+  add_edge(from = 1, to = 2, edge_aes=edge_aes(color="black")) %>%
+  render_graph(layout = "tree")
+```
+
+For PDFs I primarily use `igraph` (which you can also use for graph algorithms).
+
+```{r}
+library(igraph)
+
+set.seed(1)
+g <- igraph::random.graph.game(5, p.or.m=.4)
+l <- igraph::layout.reingold.tilford(g) 
+l[1, 1:2] <- c(1, 1)
+l[2, 1:2] <- c(0, 0)
+l[3, 1:2] <- c(1, 0)
+l[4, 1:2] <- c(3, 0)
+#l[5, 1:2] <- c(2, 2)
+plot(g, vertex.size=9, vertex.color="black", vertex.label.degree=0,
+     vertex.label.cex=1, vertex.label.dist=1, vertex.label.color="black", 
+     edge.color="darkgrey", edge.width=.5, edge.arrow.size=.65, 
+     layout=l)
+```
+
+Other packages for graphi visualisations include `ggnetwork`/`ggnet`, `tidygraph`, or `ggraph`.
+
+## RMarkdown
+
+`Rmarkdown` is a great way for documentation, reporting and working reproducibly. Rstudio provides tons of different output formats like web sites (like this one), Tufte style documents, blogs and others. 
+For presentations that use R code I use either <a href="https://github.com/yihui/xaringan">xaringan</a>, <a href="http://slidify.org/">Slidify</a> or <a href="https://rmarkdown.rstudio.com/revealjs_presentation_format.html">reveal.js</a>. Find all the output formats by Rstudio [here](https://rmarkdown.rstudio.com/lesson-9.html).
+
+## Shiny
+
+If you want to present your work interactively you can do so by building a web page using `shiny`. Setting up a Shiny instance for reporting is a great way to present data using interactive plots.
+Setting up shiny is fairly easy. You need to create a `server.R` file and `ui.R` file, e.g. like this:
+
+```{bash}
+  cat R/ui.R
+```
+
+```{bash}
+  cat R/server.R
+```
+
+You can publish your server on <a href="http://www.shinyapps.io/">shinyapps.io</a> so that it is accessible by everyone.
+
+## Others
+
+TODO add some other packages
+
+- `ggraph`, `ggnet` and `ggnetwork`
+- `gganimate`
+- `tweenr`
+- `ggpixel`
+- `animation`
+- `lattice`
+- `magick`
+- `imager`
+  
+TODO add
+
+- add beautified base plots (tufte or so)
+- add colorschemes
+- magick and imagr
+- scico
+- tidygraph
+- r2d3
+
+<!--chapter:end:07-plotting.Rmd-->
+
+# Miscellaneous
+
+The following chapter covers miscellaneous, useful tools and libraries for working with R some of which belong to my favourites.
+
+## Workflow management
+
+I recently came across [`drake`](https://ropensci.github.io/drake/index.html) as a workflow manager. It allows you to run a project and easily update output files.
+
+<div align="center">
+  <img src="https://rawgit.com/dirmeier/essential-R/master/fig/drake.jpg" alt="oh no" width="500px">
+</div>
+
+## Pry back the covers of R 
+
+In some cases it is interesting to have a look at the implementation of specific functions, get their sizes in byte or get the current memory consumption. It is especially useful to keep track of the addresses your objects point to. When I was new to R I found it confusing when a reference is dropped and when a new copy of an object is created.
+
+```{r}
+library(pryr)
+
+pryr::inspect(list())
+pryr::inspect(vector())
+
+pryr::object_size(numeric())
+pryr::object_size(numeric(1))
+
+x <- stats::rnorm(10)
+y <- x
+pryr::address(x)
+pryr::address(y)
+y[1] <- 1
+pryr::address(y)
+```
+
+## Tidy evaluation
+
+TODO rlang
+
+## Compile
+
+Base `R` can be frustratingly slow at times, especially when you cannot vectorize your code or don't want to extend it ro C++ or Fortran. Using `compiler` you can however improve your code a little:
+
+```{r}
+library(compiler)
+
+jit <- enableJIT(0)
+
+slow.mean <- function(x) {
+  sum <- 0
+  n <- length(x)
+  for(i in 1:n) sum <- sum + x[i]
+  sum / n
+}
+
+fast.mean <- compiler::cmpfun(slow.mean)
+
+array <- rnorm(1000)
+microbenchmark::microbenchmark(
+  slow.mean(array),
+  fast.mean(array),
+  mean(array)
+)
+
+enableJIT(jit)
+```
+
+## Others
+
+* In case you ever need to use Google's `V8` JavaScript enginge, it has R bindings thanks to Jeroen Ooms.
+* Understanding R on the backend has its benefits of its own. A fantastic package for this is `lobstr`.
+
+<!--chapter:end:08-misc.Rmd-->
+
+# Good practices
+
+Continuous integration, version control and containerization are three of the many tools of a developer. Here, I quickly introduce how the three can be used for `R`.
+
+## Continuous integration
+
+To be honest, doing all the steps from the section above is tedious and annoying. For that reason I set up Travis CI to take care of running our tests, static analysis and code coverage in the project. Travis works for Mac and Unix.
+
+```{bash}
+cat ./pkg/.travis.yml
+```
+
+Check out Travis' <a href="https://docs.travis-ci.com/">docs</a> for more info. What we are basically telling Travis to do is to check our package `--as-cran`, run the unit tests, do the code coverage and finally do a static code analysis.
+
+In order to do the same for Windows machines, we also use AppVeyor.
+
+```{bash}
+cat ./pkg/appveyor.yml
+```
+
+Here, we only run some tests and checks, since we already got the code analysis and coverage.
+
+Code coverage of our project yielded us the following results:
+
+<div align="center">
+  <img src="https://codecov.io/gh/dirmeier/essential-R/branch/master/graphs/sunburst.svg" alt="no img">
+</div>
+<div style="text-align: center">
+  Code coverage
+</div>
+
+If we check the travis log, we see it has succeeded, because all tests ran through. However, we have some lints we should fix.
+
+<pre><code>$ tar -C .. -xf $PKG_TARBALL
+after_script.2
+2.22s$ Rscript -e 'covr::codecov()'
+$message
+[1] "Coverage reports upload successfully"
+$id
+[1] "552fd0db-187b-434e-b37b-a0e4fcba7636"
+$meta
+$meta$status
+[1] 200
+$queued
+[1] TRUE
+$url
+[1] "https://codecov.io/github/dirmeier/essential-R/commit/f24d277296f78512524f26f3ca3b31d202e122a1"
+$uploaded
+[1] TRUE
+after_script.3
+1.23s$ Rscript -e 'lintr::lint_package()'
+R/bad_bad_file.R:3:1: style: lines should not be more than 80 characters.
+                                                                              myRet = a+b
+^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+R/bad_bad_file.R:3:79: style: Variable and function names should be all lowercase.
+                                                                              myRet = a+b
+                                                                              ^~~~~
+R/bad_bad_file.R:3:85: style: Use <-, not =, for assignment.
+                                                                              myRet = a+b
+                                                                                    ^
+Warning message:
+In readLines(filename) :
+  incomplete final line found on '/home/travis/build/dirmeier/essential-R/pkg/R/emptypRoject-package.R'
+Done. Your build exited with 0.</code></pre>
+
+Fixing style related issues is essential since we want other people to be able to read our code easily. Good code also increases the number of users, because the package is more trusted than a *spaghetti code* package.
+
+<div class="quote" style="text-align: center; margin-top: 5%">
+  <i>Beauty is more important in computing than anywhere else in technology because software is so complicated. Beauty is the ultimate defense against complexity.</i><br>
+</div>
+<div class="quote" style="text-align: right; margin-bottom: 5% ">
+  <span style="text-align: right;">-- David Gelernter
+</div>
+
+## Version control
+
+Aside from he fact that version control is great, putting your project on GitHub has the most prominent advantage that you can add badges to your `README.md` to show others about the state of your package, for instance repository, CI or code coverage status.
+
+<div align="center">
+  <img src="https://rawgit.com/dirmeier/essential-R/master/fig/readme_me.jpg" alt="oh no" width="750px">
+</div>
+
+There's a wide variety of badges to describe your project.
+<div align="center">
+| Description  | Badge |
+| ------------- | ------------- |
+| Is the project passing on windows?  | <img src="https://ci.appveyor.com/api/projects/status/github/dirmeier/netReg?branch=master&svg=true">  |
+| How long is it on Bioconductor?  | ![](https://bioconductor.org/shields/years-in-bioc/netReg.svg)  |
+| Is it installable using conda?  | ![](https://anaconda.org/bioconda/netreg/badges/installer/conda.svg)  |
+| What is its version on CRAN?  | ![](http://www.r-pkg.org/badges/version/datastructures?color=brightgreen)  |
+| How often has it been downloaded?  | ![](http://cranlogs.r-pkg.org/badges/grand-total/datastructures?color=brightgreen)  |
+</div>
+
+## Docker
+
+TODO (needed for debugging c++)
+
+## Code style
+
+I try to follow two general guidelines when writing code. These are primarily not my personal preferences, nut adopted form packages like
+`data.table`, `lme4`, `Matrix` or Bioconductor. 
+Whatever you do, just be consistent. There seem to be a lot of different preference around.
+
+If I mainly write using `S3` classes and functions I prefer writing code like this:
+
+```{r ,eval=FALSE}
+my.var <- "2"
+
+i.am.a.function <- function(i) 
+{
+  sapply(seq(10), function(i) {
+    i + 1
+  })  
+}
+
+plot.me <- function(x, ...) plot.default(x)
+
+.i.am.private <- "2"
+```
+
+For `S4` classes and functions I recommend using the [Bioconductor](https://www.bioconductor.org/developers/how-to/coding-style/) style guide or how 
+`lme4` and `Matrix` do it:
+
+```{r, eval=FALSE}
+setMethod("camelCaps",
+          signature=signature(iAmAList = "list"))
+```
+
+## Debugging C++ from R
+
+TODO
+
+<!--chapter:end:09-good_practices.Rmd-->
+
