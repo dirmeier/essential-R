@@ -6,9 +6,9 @@ repo: https://github.com/dirmeier/essential-R
 output_dir: "docs"
 delete_merged_file: true
 rmd_files: [
-  "index.Rmd",
+  "00-index.Rmd",
   "01-r_devel.Rmd",
-  "02-programming_paradigma_in_r.Rmd",
+  "02-programming_paradigma_in_R.Rmd",
   "03-extending_R.Rmd",
   "04-working_with_data.Rmd",
   "05-data_analysis.Rmd",

@@ -1,0 +1,9 @@
+knitr
+magrittr
+devtools
+gam
+lintr
+covr
+testthat
+usethis
+profvis

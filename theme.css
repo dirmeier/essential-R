@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Roboto|Inconsolata');
+@import url('https://fonts.googleapis.com/css?family=Merriweather|Inconsolata');
 
 
 body {
@@ -28,8 +28,7 @@ p.caption {
 .book .book-summary ul.summary li a,
 .book .book-summary ul.summary li span {
     color: black;
-    font-style: italic;
-    font-family: 'Helvetica';
+    font-family: 'Merriweather';
     font-weight: 300;
 }
 
@@ -47,14 +46,13 @@ p.caption {
 
 h4, .title {
   font-size: 2em;
-  font-family: "Helvetica";
+  font-family: "Merriweather";
   font-weight: 300;
   color: black;
-  font-style: italic;
 }
 
 .book.font-family-1 {
-    font-family: "Helvetica";
+    font-family: "Merriweather";
     font-weight: 200;
 }
 
@@ -77,6 +75,7 @@ h4, .title {
 .book .book-body .page-wrapper .page-inner section.normal h4 {
     font-size: 1em;
 }
+
 .book .book-body .page-wrapper .page-inner section.normal h4.date {
     font-size: 1em;
     font-style: italic;
@@ -106,14 +105,12 @@ section.normal dl,
     font-weight: 400;
 }
 
-
  h1, h2, h3, .title {
-  font-family: "Roboto", "Hind", "Helvetica";
-  font-style: italic;
+  font-family: "Merriweather", serif;
   font-weight: 200;
 }
 
-code,pre {
+code, pre {
   font-family:  "Inconsolata";
 }
 

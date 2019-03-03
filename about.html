@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Essential R</title>
+  <meta name="description" content="Essential R">
+  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+
+  <meta property="og:title" content="Essential R" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  <meta name="github-repo" content="dirmeier/essential-R" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Essential R" />
+  
+  
+  
+
+<meta name="author" content="Simon Dirmeier">
+
+
+<meta name="date" content="2019-03-03">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+
+
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="theme.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">essential-R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path=""><a href="#about"><i class="fa fa-check"></i>About</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Essential R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="header">
+<h1 class="title">Essential R</h1>
+<p class="author"><em>Simon Dirmeier</em></p>
+<p class="date"><em>2019-03-03</em></p>
+</div>
+<div id="about" class="section level1 unnumbered">
+<h1>About</h1>
+<div class="quote" style="text-align: center; margin-top: 5%">
+<p><i>The lyf so short, the craft so long to lerne.</i><br></p>
+</div>
+<div class="quote" style="text-align: right; margin-bottom: 5% ">
+<p><span style="text-align: right;">– Geoffrey Chaucer</span></p>
+</div>
+<p>This book serves as a collection of</p>
+<ul>
+<li>tools for package development,</li>
+<li>good practices for programming,</li>
+<li>and my most frequently used packages.</li>
+</ul>
+<p>The material treated here certainly does not cover all of <code>R</code>, but rather serves as my personal list of essential things related to programming in <code>R</code> that I found useful to know. The document is partly opinionated and subjective, so feel free to open up an <a href="https://github.com/dirmeier/essential-R/issues">issue</a> if you feel some parts should be clarified or reformulated.</p>
+<p>The book is no introduction on how to program functionally, procedurally or in an object-oriented way, how to write code in general, or how to speed it up. The interested reader is referred to:</p>
+<ul>
+<li>Robert Martin: Clean Code,</li>
+<li>Andrew Hunt: The Pragmatic Programmer,</li>
+<li>Gang of Four: Design Patterns,</li>
+<li>Colin Gillespie: Efficient R programming,</li>
+<li>Patrick Burns: The R Inferno,</li>
+<li>Hadley Wickham: R packages,</li>
+<li>Hadley Wickham: Advanced R,</li>
+<li>Dirk Eddelbuettel: Seamless R and C++ Integration with Rcpp,</li>
+<li>Thomas Cormen: Introduction to Algorithms,</li>
+<li>Dan Gusfield: Algorithms on Strings, Trees and Sequences,</li>
+<li>Donald Knuth: The Art of Computer Programming,</li>
+<li>a <a href="http://norvig.com/21-days.html">comment</a> by Peter Norvig,</li>
+<li>…</li>
+</ul>
+<p>Much of R’s popularity is due to its fantastic ecosystem. For data analysis or statistics R is a good choice for various reasons:</p>
+<ul>
+<li>high-level,</li>
+<li>easy to install packages,</li>
+<li>can be extended to C++ without needing knowledge of linking or C++ build-systems,</li>
+<li>probably the best plotting facility of any language,</li>
+<li>Bioconductor, machine learning and statistics libraries,</li>
+<li>small standard library.</li>
+</ul>
+<p>There are a few things, however, R is not so great at:</p>
+<ul>
+<li>in general slow,</li>
+<li>not really suited for large projects,</li>
+<li>poor object orientation,</li>
+<li>inconsistent function names,</li>
+<li>very limited threading capabilities,</li>
+<li>…</li>
+</ul>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": false,
+"twitter": true,
+"google": false,
+"linkedin": true,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": false,
+"instapper": false
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": null,
+"history": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+},
+"toolbar": {
+"position": "fixed"
+},
+"search": false
+});
+});
+</script>
+
+</body>
+
+</html>

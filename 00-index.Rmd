@@ -18,16 +18,16 @@ output: bookdown::gitbook
 </div>
 
 ```{r knitr_init, echo=FALSE, cache=FALSE, message=FALSE}
-  library(knitr)
-  library(magrittr)
-  library(devtools)
-  opts_chunk$set(prompt=FALSE,
-                 tidy=TRUE,
-                 comment=NA,
-                 message=FALSE,
-                 warning=FALSE)
-  library('gam')
-  data(kyphosis)
+library(knitr)
+library(magrittr)
+library(devtools)
+opts_chunk$set(prompt=FALSE,
+               tidy=TRUE,
+               comment=NA,
+               message=FALSE,
+               warning=FALSE)
+library(gam)
+data(kyphosis)
 ```
 
 This book serves as a collection of
