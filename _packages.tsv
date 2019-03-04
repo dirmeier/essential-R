@@ -36,3 +36,6 @@ plotly
 highcharter
 DiagrammeR
 igraph
+mlr
+modelr
+kernlab
