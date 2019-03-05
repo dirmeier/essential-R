@@ -257,19 +257,19 @@ Eigen::MatrixXd square(Eigen::MatrixXd&amp; m)
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;RcppEigen&quot;</span>)
 Rcpp<span class="op">::</span><span class="kw">sourceCpp</span>(<span class="st">&quot;./_src/square.cpp&quot;</span>)
 <span class="kw">square</span>(<span class="kw">matrix</span>(<span class="kw">rnorm</span>(<span class="dv">10</span>), <span class="dv">2</span>))</code></pre></div>
-<pre><code>           [,1]        [,2]       [,3]       [,4]        [,5]
-[1,]  1.1269467 -0.17961639 -0.9013668 -0.4919778 -0.36933216
-[2,] -0.1796164  0.54820622  0.6942179  1.4844371  0.07944378
-[3,] -0.9013668  0.69421785  1.3043197  1.8833488  0.31720857
-[4,] -0.4919778  1.48443705  1.8833488  4.0195996  0.21692200
-[5,] -0.3693322  0.07944378  0.3172086  0.2169220  0.12185557</code></pre>
+<pre><code>          [,1]      [,2]     [,3]       [,4]       [,5]
+[1,] 5.8796994 2.4710347 3.587033  2.7327981  0.1372097
+[2,] 2.4710347 2.6095616 2.611945  0.8948609  2.0985710
+[3,] 3.5870330 2.6119446 2.964747  1.4888955  1.5184331
+[4,] 2.7327981 0.8948609 1.488895  1.3111131 -0.2657189
+[5,] 0.1372097 2.0985710 1.518433 -0.2657189  2.6544504</code></pre>
 <p>Even for small matrices, the speed up is already substantial.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">m &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">rnorm</span>(<span class="dv">100</span> <span class="op">*</span><span class="st"> </span><span class="dv">100</span>), <span class="dv">100</span>)
 microbenchmark<span class="op">::</span><span class="kw">microbenchmark</span>(<span class="kw">square</span>(m), <span class="kw">t</span>(m) <span class="op">%*%</span><span class="st"> </span>m)</code></pre></div>
 <pre><code>Unit: microseconds
-       expr     min      lq     mean  median       uq      max neval
-  square(m) 283.279 302.058 341.3478 306.402 324.0610 2645.292   100
- t(m) %*% m  76.840  92.041 163.7173  94.307 100.6215 4822.469   100</code></pre>
+       expr     min       lq     mean   median       uq      max neval
+  square(m) 282.920 299.0500 389.1880 301.6985 320.4470 1509.044   100
+ t(m) %*% m  85.628  89.6305 352.7502 120.0165 204.7815 4789.519   100</code></pre>
 <div id="rcpp-in-a-package" class="section level3">
 <h3><span class="header-section-number">3.1.1</span> Rcpp in a package</h3>
 <p>Usually, you would want to put your source code into a <code>cpp</code> file in the <code>src</code> folder. Then you can call C++ from an R function, for instance as described below.</p>

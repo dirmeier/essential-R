@@ -244,9 +244,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(pryr)
 
 pryr<span class="op">::</span><span class="kw">inspect</span>(<span class="kw">list</span>())</code></pre></div>
-<pre><code>&lt;VECSXP 0xfcb4cc8&gt;</code></pre>
+<pre><code>&lt;VECSXP 0x2d50b428&gt;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pryr<span class="op">::</span><span class="kw">inspect</span>(<span class="kw">vector</span>())</code></pre></div>
-<pre><code>&lt;LGLSXP 0xe3f5848&gt;</code></pre>
+<pre><code>&lt;LGLSXP 0x2d586c90&gt;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pryr<span class="op">::</span><span class="kw">object_size</span>(<span class="kw">numeric</span>())</code></pre></div>
 <pre><code>48 B</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pryr<span class="op">::</span><span class="kw">object_size</span>(<span class="kw">numeric</span>(<span class="dv">1</span>))</code></pre></div>
@@ -254,12 +254,12 @@ pryr<span class="op">::</span><span class="kw">inspect</span>(<span class="kw">l
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span>stats<span class="op">::</span><span class="kw">rnorm</span>(<span class="dv">10</span>)
 y &lt;-<span class="st"> </span>x
 pryr<span class="op">::</span><span class="kw">address</span>(x)</code></pre></div>
-<pre><code>[1] &quot;0x3090b298&quot;</code></pre>
+<pre><code>[1] &quot;0x2df28858&quot;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pryr<span class="op">::</span><span class="kw">address</span>(y)</code></pre></div>
-<pre><code>[1] &quot;0x3090b298&quot;</code></pre>
+<pre><code>[1] &quot;0x2df28858&quot;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">y[<span class="dv">1</span>] &lt;-<span class="st"> </span><span class="dv">1</span>
 pryr<span class="op">::</span><span class="kw">address</span>(y)</code></pre></div>
-<pre><code>[1] &quot;0x3090c3c8&quot;</code></pre>
+<pre><code>[1] &quot;0x2df67f88&quot;</code></pre>
 </div>
 <div id="tidy-evaluation" class="section level2">
 <h2><span class="header-section-number">8.3</span> Tidy evaluation</h2>
@@ -284,14 +284,14 @@ fast.mean &lt;-<span class="st"> </span>compiler<span class="op">::</span><span 
 array &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">1000</span>)
 microbenchmark<span class="op">::</span><span class="kw">microbenchmark</span>(<span class="kw">slow.mean</span>(array), <span class="kw">fast.mean</span>(array), <span class="kw">mean</span>(array))</code></pre></div>
 <pre><code>Unit: microseconds
-             expr     min       lq      mean   median      uq     max
- slow.mean(array) 241.630 245.1345 263.14913 252.3515 260.940 395.158
- fast.mean(array)  50.743  51.1650  55.60300  51.8135  53.094 107.146
-      mean(array)   9.768  10.4935  13.83114  13.2905  14.423  57.781
- neval
-   100
-   100
-   100</code></pre>
+             expr     min       lq        mean   median       uq
+ slow.mean(array) 292.833 298.9350 17261.85638 306.7190 316.3315
+ fast.mean(array)  50.753  51.4015    58.66360  51.7805  53.0555
+      mean(array)   9.755  12.5225    23.38276  15.4740  17.6665
+         max neval
+ 1694225.411   100
+     205.735   100
+     805.857   100</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">enableJIT</span>(jit)</code></pre></div>
 <pre><code>[1] 0</code></pre>
 </div>

@@ -30,13 +30,13 @@ library(gam)
 data(kyphosis)
 ```
 
-This book serves as a collection of
+This book serves as a personal collection of
 
 * tools for package development,
 * good practices for programming,
-* and my most frequently used packages.
+* and most frequently used packages.
 
-The material treated here certainly does not cover all of `R`, but rather serves as my personal list of essential things related to programming in `R` that I found useful to know. The document is partly opinionated and subjective, so feel free to open up an <a href="https://github.com/dirmeier/essential-R/issues">issue</a> if you feel some parts should be clarified or reformulated.
+The material treated here certainly does not cover all of `R`, but rather serves as list of essential things related to programming in `R` that I find useful to know. The document is partly opinionated and subjective, so feel free to open up an <a href="https://github.com/dirmeier/essential-R/issues">issue</a> if you feel some parts should be clarified or reformulated.
 
 The book is no introduction on how to program functionally, procedurally or in an object-oriented way, how to write code in general, or how to speed it up. The interested reader is referred to:
 
@@ -52,23 +52,4 @@ The book is no introduction on how to program functionally, procedurally or in a
 - Dan Gusfield: Algorithms on Strings, Trees and Sequences,
 - Donald Knuth: The Art of Computer Programming,
 - a <a href="http://norvig.com/21-days.html">comment</a> by Peter Norvig,
-- ...
-
-Much of R's popularity is due to its fantastic ecosystem.
-For data analysis or statistics R is a good choice for various reasons:
-
-- high-level,
-- easy to install packages,
-- can be extended to C++ without needing knowledge of linking or C++ build-systems,
-- probably the best plotting facility of any language,
-- Bioconductor, machine learning and statistics libraries,
-- small standard library.
-
-There are a few things, however, R is not so great at:
-
-- in general slow,
-- not really suited for large projects,
-- poor object orientation,
-- inconsistent function names,
-- very limited threading capabilities,
 - ...

@@ -286,10 +286,10 @@ df.dplyr &lt;-<span class="st"> </span><span class="cf">function</span>() df <sp
 
 microbenchmark<span class="op">::</span><span class="kw">microbenchmark</span>(<span class="kw">dt.only</span>(), <span class="kw">dt.dtplyr</span>(), <span class="kw">df.dplyr</span>())</code></pre></div>
 <pre><code>Unit: microseconds
-        expr      min       lq      mean   median       uq         max
-   dt.only() 1731.925 1823.490 19313.986 1878.326 1979.515 1725450.686
- dt.dtplyr() 2586.123 2697.584  2918.743 2775.197 2944.069    7248.483
-  df.dplyr()  874.822  975.643  1081.011 1022.724 1095.699    4814.462
+        expr      min        lq      mean   median       uq         max
+   dt.only() 1414.785 1586.2480  5779.886 1703.112 2298.637   68805.670
+ dt.dtplyr() 2124.899 2327.8425 41565.427 2641.847 8450.181 3576499.515
+  df.dplyr()  724.789  841.0025  1082.067  941.272 1057.872    7787.377
  neval
    100
    100
@@ -303,13 +303,13 @@ q &lt;-<span class="st"> </span>datastructures<span class="op">::</span><span cl
 q[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>] &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="kw">rnorm</span>(<span class="dv">3</span>), <span class="dv">2</span>, <span class="kw">rnorm</span>(<span class="dv">4</span>))
 datastructures<span class="op">::</span><span class="kw">pop</span>(q)</code></pre></div>
 <pre><code>$`1`
-[1] -0.5260887 -1.3267906  0.6131941</code></pre>
+[1] -0.1297980 -0.7222048  0.8822356</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">datastructures<span class="op">::</span><span class="kw">pop</span>(q)</code></pre></div>
 <pre><code>$`2`
 [1] 2</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">datastructures<span class="op">::</span><span class="kw">pop</span>(q)</code></pre></div>
 <pre><code>$`3`
-[1] -1.0123259  0.3151942  0.6507924  0.3208561</code></pre>
+[1] -0.9690185  0.5841185 -0.4897903  0.4729006</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">datastructures<span class="op">::</span><span class="kw">pop</span>(q)</code></pre></div>
 <pre><code>NULL</code></pre>
 <p>TODO examples</p>

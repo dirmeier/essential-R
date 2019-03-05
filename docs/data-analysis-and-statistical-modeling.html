@@ -267,8 +267,8 @@ fit &lt;-<span class="st"> </span><span class="kw">stan</span>(<span class="dt">
 <pre><code>
 SAMPLING FOR MODEL &#39;920bbd45e873f3162b84171e9f3ae19f&#39; NOW (CHAIN 1).
 Chain 1: 
-Chain 1: Gradient evaluation took 2.4e-05 seconds
-Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.24 seconds.
+Chain 1: Gradient evaluation took 2.6e-05 seconds
+Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.26 seconds.
 Chain 1: Adjust your expectations accordingly!
 Chain 1: 
 Chain 1: 
@@ -293,38 +293,38 @@ Chain 1: Iteration:  980 / 1100 [ 89%]  (Sampling)
 Chain 1: Iteration: 1090 / 1100 [ 99%]  (Sampling)
 Chain 1: Iteration: 1100 / 1100 [100%]  (Sampling)
 Chain 1: 
-Chain 1:  Elapsed Time: 0.081699 seconds (Warm-up)
-Chain 1:                1.00096 seconds (Sampling)
-Chain 1:                1.08266 seconds (Total)
+Chain 1:  Elapsed Time: 0.058223 seconds (Warm-up)
+Chain 1:                0.862701 seconds (Sampling)
+Chain 1:                0.920924 seconds (Total)
 Chain 1: </code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(fit)</code></pre></div>
 <pre><code>$summary
-             mean    se_mean       sd        2.5%         25%         50%
-beta     9.840654 0.07471856 1.113790    7.592399    9.036907    9.858972
-sigma   47.675610 0.08819308 2.747244   42.952109   45.631794   47.513751
-alpha  254.211444 0.44641018 6.001163  243.071338  250.064779  254.199137
-lp__  -788.929978 0.06827231 1.166558 -791.723608 -789.514379 -788.697275
-             75%      97.5%    n_eff      Rhat
-beta    10.60795   11.92623 222.2029 1.0006839
-sigma   49.46105   53.73767 970.3438 0.9997644
-alpha  258.64555  265.14038 180.7185 1.0030875
-lp__  -788.04788 -787.56873 291.9602 1.0009599
+             mean    se_mean       sd        2.5%        25%         50%
+beta     9.734508 0.10430790 1.307173    7.374048    8.84992    9.669498
+sigma   47.782422 0.08083895 2.579821   43.259332   45.99257   47.563146
+alpha  254.916993 0.64767282 7.282857  241.316674  250.44446  254.898783
+lp__  -789.154520 0.12228032 1.526152 -792.932606 -789.76729 -788.763406
+             75%      97.5%     n_eff     Rhat
+beta    10.55408   12.47037  157.0477 1.024087
+sigma   49.38598   53.29628 1018.4457 1.000171
+alpha  260.02287  268.50520  126.4422 1.023848
+lp__  -788.10495 -787.54819  155.7695 1.008462
 
 $c_summary
 , , chains = chain:1
 
          stats
-parameter        mean       sd        2.5%         25%         50%
-    beta     9.840654 1.113790    7.592399    9.036907    9.858972
-    sigma   47.675610 2.747244   42.952109   45.631794   47.513751
-    alpha  254.211444 6.001163  243.071338  250.064779  254.199137
-    lp__  -788.929978 1.166558 -791.723608 -789.514379 -788.697275
+parameter        mean       sd        2.5%        25%         50%
+    beta     9.734508 1.307173    7.374048    8.84992    9.669498
+    sigma   47.782422 2.579821   43.259332   45.99257   47.563146
+    alpha  254.916993 7.282857  241.316674  250.44446  254.898783
+    lp__  -789.154520 1.526152 -792.932606 -789.76729 -788.763406
          stats
 parameter        75%      97.5%
-    beta    10.60795   11.92623
-    sigma   49.46105   53.73767
-    alpha  258.64555  265.14038
-    lp__  -788.04788 -787.56873</code></pre>
+    beta    10.55408   12.47037
+    sigma   49.38598   53.29628
+    alpha  260.02287  268.50520
+    lp__  -788.10495 -787.54819</code></pre>
 <div id="rstanarm" class="section level3">
 <h3><span class="header-section-number">5.1.1</span> Rstanarm</h3>
 <p><code>rstanarm</code> is a package for applied Bayesian modelling that wraps around Stan for easier usage.</p>
@@ -335,8 +335,8 @@ fit.arm &lt;-<span class="st"> </span>rstanarm<span class="op">::</span><span cl
 <pre><code>
 SAMPLING FOR MODEL &#39;continuous&#39; NOW (CHAIN 1).
 Chain 1: 
-Chain 1: Gradient evaluation took 3.7e-05 seconds
-Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.37 seconds.
+Chain 1: Gradient evaluation took 3.5e-05 seconds
+Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.35 seconds.
 Chain 1: Adjust your expectations accordingly!
 Chain 1: 
 Chain 1: 
@@ -361,9 +361,9 @@ Chain 1: Iteration:  980 / 1100 [ 89%]  (Sampling)
 Chain 1: Iteration: 1090 / 1100 [ 99%]  (Sampling)
 Chain 1: Iteration: 1100 / 1100 [100%]  (Sampling)
 Chain 1: 
-Chain 1:  Elapsed Time: 0.111648 seconds (Warm-up)
-Chain 1:                1.34499 seconds (Sampling)
-Chain 1:                1.45663 seconds (Total)
+Chain 1:  Elapsed Time: 0.055629 seconds (Warm-up)
+Chain 1:                0.510607 seconds (Sampling)
+Chain 1:                0.566236 seconds (Total)
 Chain 1: </code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(fit.arm)</code></pre></div>
 <pre><code>
@@ -379,20 +379,20 @@ Model Info:
  predictors:   2
 
 Estimates:
-                mean   sd     2.5%   25%    50%    75%    97.5%
-(Intercept)    251.4    6.5  239.2  247.2  251.2  255.8  264.1 
-Days            10.5    1.1    8.4    9.7   10.6   11.4   12.7 
-sigma           47.9    2.5   43.3   46.1   47.8   49.5   53.2 
-mean_PPD       298.9    5.4  287.8  295.4  298.8  302.8  309.5 
-log-posterior -961.0    1.2 -964.1 -961.5 -960.7 -960.1 -959.6 
+                mean    sd      2.5%    25%     50%     75%     97.5%
+(Intercept)     247.5    17.4   186.7   245.8   251.1   256.1   264.5
+Days             10.4     1.4     7.6     9.6    10.5    11.3    13.2
+sigma            49.9     8.6    42.8    46.2    48.0    49.9    78.6
+mean_PPD        294.2    16.3   236.3   294.3   297.9   301.4   307.6
+log-posterior  -967.0    22.7 -1052.3  -961.9  -960.8  -960.2  -959.6
 
 Diagnostics:
               mcse Rhat n_eff
-(Intercept)   0.4  1.0   250 
-Days          0.0  1.0  1089 
-sigma         0.1  1.0   601 
-mean_PPD      0.4  1.0   192 
-log-posterior 0.1  1.0   139 
+(Intercept)   4.2  1.1   17  
+Days          0.1  1.0  723  
+sigma         2.0  1.1   18  
+mean_PPD      4.1  1.1   16  
+log-posterior 5.9  1.1   15  
 
 For each parameter, mcse is Monte Carlo standard error, n_eff is a crude measure of effective sample size, and Rhat is the potential scale reduction factor on split chains (at convergence Rhat=1).</code></pre>
 </div>
@@ -406,8 +406,8 @@ fit.multilevel &lt;-<span class="st"> </span><span class="kw">brm</span>(Reactio
 <pre><code>
 SAMPLING FOR MODEL &#39;45335b867c1a5a0373bc06c1740c990e&#39; NOW (CHAIN 1).
 Chain 1: 
-Chain 1: Gradient evaluation took 5.7e-05 seconds
-Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.57 seconds.
+Chain 1: Gradient evaluation took 5.1e-05 seconds
+Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.51 seconds.
 Chain 1: Adjust your expectations accordingly!
 Chain 1: 
 Chain 1: 
@@ -424,9 +424,9 @@ Chain 1: Iteration: 800 / 1000 [ 80%]  (Sampling)
 Chain 1: Iteration: 900 / 1000 [ 90%]  (Sampling)
 Chain 1: Iteration: 1000 / 1000 [100%]  (Sampling)
 Chain 1: 
-Chain 1:  Elapsed Time: 2.47964 seconds (Warm-up)
-Chain 1:                0.464368 seconds (Sampling)
-Chain 1:                2.94401 seconds (Total)
+Chain 1:  Elapsed Time: 2.43316 seconds (Warm-up)
+Chain 1:                0.690034 seconds (Sampling)
+Chain 1:                3.1232 seconds (Total)
 Chain 1: </code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(fit.multilevel)</code></pre></div>
 <pre><code> Family: gaussian 
@@ -439,18 +439,18 @@ Samples: 1 chains, each with iter = 1000; warmup = 500; thin = 1;
 Group-Level Effects: 
 ~Subject (Number of levels: 18) 
                     Estimate Est.Error l-95% CI u-95% CI Eff.Sample Rhat
-sd(Intercept)          26.99      6.72    16.12    41.48        209 1.01
-sd(Days)                6.66      1.53     4.14     9.95        199 1.00
-cor(Intercept,Days)     0.05      0.29    -0.52     0.59        135 1.00
+sd(Intercept)          26.27      7.17    14.76    42.46        195 1.01
+sd(Days)                6.43      1.42     4.13     9.52        126 1.00
+cor(Intercept,Days)     0.08      0.29    -0.40     0.69        157 1.00
 
 Population-Level Effects: 
           Estimate Est.Error l-95% CI u-95% CI Eff.Sample Rhat
-Intercept   252.04      7.65   237.87   267.49        310 1.01
-Days         10.49      1.64     7.45    13.54        130 1.00
+Intercept   251.95      7.40   239.74   266.92        266 1.00
+Days         10.29      1.80     6.83    14.27        173 1.01
 
 Family Specific Parameters: 
       Estimate Est.Error l-95% CI u-95% CI Eff.Sample Rhat
-sigma    25.79      1.51    22.86    29.14        575 1.00
+sigma    26.05      1.61    23.31    29.44        252 1.00
 
 Samples were drawn using sampling(NUTS). For each parameter, Eff.Sample 
 is a crude measure of effective sample size, and Rhat is the potential 
@@ -505,39 +505,39 @@ coda<span class="op">::</span><span class="kw">autocorr</span>(<span class="kw">
 <pre><code>[[1]]
 , , beta
 
-              beta       sigma        alpha        lp__
-Lag 0   1.00000000 -0.01180097 -0.825169443  0.07520622
-Lag 1   0.58511247 -0.03381177 -0.606263747  0.08790547
-Lag 5   0.15686554 -0.01967178 -0.222532941 -0.03192979
-Lag 10 -0.02611530 -0.01714680  0.008010295 -0.03753211
-Lag 50 -0.05666232  0.04836087  0.047507596 -0.08005626
+             beta       sigma       alpha        lp__
+Lag 0  1.00000000 -0.09098018 -0.84679910  0.02323685
+Lag 1  0.64649460 -0.05659510 -0.65854924 -0.02781911
+Lag 5  0.19644228 -0.04945911 -0.24252697 -0.01379953
+Lag 10 0.04554359 -0.03235870 -0.09980014  0.05001408
+Lag 50 0.04263937  0.04612791 -0.04150179  0.01005839
 
 , , sigma
 
-               beta        sigma        alpha         lp__
-Lag 0  -0.011800968  1.000000000 -0.003919136 -0.127155938
-Lag 1   0.042494985  0.016266015 -0.004410195 -0.022097665
-Lag 5   0.003061267 -0.023803046 -0.003151686  0.022189519
-Lag 10 -0.004971631 -0.003356223  0.023018233 -0.018567960
-Lag 50 -0.022920143  0.024274812  0.010657451  0.003749894
+              beta       sigma        alpha        lp__
+Lag 0  -0.09098018  1.00000000  0.064407207 -0.16797674
+Lag 1  -0.03181738 -0.09358071  0.042213847 -0.07805589
+Lag 5  -0.02528513  0.02386571  0.023106123 -0.07835147
+Lag 10  0.02170223 -0.01175329 -0.001123165 -0.04344650
+Lag 50  0.04590280 -0.07346226 -0.029463816 -0.02172717
 
 , , alpha
 
-              beta        sigma       alpha        lp__
-Lag 0  -0.82516944 -0.003919136  1.00000000 -0.02285560
-Lag 1  -0.58003985  0.027001307  0.70122892 -0.01881587
-Lag 5  -0.15877245  0.060579506  0.22118347  0.03878609
-Lag 10  0.02914635  0.032149682 -0.01320499  0.02315609
-Lag 50  0.03066063 -0.043999502 -0.03289805  0.06630703
+               beta       sigma        alpha        lp__
+Lag 0  -0.846799096  0.06440721  1.000000000 -0.03091263
+Lag 1  -0.644357194  0.05412907  0.758570269  0.01090853
+Lag 5  -0.253959966  0.06250224  0.288738733  0.03339915
+Lag 10 -0.001105280  0.01588829  0.072123141 -0.04399030
+Lag 50  0.007197419 -0.05324803 -0.008289024 -0.01622294
 
 , , lp__
 
-              beta        sigma       alpha          lp__
-Lag 0   0.07520622 -0.127155938 -0.02285560  1.000000e+00
-Lag 1   0.04726961 -0.066874681 -0.02555784  5.233771e-01
-Lag 5  -0.04299150  0.057112864 -0.00393490  4.729836e-02
-Lag 10 -0.07908837  0.007851676  0.07747636  9.069789e-05
-Lag 50  0.08912758 -0.028691637 -0.08548428 -3.036107e-02</code></pre>
+               beta        sigma        alpha       lp__
+Lag 0   0.023236851 -0.167976737 -0.030912631 1.00000000
+Lag 1   0.003303205 -0.074906248  0.003060961 0.59562131
+Lag 5  -0.013921540  0.021347125  0.022159315 0.22428970
+Lag 10 -0.036899347  0.053249233  0.058175966 0.10776711
+Lag 50 -0.052465458  0.009090258  0.050878108 0.04968255</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">coda<span class="op">::</span><span class="kw">traceplot</span>(<span class="kw">As.mcmc.list</span>(fit))</code></pre></div>
 <p><img src="essential-R_files/figure-html/unnamed-chunk-42-1.png" width="672" /><img src="essential-R_files/figure-html/unnamed-chunk-42-2.png" width="672" /><img src="essential-R_files/figure-html/unnamed-chunk-42-3.png" width="672" /><img src="essential-R_files/figure-html/unnamed-chunk-42-4.png" width="672" /></p>
 <p><code>MCMCpack</code> offer an alternative to rstanarm for applied Bayesian modelling. It also comes with a set of useful distributions used frequently in Bayesian modelling, such as the Dirichlet, inverse gamma, etc.</p>
@@ -565,7 +565,7 @@ model &lt;-<span class="st"> </span>mlr<span class="op">::</span><span class="kw
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pred &lt;-<span class="st"> </span>stats<span class="op">::</span><span class="kw">predict</span>(model, <span class="dt">task =</span> task, <span class="dt">subset =</span> test.set)
 <span class="kw">performance</span>(pred, <span class="dt">measures =</span> <span class="kw">list</span>(mmce, acc))</code></pre></div>
 <pre><code>     mmce       acc 
-0.3333333 0.6666667 </code></pre>
+0.1111111 0.8888889 </code></pre>
 </div>
 <div id="tensorflow" class="section level2">
 <h2><span class="header-section-number">5.5</span> Tensorflow</h2>
@@ -664,11 +664,11 @@ rbf &lt;-<span class="st"> </span>kernlab<span class="op">::</span><span class="
 (K &lt;-<span class="st"> </span>kernlab<span class="op">::</span><span class="kw">kernelMatrix</span>(rbf, x))</code></pre></div>
 <pre><code>An object of class &quot;kernelMatrix&quot;
              [,1]         [,2]         [,3]         [,4]         [,5]
-[1,] 1.000000e+00 2.481308e-03 1.795408e-03 3.218746e-04 2.144079e-09
-[2,] 2.481308e-03 1.000000e+00 4.400264e-10 7.710158e-10 4.737936e-12
-[3,] 1.795408e-03 4.400264e-10 1.000000e+00 1.675348e-03 6.622170e-08
-[4,] 3.218746e-04 7.710158e-10 1.675348e-03 1.000000e+00 1.212343e-05
-[5,] 2.144079e-09 4.737936e-12 6.622170e-08 1.212343e-05 1.000000e+00</code></pre>
+[1,] 1.000000e+00 2.538052e-04 3.908063e-08 7.738091e-04 1.235612e-04
+[2,] 2.538052e-04 1.000000e+00 2.785052e-10 1.300262e-07 8.685670e-02
+[3,] 3.908063e-08 2.785052e-10 1.000000e+00 4.426158e-16 1.270126e-14
+[4,] 7.738091e-04 1.300262e-07 4.426158e-16 1.000000e+00 2.306205e-07
+[5,] 1.235612e-04 8.685670e-02 1.270126e-14 2.306205e-07 1.000000e+00</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">sort</span>(<span class="kw">rnorm</span>(<span class="dv">100</span>))
 y &lt;-<span class="st"> </span><span class="dv">3</span> <span class="op">+</span><span class="st"> </span><span class="fl">0.5</span> <span class="op">*</span><span class="st"> </span>x<span class="op">^</span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">*</span><span class="st"> </span>x <span class="op">+</span><span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">100</span>, <span class="dv">0</span>, <span class="fl">0.05</span>)
 gpr &lt;-<span class="st"> </span>kernlab<span class="op">::</span><span class="kw">gausspr</span>(x, y)</code></pre></div>
