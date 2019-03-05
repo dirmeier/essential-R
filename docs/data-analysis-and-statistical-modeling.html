@@ -5,11 +5,11 @@
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Essential R</title>
-  <meta name="description" content="Essential R">
-  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
+  <title>5 Data analysis and statistical modeling | Essential R</title>
+  <meta name="description" content="5 Data analysis and statistical modeling | Essential R">
+  <meta name="generator" content="bookdown  and GitBook 2.6.7">
 
-  <meta property="og:title" content="Essential R" />
+  <meta property="og:title" content="5 Data analysis and statistical modeling | Essential R" />
   <meta property="og:type" content="book" />
   
   
@@ -17,7 +17,7 @@
   <meta name="github-repo" content="dirmeier/essential-R" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Essential R" />
+  <meta name="twitter:title" content="5 Data analysis and statistical modeling | Essential R" />
   
   
   
@@ -25,7 +25,7 @@
 <meta name="author" content="Simon Dirmeier">
 
 
-<meta name="date" content="2018-12-18">
+<meta name="date" content="2019-03-05">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -33,9 +33,10 @@
   
   
 <link rel="prev" href="working-with-data.html">
-<link rel="next" href="plotting-reporting-and-visualizing.html">
+<link rel="next" href="optimization.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
@@ -47,27 +48,27 @@
 
 
 
-<script src="libs/htmlwidgets-1.2/htmlwidgets.js"></script>
+<script src="libs/htmlwidgets-1.3/htmlwidgets.js"></script>
 <script src="libs/d3-3.5.6/d3.min.js"></script>
 <link href="libs/profvis-0.3.5/profvis.css" rel="stylesheet" />
 <script src="libs/profvis-0.3.5/profvis.js"></script>
 <link href="libs/highlight-6.2.0/textmate.css" rel="stylesheet" />
 <script src="libs/highlight-6.2.0/highlight.js"></script>
 <script src="libs/profvis-binding-0.3.5/profvis.js"></script>
-<script src="libs/plotly-binding-4.7.1/plotly.js"></script>
+<script src="libs/plotly-binding-4.8.0/plotly.js"></script>
 <script src="libs/typedarray-0.1/typedarray.min.js"></script>
 <link href="libs/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet" />
 <script src="libs/crosstalk-1.0.0/js/crosstalk.min.js"></script>
-<link href="libs/plotlyjs-1.29.2/plotly-htmlwidgets.css" rel="stylesheet" />
-<script src="libs/plotlyjs-1.29.2/plotly-latest.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-1.39.2/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-1.39.2/plotly-latest.min.js"></script>
 <script src="libs/detect-resize-0.5.3/jquery.resize.js"></script>
 <link href="libs/jquery-ui-1.11.4/jquery-ui.min.css" rel="stylesheet" />
 <script src="libs/jquery-ui-1.11.4/jquery-ui.min.js"></script>
 <script src="libs/vega-1.4.3/vega.min.js"></script>
 <script src="libs/lodash-2.2.1/lodash.min.js"></script>
 <script>var lodash = _.noConflict();</script>
-<link href="libs/ggvis-0.4.3/css/ggvis.css" rel="stylesheet" />
-<script src="libs/ggvis-0.4.3/js/ggvis.js"></script>
+<link href="libs/ggvis-0.4.4/css/ggvis.css" rel="stylesheet" />
+<script src="libs/ggvis-0.4.4/js/ggvis.js"></script>
 <script src="libs/viz-0.3/viz.js"></script>
 <link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
 <script src="libs/grViz-binding-1.0.0/grViz.js"></script>
@@ -127,7 +128,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li><a href="./">essential-R</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>About</a></li>
+<li class="chapter" data-level="" data-path="about.html"><a href="about.html"><i class="fa fa-check"></i>About</a></li>
 <li class="chapter" data-level="1" data-path="r-package-development.html"><a href="r-package-development.html"><i class="fa fa-check"></i><b>1</b> R package development</a><ul>
 <li class="chapter" data-level="1.1" data-path="r-package-development.html"><a href="r-package-development.html#creating-r-packages"><i class="fa fa-check"></i><b>1.1</b> Creating R packages</a></li>
 <li class="chapter" data-level="1.2" data-path="r-package-development.html"><a href="r-package-development.html#writing-r-packages"><i class="fa fa-check"></i><b>1.2</b> Writing R packages</a></li>
@@ -182,29 +183,33 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="5.9.2" data-path="data-analysis-and-statistical-modeling.html"><a href="data-analysis-and-statistical-modeling.html#kernlab"><i class="fa fa-check"></i><b>5.9.2</b> kernlab</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="plotting-reporting-and-visualizing.html"><a href="plotting-reporting-and-visualizing.html"><i class="fa fa-check"></i><b>6</b> Plotting, reporting and visualizing</a><ul>
-<li class="chapter" data-level="6.1" data-path="plotting-reporting-and-visualizing.html"><a href="plotting-reporting-and-visualizing.html#layout"><i class="fa fa-check"></i><b>6.1</b> Layout</a></li>
-<li class="chapter" data-level="6.2" data-path="plotting-reporting-and-visualizing.html"><a href="plotting-reporting-and-visualizing.html#publication-ready-plots"><i class="fa fa-check"></i><b>6.2</b> Publication ready plots</a></li>
-<li class="chapter" data-level="6.3" data-path="plotting-reporting-and-visualizing.html"><a href="plotting-reporting-and-visualizing.html#colors"><i class="fa fa-check"></i><b>6.3</b> Colors</a></li>
-<li class="chapter" data-level="6.4" data-path="plotting-reporting-and-visualizing.html"><a href="plotting-reporting-and-visualizing.html#interactive-and-animated-plots"><i class="fa fa-check"></i><b>6.4</b> Interactive and animated plots</a></li>
-<li class="chapter" data-level="6.5" data-path="plotting-reporting-and-visualizing.html"><a href="plotting-reporting-and-visualizing.html#graphs"><i class="fa fa-check"></i><b>6.5</b> Graphs</a></li>
-<li class="chapter" data-level="6.6" data-path="plotting-reporting-and-visualizing.html"><a href="plotting-reporting-and-visualizing.html#rmarkdown"><i class="fa fa-check"></i><b>6.6</b> RMarkdown</a></li>
-<li class="chapter" data-level="6.7" data-path="plotting-reporting-and-visualizing.html"><a href="plotting-reporting-and-visualizing.html#shiny"><i class="fa fa-check"></i><b>6.7</b> Shiny</a></li>
-<li class="chapter" data-level="6.8" data-path="plotting-reporting-and-visualizing.html"><a href="plotting-reporting-and-visualizing.html#others-1"><i class="fa fa-check"></i><b>6.8</b> Others</a></li>
+<li class="chapter" data-level="6" data-path="optimization.html"><a href="optimization.html"><i class="fa fa-check"></i><b>6</b> Optimization</a><ul>
+<li class="chapter" data-level="6.1" data-path="optimization.html"><a href="optimization.html#convex-optimization"><i class="fa fa-check"></i><b>6.1</b> Convex optimization</a></li>
+<li class="chapter" data-level="6.2" data-path="optimization.html"><a href="optimization.html#non-linear-optimizaton"><i class="fa fa-check"></i><b>6.2</b> Non-linear optimizaton</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="miscellaneous.html"><a href="miscellaneous.html"><i class="fa fa-check"></i><b>7</b> Miscellaneous</a><ul>
-<li class="chapter" data-level="7.1" data-path="miscellaneous.html"><a href="miscellaneous.html#workflow-management"><i class="fa fa-check"></i><b>7.1</b> Workflow management</a></li>
-<li class="chapter" data-level="7.2" data-path="miscellaneous.html"><a href="miscellaneous.html#pry-back-the-covers-of-r"><i class="fa fa-check"></i><b>7.2</b> Pry back the covers of R</a></li>
-<li class="chapter" data-level="7.3" data-path="miscellaneous.html"><a href="miscellaneous.html#tidy-evaluation"><i class="fa fa-check"></i><b>7.3</b> Tidy evaluation</a></li>
-<li class="chapter" data-level="7.4" data-path="miscellaneous.html"><a href="miscellaneous.html#compile"><i class="fa fa-check"></i><b>7.4</b> Compile</a></li>
-<li class="chapter" data-level="7.5" data-path="miscellaneous.html"><a href="miscellaneous.html#others-2"><i class="fa fa-check"></i><b>7.5</b> Others</a></li>
+<li class="chapter" data-level="7" data-path="plotting-reporting-and-visualizing.html"><a href="plotting-reporting-and-visualizing.html"><i class="fa fa-check"></i><b>7</b> Plotting, reporting and visualizing</a><ul>
+<li class="chapter" data-level="7.1" data-path="plotting-reporting-and-visualizing.html"><a href="plotting-reporting-and-visualizing.html#layout"><i class="fa fa-check"></i><b>7.1</b> Layout</a></li>
+<li class="chapter" data-level="7.2" data-path="plotting-reporting-and-visualizing.html"><a href="plotting-reporting-and-visualizing.html#publication-ready-plots"><i class="fa fa-check"></i><b>7.2</b> Publication ready plots</a></li>
+<li class="chapter" data-level="7.3" data-path="plotting-reporting-and-visualizing.html"><a href="plotting-reporting-and-visualizing.html#colors"><i class="fa fa-check"></i><b>7.3</b> Colors</a></li>
+<li class="chapter" data-level="7.4" data-path="plotting-reporting-and-visualizing.html"><a href="plotting-reporting-and-visualizing.html#interactive-and-animated-plots"><i class="fa fa-check"></i><b>7.4</b> Interactive and animated plots</a></li>
+<li class="chapter" data-level="7.5" data-path="plotting-reporting-and-visualizing.html"><a href="plotting-reporting-and-visualizing.html#graphs"><i class="fa fa-check"></i><b>7.5</b> Graphs</a></li>
+<li class="chapter" data-level="7.6" data-path="plotting-reporting-and-visualizing.html"><a href="plotting-reporting-and-visualizing.html#rmarkdown"><i class="fa fa-check"></i><b>7.6</b> RMarkdown</a></li>
+<li class="chapter" data-level="7.7" data-path="plotting-reporting-and-visualizing.html"><a href="plotting-reporting-and-visualizing.html#shiny"><i class="fa fa-check"></i><b>7.7</b> Shiny</a></li>
+<li class="chapter" data-level="7.8" data-path="plotting-reporting-and-visualizing.html"><a href="plotting-reporting-and-visualizing.html#others-1"><i class="fa fa-check"></i><b>7.8</b> Others</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="good-practices.html"><a href="good-practices.html"><i class="fa fa-check"></i><b>8</b> Good practices</a><ul>
-<li class="chapter" data-level="8.1" data-path="good-practices.html"><a href="good-practices.html#continuous-integration"><i class="fa fa-check"></i><b>8.1</b> Continuous integration</a></li>
-<li class="chapter" data-level="8.2" data-path="good-practices.html"><a href="good-practices.html#version-control"><i class="fa fa-check"></i><b>8.2</b> Version control</a></li>
-<li class="chapter" data-level="8.3" data-path="good-practices.html"><a href="good-practices.html#docker"><i class="fa fa-check"></i><b>8.3</b> Docker</a></li>
-<li class="chapter" data-level="8.4" data-path="good-practices.html"><a href="good-practices.html#code-style"><i class="fa fa-check"></i><b>8.4</b> Code style</a></li>
-<li class="chapter" data-level="8.5" data-path="good-practices.html"><a href="good-practices.html#debugging-c-from-r"><i class="fa fa-check"></i><b>8.5</b> Debugging C++ from R</a></li>
+<li class="chapter" data-level="8" data-path="miscellaneous.html"><a href="miscellaneous.html"><i class="fa fa-check"></i><b>8</b> Miscellaneous</a><ul>
+<li class="chapter" data-level="8.1" data-path="miscellaneous.html"><a href="miscellaneous.html#workflow-management"><i class="fa fa-check"></i><b>8.1</b> Workflow management</a></li>
+<li class="chapter" data-level="8.2" data-path="miscellaneous.html"><a href="miscellaneous.html#pry-back-the-covers-of-r"><i class="fa fa-check"></i><b>8.2</b> Pry back the covers of R</a></li>
+<li class="chapter" data-level="8.3" data-path="miscellaneous.html"><a href="miscellaneous.html#tidy-evaluation"><i class="fa fa-check"></i><b>8.3</b> Tidy evaluation</a></li>
+<li class="chapter" data-level="8.4" data-path="miscellaneous.html"><a href="miscellaneous.html#compile"><i class="fa fa-check"></i><b>8.4</b> Compile</a></li>
+<li class="chapter" data-level="8.5" data-path="miscellaneous.html"><a href="miscellaneous.html#others-2"><i class="fa fa-check"></i><b>8.5</b> Others</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="good-practices.html"><a href="good-practices.html"><i class="fa fa-check"></i><b>9</b> Good practices</a><ul>
+<li class="chapter" data-level="9.1" data-path="good-practices.html"><a href="good-practices.html#continuous-integration"><i class="fa fa-check"></i><b>9.1</b> Continuous integration</a></li>
+<li class="chapter" data-level="9.2" data-path="good-practices.html"><a href="good-practices.html#version-control"><i class="fa fa-check"></i><b>9.2</b> Version control</a></li>
+<li class="chapter" data-level="9.3" data-path="good-practices.html"><a href="good-practices.html#docker"><i class="fa fa-check"></i><b>9.3</b> Docker</a></li>
+<li class="chapter" data-level="9.4" data-path="good-practices.html"><a href="good-practices.html#code-style"><i class="fa fa-check"></i><b>9.4</b> Code style</a></li>
+<li class="chapter" data-level="9.5" data-path="good-practices.html"><a href="good-practices.html#debugging-c-from-r"><i class="fa fa-check"></i><b>9.5</b> Debugging C++ from R</a></li>
 </ul></li>
 </ul>
 
@@ -254,16 +259,16 @@ model &lt;-<span class="st"> &quot;</span>
 <span class="st">&quot;</span>
 
 n &lt;-<span class="st"> </span><span class="kw">nrow</span>(sleepstudy)
-x &lt;-<span class="st"> </span>sleepstudy$Days
-y &lt;-<span class="st"> </span>sleepstudy$Reaction
+x &lt;-<span class="st"> </span>sleepstudy<span class="op">$</span>Days
+y &lt;-<span class="st"> </span>sleepstudy<span class="op">$</span>Reaction
 
 fit &lt;-<span class="st"> </span><span class="kw">stan</span>(<span class="dt">model_code =</span> model, <span class="dt">data =</span> <span class="kw">list</span>(<span class="dt">n =</span> n, <span class="dt">x =</span> x, <span class="dt">y =</span> y), <span class="dt">warmup =</span> <span class="dv">100</span>, 
     <span class="dt">iter =</span> <span class="dv">1100</span>, <span class="dt">chains =</span> <span class="dv">1</span>)</code></pre></div>
 <pre><code>
 SAMPLING FOR MODEL &#39;920bbd45e873f3162b84171e9f3ae19f&#39; NOW (CHAIN 1).
 Chain 1: 
-Chain 1: Gradient evaluation took 4.2e-05 seconds
-Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.42 seconds.
+Chain 1: Gradient evaluation took 2.4e-05 seconds
+Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.24 seconds.
 Chain 1: Adjust your expectations accordingly!
 Chain 1: 
 Chain 1: 
@@ -288,77 +293,78 @@ Chain 1: Iteration:  980 / 1100 [ 89%]  (Sampling)
 Chain 1: Iteration: 1090 / 1100 [ 99%]  (Sampling)
 Chain 1: Iteration: 1100 / 1100 [100%]  (Sampling)
 Chain 1: 
-Chain 1:  Elapsed Time: 0.062291 seconds (Warm-up)
-Chain 1:                1.12834 seconds (Sampling)
-Chain 1:                1.19064 seconds (Total)
+Chain 1:  Elapsed Time: 0.081699 seconds (Warm-up)
+Chain 1:                1.00096 seconds (Sampling)
+Chain 1:                1.08266 seconds (Total)
 Chain 1: </code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(fit)</code></pre></div>
 <pre><code>$summary
              mean    se_mean       sd        2.5%         25%         50%
-beta     9.753653 0.07905973 1.211110    7.444559    8.948518    9.738063
-sigma   47.926267 0.08453780 2.571476   43.195357   46.152896   47.792296
-alpha  254.819107 0.49803213 6.709314  242.252414  249.928741  254.551087
-lp__  -788.972722 0.07228927 1.258553 -792.202760 -789.557066 -788.654252
+beta     9.840654 0.07471856 1.113790    7.592399    9.036907    9.858972
+sigma   47.675610 0.08819308 2.747244   42.952109   45.631794   47.513751
+alpha  254.211444 0.44641018 6.001163  243.071338  250.064779  254.199137
+lp__  -788.929978 0.06827231 1.166558 -791.723608 -789.514379 -788.697275
              75%      97.5%    n_eff      Rhat
-beta    10.60101   12.13343 234.6694 1.0023494
-sigma   49.62078   53.22361 925.2583 0.9993507
-alpha  259.52570  267.12218 181.4853 1.0031326
-lp__  -788.06104 -787.56368 303.1064 1.0053961
+beta    10.60795   11.92623 222.2029 1.0006839
+sigma   49.46105   53.73767 970.3438 0.9997644
+alpha  258.64555  265.14038 180.7185 1.0030875
+lp__  -788.04788 -787.56873 291.9602 1.0009599
 
 $c_summary
 , , chains = chain:1
 
          stats
 parameter        mean       sd        2.5%         25%         50%
-    beta     9.753653 1.211110    7.444559    8.948518    9.738063
-    sigma   47.926267 2.571476   43.195357   46.152896   47.792296
-    alpha  254.819107 6.709314  242.252414  249.928741  254.551087
-    lp__  -788.972722 1.258553 -792.202760 -789.557066 -788.654252
+    beta     9.840654 1.113790    7.592399    9.036907    9.858972
+    sigma   47.675610 2.747244   42.952109   45.631794   47.513751
+    alpha  254.211444 6.001163  243.071338  250.064779  254.199137
+    lp__  -788.929978 1.166558 -791.723608 -789.514379 -788.697275
          stats
 parameter        75%      97.5%
-    beta    10.60101   12.13343
-    sigma   49.62078   53.22361
-    alpha  259.52570  267.12218
-    lp__  -788.06104 -787.56368</code></pre>
+    beta    10.60795   11.92623
+    sigma   49.46105   53.73767
+    alpha  258.64555  265.14038
+    lp__  -788.04788 -787.56873</code></pre>
 <div id="rstanarm" class="section level3">
 <h3><span class="header-section-number">5.1.1</span> Rstanarm</h3>
 <p><code>rstanarm</code> is a package for applied Bayesian modelling that wraps around Stan for easier usage.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(rstanarm)
 
-fit.arm &lt;-<span class="st"> </span>rstanarm::<span class="kw">stan_glm</span>(Reaction ~<span class="st"> </span>Days, sleepstudy, <span class="dt">chains =</span> <span class="dv">1</span>, <span class="dt">iter =</span> <span class="dv">1100</span>, 
+fit.arm &lt;-<span class="st"> </span>rstanarm<span class="op">::</span><span class="kw">stan_glm</span>(Reaction <span class="op">~</span><span class="st"> </span>Days, sleepstudy, <span class="dt">chains =</span> <span class="dv">1</span>, <span class="dt">iter =</span> <span class="dv">1100</span>, 
     <span class="dt">warmup =</span> <span class="dv">100</span>, <span class="dt">family =</span> <span class="kw">gaussian</span>())</code></pre></div>
 <pre><code>
 SAMPLING FOR MODEL &#39;continuous&#39; NOW (CHAIN 1).
-
-Gradient evaluation took 0.00013 seconds
-1000 transitions using 10 leapfrog steps per transition would take 1.3 seconds.
-Adjust your expectations accordingly!
-
-
-WARNING: There aren&#39;t enough warmup iterations to fit the
-         three stages of adaptation as currently configured.
-         Reducing each adaptation stage to 15%/75%/10% of
-         the given number of warmup iterations:
-           init_buffer = 15
-           adapt_window = 75
-           term_buffer = 10
-
-Iteration:    1 / 1100 [  0%]  (Warmup)
-Iteration:  101 / 1100 [  9%]  (Sampling)
-Iteration:  210 / 1100 [ 19%]  (Sampling)
-Iteration:  320 / 1100 [ 29%]  (Sampling)
-Iteration:  430 / 1100 [ 39%]  (Sampling)
-Iteration:  540 / 1100 [ 49%]  (Sampling)
-Iteration:  650 / 1100 [ 59%]  (Sampling)
-Iteration:  760 / 1100 [ 69%]  (Sampling)
-Iteration:  870 / 1100 [ 79%]  (Sampling)
-Iteration:  980 / 1100 [ 89%]  (Sampling)
-Iteration: 1090 / 1100 [ 99%]  (Sampling)
-Iteration: 1100 / 1100 [100%]  (Sampling)
-
- Elapsed Time: 0.095637 seconds (Warm-up)
-               1.03618 seconds (Sampling)
-               1.13182 seconds (Total)</code></pre>
+Chain 1: 
+Chain 1: Gradient evaluation took 3.7e-05 seconds
+Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.37 seconds.
+Chain 1: Adjust your expectations accordingly!
+Chain 1: 
+Chain 1: 
+Chain 1: WARNING: There aren&#39;t enough warmup iterations to fit the
+Chain 1:          three stages of adaptation as currently configured.
+Chain 1:          Reducing each adaptation stage to 15%/75%/10% of
+Chain 1:          the given number of warmup iterations:
+Chain 1:            init_buffer = 15
+Chain 1:            adapt_window = 75
+Chain 1:            term_buffer = 10
+Chain 1: 
+Chain 1: Iteration:    1 / 1100 [  0%]  (Warmup)
+Chain 1: Iteration:  101 / 1100 [  9%]  (Sampling)
+Chain 1: Iteration:  210 / 1100 [ 19%]  (Sampling)
+Chain 1: Iteration:  320 / 1100 [ 29%]  (Sampling)
+Chain 1: Iteration:  430 / 1100 [ 39%]  (Sampling)
+Chain 1: Iteration:  540 / 1100 [ 49%]  (Sampling)
+Chain 1: Iteration:  650 / 1100 [ 59%]  (Sampling)
+Chain 1: Iteration:  760 / 1100 [ 69%]  (Sampling)
+Chain 1: Iteration:  870 / 1100 [ 79%]  (Sampling)
+Chain 1: Iteration:  980 / 1100 [ 89%]  (Sampling)
+Chain 1: Iteration: 1090 / 1100 [ 99%]  (Sampling)
+Chain 1: Iteration: 1100 / 1100 [100%]  (Sampling)
+Chain 1: 
+Chain 1:  Elapsed Time: 0.111648 seconds (Warm-up)
+Chain 1:                1.34499 seconds (Sampling)
+Chain 1:                1.45663 seconds (Total)
+Chain 1: </code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(fit.arm)</code></pre></div>
 <pre><code>
 Model Info:
@@ -374,19 +380,19 @@ Model Info:
 
 Estimates:
                 mean   sd     2.5%   25%    50%    75%    97.5%
-(Intercept)    251.5    6.2  239.5  247.6  251.6  255.5  263.8 
-Days            10.5    1.2    8.3    9.7   10.5   11.3   12.9 
-sigma           48.0    2.7   43.4   46.1   48.0   49.7   53.7 
-mean_PPD       298.8    4.8  289.3  295.6  298.9  302.1  308.1 
-log-posterior -961.0    1.2 -964.0 -961.6 -960.6 -960.1 -959.6 
+(Intercept)    251.4    6.5  239.2  247.2  251.2  255.8  264.1 
+Days            10.5    1.1    8.4    9.7   10.6   11.4   12.7 
+sigma           47.9    2.5   43.3   46.1   47.8   49.5   53.2 
+mean_PPD       298.9    5.4  287.8  295.4  298.8  302.8  309.5 
+log-posterior -961.0    1.2 -964.1 -961.5 -960.7 -960.1 -959.6 
 
 Diagnostics:
               mcse Rhat n_eff
-(Intercept)   0.3  1.0   430 
-Days          0.0  1.0  1240 
-sigma         0.1  1.0   609 
-mean_PPD      0.3  1.0   232 
-log-posterior 0.1  1.0   250 
+(Intercept)   0.4  1.0   250 
+Days          0.0  1.0  1089 
+sigma         0.1  1.0   601 
+mean_PPD      0.4  1.0   192 
+log-posterior 0.1  1.0   139 
 
 For each parameter, mcse is Monte Carlo standard error, n_eff is a crude measure of effective sample size, and Rhat is the potential scale reduction factor on split chains (at convergence Rhat=1).</code></pre>
 </div>
@@ -395,13 +401,13 @@ For each parameter, mcse is Monte Carlo standard error, n_eff is a crude measure
 <p>For non-linear multi-level models <code>brms</code> is also a great option.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(brms)
 
-fit.multilevel &lt;-<span class="st"> </span><span class="kw">brm</span>(Reaction ~<span class="st"> </span>Days +<span class="st"> </span>(Days |<span class="st"> </span>Subject), sleepstudy, <span class="dt">chains =</span> <span class="dv">1</span>, 
+fit.multilevel &lt;-<span class="st"> </span><span class="kw">brm</span>(Reaction <span class="op">~</span><span class="st"> </span>Days <span class="op">+</span><span class="st"> </span>(Days <span class="op">|</span><span class="st"> </span>Subject), sleepstudy, <span class="dt">chains =</span> <span class="dv">1</span>, 
     <span class="dt">iter =</span> <span class="dv">1000</span>)</code></pre></div>
 <pre><code>
-SAMPLING FOR MODEL &#39;gaussian brms-model&#39; NOW (CHAIN 1).
+SAMPLING FOR MODEL &#39;45335b867c1a5a0373bc06c1740c990e&#39; NOW (CHAIN 1).
 Chain 1: 
-Chain 1: Gradient evaluation took 7.3e-05 seconds
-Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.73 seconds.
+Chain 1: Gradient evaluation took 5.7e-05 seconds
+Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.57 seconds.
 Chain 1: Adjust your expectations accordingly!
 Chain 1: 
 Chain 1: 
@@ -418,9 +424,9 @@ Chain 1: Iteration: 800 / 1000 [ 80%]  (Sampling)
 Chain 1: Iteration: 900 / 1000 [ 90%]  (Sampling)
 Chain 1: Iteration: 1000 / 1000 [100%]  (Sampling)
 Chain 1: 
-Chain 1:  Elapsed Time: 2.25627 seconds (Warm-up)
-Chain 1:                0.534551 seconds (Sampling)
-Chain 1:                2.79082 seconds (Total)
+Chain 1:  Elapsed Time: 2.47964 seconds (Warm-up)
+Chain 1:                0.464368 seconds (Sampling)
+Chain 1:                2.94401 seconds (Total)
 Chain 1: </code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(fit.multilevel)</code></pre></div>
 <pre><code> Family: gaussian 
@@ -433,18 +439,18 @@ Samples: 1 chains, each with iter = 1000; warmup = 500; thin = 1;
 Group-Level Effects: 
 ~Subject (Number of levels: 18) 
                     Estimate Est.Error l-95% CI u-95% CI Eff.Sample Rhat
-sd(Intercept)          27.07      7.26    15.92    44.84        118 1.01
-sd(Days)                6.70      1.71     4.23    10.73        230 1.00
-cor(Intercept,Days)     0.07      0.31    -0.50     0.70         53 1.05
+sd(Intercept)          26.99      6.72    16.12    41.48        209 1.01
+sd(Days)                6.66      1.53     4.14     9.95        199 1.00
+cor(Intercept,Days)     0.05      0.29    -0.52     0.59        135 1.00
 
 Population-Level Effects: 
           Estimate Est.Error l-95% CI u-95% CI Eff.Sample Rhat
-Intercept   251.09      7.16   236.74   266.27        249 1.00
-Days         10.28      1.71     7.20    13.82        178 1.00
+Intercept   252.04      7.65   237.87   267.49        310 1.01
+Days         10.49      1.64     7.45    13.54        130 1.00
 
 Family Specific Parameters: 
       Estimate Est.Error l-95% CI u-95% CI Eff.Sample Rhat
-sigma    25.96      1.51    23.26    29.21        566 1.00
+sigma    25.79      1.51    22.86    29.14        575 1.00
 
 Samples were drawn using sampling(NUTS). For each parameter, Eff.Sample 
 is a crude measure of effective sample size, and Rhat is the potential 
@@ -456,38 +462,38 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(bayesplot)
 <span class="kw">library</span>(cowplot)
 
-p1 &lt;-<span class="st"> </span><span class="kw">ppc_intervals</span>(<span class="dt">y =</span> sleepstudy$Reaction, <span class="dt">yrep =</span> <span class="kw">posterior_predict</span>(fit.arm)) +<span class="st"> </span>
+p1 &lt;-<span class="st"> </span><span class="kw">ppc_intervals</span>(<span class="dt">y =</span> sleepstudy<span class="op">$</span>Reaction, <span class="dt">yrep =</span> <span class="kw">posterior_predict</span>(fit.arm)) <span class="op">+</span><span class="st"> </span>
 <span class="st">    </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Linear model&quot;</span>)
-p2 &lt;-<span class="st"> </span><span class="kw">ppc_intervals</span>(<span class="dt">y =</span> sleepstudy$Reaction, <span class="dt">yrep =</span> <span class="kw">posterior_predict</span>(fit.multilevel)) +<span class="st"> </span>
+p2 &lt;-<span class="st"> </span><span class="kw">ppc_intervals</span>(<span class="dt">y =</span> sleepstudy<span class="op">$</span>Reaction, <span class="dt">yrep =</span> <span class="kw">posterior_predict</span>(fit.multilevel)) <span class="op">+</span><span class="st"> </span>
 <span class="st">    </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Linear mixed model&quot;</span>)
 
-cowplot::<span class="kw">plot_grid</span>(p1, p2, <span class="dt">ncol =</span> <span class="dv">2</span>, <span class="dt">align =</span> <span class="st">&quot;h&quot;</span>)</code></pre></div>
+cowplot<span class="op">::</span><span class="kw">plot_grid</span>(p1, p2, <span class="dt">ncol =</span> <span class="dv">2</span>, <span class="dt">align =</span> <span class="st">&quot;h&quot;</span>)</code></pre></div>
 <p><img src="essential-R_files/figure-html/unnamed-chunk-39-1.png" width="960" /></p>
 </div>
 </div>
 <div id="greta" class="section level2">
 <h2><span class="header-section-number">5.2</span> greta</h2>
 <p>Model definitions in Stan are arguable difficult in the beginning. As an alternative with <code>greta</code> is not only easier to compose models, but also often faster owing to the fact that it’s developed against tensorflow. Installation can be a bit tedious. For <code>greta</code> version <code>v.0.3</code> I would install tensorflow from the command line:</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">conda</span> create -y -n r-tensorflow python=3.6
-<span class="kw">conda</span> install tensorflow==1.10.0
-<span class="kw">pip</span> install tensorflow-probability==0.30.0</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="ex">conda</span> create -y -n r-tensorflow python=3.6
+<span class="ex">conda</span> install tensorflow==1.10.0
+<span class="ex">pip</span> install tensorflow-probability==0.30.0</code></pre></div>
 <p>The same model we used for stan above, looks like this with greta:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(greta)
 <span class="kw">library</span>(lme4)
 
 n &lt;-<span class="st"> </span><span class="kw">nrow</span>(sleepstudy)
-x &lt;-<span class="st"> </span>sleepstudy$Days
-y &lt;-<span class="st"> </span>sleepstudy$Reaction
+x &lt;-<span class="st"> </span>sleepstudy<span class="op">$</span>Days
+y &lt;-<span class="st"> </span>sleepstudy<span class="op">$</span>Reaction
 
 alpha &lt;-<span class="st"> </span><span class="kw">variable</span>()
-beta &lt;-<span class="st"> </span>greta::<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">5</span>)
-sigma &lt;-<span class="st"> </span>greta::<span class="kw">cauchy</span>(<span class="dv">0</span>, <span class="dv">5</span>, <span class="dt">truncation =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="ot">Inf</span>))
+beta &lt;-<span class="st"> </span>greta<span class="op">::</span><span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">5</span>)
+sigma &lt;-<span class="st"> </span>greta<span class="op">::</span><span class="kw">cauchy</span>(<span class="dv">0</span>, <span class="dv">5</span>, <span class="dt">truncation =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="ot">Inf</span>))
 
-y &lt;-<span class="st"> </span>greta::<span class="kw">as_data</span>(y)
-greta::<span class="kw">distribution</span>(y) &lt;-<span class="st"> </span>greta::<span class="kw">normal</span>(alpha +<span class="st"> </span>x *<span class="st"> </span>beta, sigma)
+y &lt;-<span class="st"> </span>greta<span class="op">::</span><span class="kw">as_data</span>(y)
+greta<span class="op">::</span><span class="kw">distribution</span>(y) &lt;-<span class="st"> </span>greta<span class="op">::</span><span class="kw">normal</span>(alpha <span class="op">+</span><span class="st"> </span>x <span class="op">*</span><span class="st"> </span>beta, sigma)
 
-mod &lt;-<span class="st"> </span>greta::<span class="kw">model</span>(beta)
-samples &lt;-<span class="st"> </span>greta::<span class="kw">mcmc</span>(mod, <span class="dt">n_samples =</span> <span class="dv">1000</span>, <span class="dt">warmup =</span> <span class="dv">100</span>, <span class="dt">chains =</span> <span class="dv">1</span>)</code></pre></div>
+mod &lt;-<span class="st"> </span>greta<span class="op">::</span><span class="kw">model</span>(beta)
+samples &lt;-<span class="st"> </span>greta<span class="op">::</span><span class="kw">mcmc</span>(mod, <span class="dt">n_samples =</span> <span class="dv">1000</span>, <span class="dt">warmup =</span> <span class="dv">100</span>, <span class="dt">chains =</span> <span class="dv">1</span>)</code></pre></div>
 </div>
 <div id="mcmc" class="section level2">
 <h2><span class="header-section-number">5.3</span> MCMC</h2>
@@ -495,71 +501,71 @@ samples &lt;-<span class="st"> </span>greta::<span class="kw">mcmc</span>(mod, <
 <p><code>coda</code> is a package for analysis and diagnostics of MCMC chains. Mostly it takes arguments of class mcmc.list, so put your results into an object of it to be able to use <code>coda</code>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(coda)
 
-coda::<span class="kw">autocorr</span>(<span class="kw">As.mcmc.list</span>(fit))</code></pre></div>
+coda<span class="op">::</span><span class="kw">autocorr</span>(<span class="kw">As.mcmc.list</span>(fit))</code></pre></div>
 <pre><code>[[1]]
 , , beta
 
-             beta        sigma       alpha       lp__
-Lag 0  1.00000000 -0.031849854 -0.85202793 0.06254475
-Lag 1  0.59538199 -0.034834487 -0.65134061 0.08422892
-Lag 5  0.13163300 -0.015713658 -0.12721808 0.06573727
-Lag 10 0.01069462  0.001600766  0.04118102 0.09865070
-Lag 50 0.04952855  0.002825211 -0.07119834 0.03235895
+              beta       sigma        alpha        lp__
+Lag 0   1.00000000 -0.01180097 -0.825169443  0.07520622
+Lag 1   0.58511247 -0.03381177 -0.606263747  0.08790547
+Lag 5   0.15686554 -0.01967178 -0.222532941 -0.03192979
+Lag 10 -0.02611530 -0.01714680  0.008010295 -0.03753211
+Lag 50 -0.05666232  0.04836087  0.047507596 -0.08005626
 
 , , sigma
 
-              beta        sigma       alpha         lp__
-Lag 0  -0.03184985  1.000000000  0.01008657 -0.157400511
-Lag 1   0.01364183  0.041349268 -0.03207444 -0.066504836
-Lag 5   0.03910786 -0.012029128 -0.02234985  0.023749402
-Lag 10  0.04683793  0.018791087 -0.06031728 -0.004689183
-Lag 50 -0.03243602  0.001325457  0.01088427 -0.023314429
+               beta        sigma        alpha         lp__
+Lag 0  -0.011800968  1.000000000 -0.003919136 -0.127155938
+Lag 1   0.042494985  0.016266015 -0.004410195 -0.022097665
+Lag 5   0.003061267 -0.023803046 -0.003151686  0.022189519
+Lag 10 -0.004971631 -0.003356223  0.023018233 -0.018567960
+Lag 50 -0.022920143  0.024274812  0.010657451  0.003749894
 
 , , alpha
 
-               beta        sigma       alpha        lp__
-Lag 0  -0.852027927  0.010086572  1.00000000 -0.02883640
-Lag 1  -0.642488321  0.027506793  0.76495994 -0.04388579
-Lag 5  -0.167579035 -0.009184485  0.16927165 -0.06043930
-Lag 10 -0.002710714  0.008821380 -0.05701376 -0.11477832
-Lag 50 -0.039507866 -0.001012817  0.07113032 -0.02643560
+              beta        sigma       alpha        lp__
+Lag 0  -0.82516944 -0.003919136  1.00000000 -0.02285560
+Lag 1  -0.58003985  0.027001307  0.70122892 -0.01881587
+Lag 5  -0.15877245  0.060579506  0.22118347  0.03878609
+Lag 10  0.02914635  0.032149682 -0.01320499  0.02315609
+Lag 50  0.03066063 -0.043999502 -0.03289805  0.06630703
 
 , , lp__
 
-             beta        sigma        alpha       lp__
-Lag 0  0.06254475 -0.157400511 -0.028836404 1.00000000
-Lag 1  0.01495769 -0.046105465 -0.002354991 0.42633030
-Lag 5  0.01029392  0.006315315 -0.030343917 0.04427737
-Lag 10 0.01224376 -0.018912108  0.025469009 0.06949022
-Lag 50 0.05313161  0.014261325 -0.049874591 0.06994822</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">coda::<span class="kw">traceplot</span>(<span class="kw">As.mcmc.list</span>(fit))</code></pre></div>
+              beta        sigma       alpha          lp__
+Lag 0   0.07520622 -0.127155938 -0.02285560  1.000000e+00
+Lag 1   0.04726961 -0.066874681 -0.02555784  5.233771e-01
+Lag 5  -0.04299150  0.057112864 -0.00393490  4.729836e-02
+Lag 10 -0.07908837  0.007851676  0.07747636  9.069789e-05
+Lag 50  0.08912758 -0.028691637 -0.08548428 -3.036107e-02</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">coda<span class="op">::</span><span class="kw">traceplot</span>(<span class="kw">As.mcmc.list</span>(fit))</code></pre></div>
 <p><img src="essential-R_files/figure-html/unnamed-chunk-42-1.png" width="672" /><img src="essential-R_files/figure-html/unnamed-chunk-42-2.png" width="672" /><img src="essential-R_files/figure-html/unnamed-chunk-42-3.png" width="672" /><img src="essential-R_files/figure-html/unnamed-chunk-42-4.png" width="672" /></p>
 <p><code>MCMCpack</code> offer an alternative to rstanarm for applied Bayesian modelling. It also comes with a set of useful distributions used frequently in Bayesian modelling, such as the Dirichlet, inverse gamma, etc.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(MCMCpack)
-invg &lt;-<span class="st"> </span>MCMCpack::<span class="kw">rinvgamma</span>(<span class="dv">1000</span>, <span class="dv">5</span>, <span class="dv">1</span>)
+invg &lt;-<span class="st"> </span>MCMCpack<span class="op">::</span><span class="kw">rinvgamma</span>(<span class="dv">1000</span>, <span class="dv">5</span>, <span class="dv">1</span>)
 <span class="kw">hist</span>(invg, <span class="dt">breaks =</span> <span class="dv">50</span>, <span class="dt">xlab =</span> <span class="st">&quot;X&quot;</span>, <span class="dt">main =</span> <span class="st">&quot;&quot;</span>, <span class="dt">col =</span> <span class="st">&quot;darkgrey&quot;</span>, <span class="dt">family =</span> <span class="st">&quot;serif&quot;</span>)</code></pre></div>
 <p><img src="essential-R_files/figure-html/unnamed-chunk-43-1.png" width="672" /></p>
 <p>For plotting <code>mcmc.list</code> objects (from <code>coda</code>) <code>MCMCvis</code> is great:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">MCMCvis::<span class="kw">MCMCplot</span>(<span class="kw">As.mcmc.list</span>(fit))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">MCMCvis<span class="op">::</span><span class="kw">MCMCplot</span>(<span class="kw">As.mcmc.list</span>(fit))</code></pre></div>
 <p><img src="essential-R_files/figure-html/unnamed-chunk-44-1.png" width="672" /></p>
 </div>
 <div id="mlr-and-openml" class="section level2">
 <h2><span class="header-section-number">5.4</span> mlR and openML</h2>
 <p>CRAN offers dozens of packages related to machine and statistical learning, many of which doing the same. <code>mlR</code> wraps many of these into one big library. <code>mlR</code> integrates with <code>openML</code>, an open machine learning platform where people share code, data and algorithms. Here we show an example where we use a Gaussian process to predict the Kyphosis label from the <code>gam</code> package.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(mlr)
-task &lt;-<span class="st"> </span>mlr::<span class="kw">makeClassifTask</span>(<span class="dt">data =</span> kyphosis, <span class="dt">target =</span> <span class="st">&quot;Kyphosis&quot;</span>)
-lrn &lt;-<span class="st"> </span>mlr::<span class="kw">makeLearner</span>(<span class="st">&quot;classif.gausspr&quot;</span>)
+task &lt;-<span class="st"> </span>mlr<span class="op">::</span><span class="kw">makeClassifTask</span>(<span class="dt">data =</span> kyphosis, <span class="dt">target =</span> <span class="st">&quot;Kyphosis&quot;</span>)
+lrn &lt;-<span class="st"> </span>mlr<span class="op">::</span><span class="kw">makeLearner</span>(<span class="st">&quot;classif.gausspr&quot;</span>)
 
 n &lt;-<span class="st"> </span><span class="kw">nrow</span>(kyphosis)
-train.set &lt;-<span class="st"> </span><span class="kw">sample</span>(n, <span class="dt">size =</span> <span class="dv">2</span>/<span class="dv">3</span> *<span class="st"> </span>n)
-test.set &lt;-<span class="st"> </span><span class="kw">setdiff</span>(<span class="dv">1</span>:n, train.set)
+train.set &lt;-<span class="st"> </span><span class="kw">sample</span>(n, <span class="dt">size =</span> <span class="dv">2</span><span class="op">/</span><span class="dv">3</span> <span class="op">*</span><span class="st"> </span>n)
+test.set &lt;-<span class="st"> </span><span class="kw">setdiff</span>(<span class="dv">1</span><span class="op">:</span>n, train.set)
 
-model &lt;-<span class="st"> </span>mlr::<span class="kw">train</span>(lrn, task, <span class="dt">subset =</span> train.set)</code></pre></div>
+model &lt;-<span class="st"> </span>mlr<span class="op">::</span><span class="kw">train</span>(lrn, task, <span class="dt">subset =</span> train.set)</code></pre></div>
 <pre><code>Using automatic sigma estimation (sigest) for RBF or laplace kernel </code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pred &lt;-<span class="st"> </span>stats::<span class="kw">predict</span>(model, <span class="dt">task =</span> task, <span class="dt">subset =</span> test.set)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pred &lt;-<span class="st"> </span>stats<span class="op">::</span><span class="kw">predict</span>(model, <span class="dt">task =</span> task, <span class="dt">subset =</span> test.set)
 <span class="kw">performance</span>(pred, <span class="dt">measures =</span> <span class="kw">list</span>(mmce, acc))</code></pre></div>
 <pre><code>     mmce       acc 
-0.1481481 0.8518519 </code></pre>
+0.3333333 0.6666667 </code></pre>
 </div>
 <div id="tensorflow" class="section level2">
 <h2><span class="header-section-number">5.5</span> Tensorflow</h2>
@@ -567,25 +573,25 @@ model &lt;-<span class="st"> </span>mlr::<span class="kw">train</span>(lrn, task
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tensorflow)
 
 n &lt;-<span class="st"> </span><span class="kw">nrow</span>(sleepstudy)
-x &lt;-<span class="st"> </span>sleepstudy$Days
-y &lt;-<span class="st"> </span>sleepstudy$Reaction
+x &lt;-<span class="st"> </span>sleepstudy<span class="op">$</span>Days
+y &lt;-<span class="st"> </span>sleepstudy<span class="op">$</span>Reaction
 
 <span class="co"># define model</span>
-beta &lt;-<span class="st"> </span>tf$<span class="kw">Variable</span>(tf$<span class="kw">random_normal</span>(<span class="kw">shape</span>(1L), <span class="dv">0</span>, <span class="dv">10</span>))
-alpha &lt;-<span class="st"> </span>tf$<span class="kw">Variable</span>(tf$<span class="kw">zeros</span>(<span class="kw">shape</span>(1L)))
-y.hat &lt;-<span class="st"> </span>alpha +<span class="st"> </span>beta *<span class="st"> </span>x
+beta &lt;-<span class="st"> </span>tf<span class="op">$</span><span class="kw">Variable</span>(tf<span class="op">$</span><span class="kw">random_normal</span>(<span class="kw">shape</span>(1L), <span class="dv">0</span>, <span class="dv">10</span>))
+alpha &lt;-<span class="st"> </span>tf<span class="op">$</span><span class="kw">Variable</span>(tf<span class="op">$</span><span class="kw">zeros</span>(<span class="kw">shape</span>(1L)))
+y.hat &lt;-<span class="st"> </span>alpha <span class="op">+</span><span class="st"> </span>beta <span class="op">*</span><span class="st"> </span>x
 
 <span class="co"># Minimize the mean squared errors.</span>
-loss &lt;-<span class="st"> </span>tf$<span class="kw">reduce_mean</span>((y -<span class="st"> </span>y.hat)^<span class="dv">2</span>)
-optimizer &lt;-<span class="st"> </span>tf$train$<span class="kw">GradientDescentOptimizer</span>(<span class="fl">0.5</span>)
-train &lt;-<span class="st"> </span>optimizer$<span class="kw">minimize</span>(loss)
+loss &lt;-<span class="st"> </span>tf<span class="op">$</span><span class="kw">reduce_mean</span>((y <span class="op">-</span><span class="st"> </span>y.hat)<span class="op">^</span><span class="dv">2</span>)
+optimizer &lt;-<span class="st"> </span>tf<span class="op">$</span>train<span class="op">$</span><span class="kw">GradientDescentOptimizer</span>(<span class="fl">0.5</span>)
+train &lt;-<span class="st"> </span>optimizer<span class="op">$</span><span class="kw">minimize</span>(loss)
 
 <span class="co"># Launch the graph and initialize the variables.</span>
-sess &lt;-<span class="st"> </span>tf$<span class="kw">Session</span>()
-sess$<span class="kw">run</span>(tf$<span class="kw">global_variables_initializer</span>())
+sess &lt;-<span class="st"> </span>tf<span class="op">$</span><span class="kw">Session</span>()
+sess<span class="op">$</span><span class="kw">run</span>(tf<span class="op">$</span><span class="kw">global_variables_initializer</span>())
 
-for (step in <span class="dv">1</span>:<span class="dv">100</span>) {
-    sess$<span class="kw">run</span>(train)
+<span class="cf">for</span> (step <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">100</span>) {
+    sess<span class="op">$</span><span class="kw">run</span>(train)
 }</code></pre></div>
 </div>
 <div id="keras" class="section level2">
@@ -593,9 +599,9 @@ for (step in <span class="dv">1</span>:<span class="dv">100</span>) {
 <p><code>Keras</code> is an interface to popular numerical libraries such as tensorflow and theano for which model/network definitions are independent of the library on the backend. Our tensorflow model from above would look the following in keras:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(keras)
 
-model &lt;-<span class="st"> </span><span class="kw">keras_model_sequential</span>() %&gt;%<span class="st"> </span><span class="kw">layer_dense</span>(<span class="dt">units =</span> <span class="dv">1</span>, <span class="dt">activation =</span> <span class="st">&quot;linear&quot;</span>, 
+model &lt;-<span class="st"> </span><span class="kw">keras_model_sequential</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">layer_dense</span>(<span class="dt">units =</span> <span class="dv">1</span>, <span class="dt">activation =</span> <span class="st">&quot;linear&quot;</span>, 
     <span class="dt">input_shape =</span> <span class="dv">1</span>)
-model %&gt;%<span class="st"> </span><span class="kw">compile</span>(<span class="dt">loss =</span> <span class="st">&quot;mse&quot;</span>, <span class="dt">optimizer =</span> <span class="kw">optimizer_sgd</span>(<span class="fl">0.5</span>), <span class="dt">metrics =</span> <span class="kw">list</span>(<span class="st">&quot;mean_absolute_error&quot;</span>))</code></pre></div>
+model <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">compile</span>(<span class="dt">loss =</span> <span class="st">&quot;mse&quot;</span>, <span class="dt">optimizer =</span> <span class="kw">optimizer_sgd</span>(<span class="fl">0.5</span>), <span class="dt">metrics =</span> <span class="kw">list</span>(<span class="st">&quot;mean_absolute_error&quot;</span>))</code></pre></div>
 </div>
 <div id="statistical-learning" class="section level2">
 <h2><span class="header-section-number">5.7</span> Statistical learning</h2>
@@ -616,8 +622,8 @@ model %&gt;%<span class="st"> </span><span class="kw">compile</span>(<span class
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(sparklyr)
 
 sc &lt;-<span class="st"> </span><span class="kw">spark_connect</span>(<span class="dt">master =</span> <span class="st">&quot;local&quot;</span>)
-kmeans_model &lt;-<span class="st"> </span><span class="kw">copy_to</span>(sc, iris, <span class="st">&quot;iris&quot;</span>, <span class="dt">overwrite =</span> <span class="ot">TRUE</span>) %&gt;%<span class="st"> </span><span class="kw">select</span>(Petal_Width, 
-    Petal_Length) %&gt;%<span class="st"> </span><span class="kw">ml_kmeans</span>(<span class="dt">centers =</span> <span class="dv">3</span>)</code></pre></div>
+kmeans_model &lt;-<span class="st"> </span><span class="kw">copy_to</span>(sc, iris, <span class="st">&quot;iris&quot;</span>, <span class="dt">overwrite =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(Petal_Width, 
+    Petal_Length) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ml_kmeans</span>(<span class="dt">centers =</span> <span class="dv">3</span>)</code></pre></div>
 </div>
 <div id="others" class="section level2">
 <h2><span class="header-section-number">5.9</span> Others</h2>
@@ -627,8 +633,8 @@ kmeans_model &lt;-<span class="st"> </span><span class="kw">copy_to</span>(sc, i
 <p><code>modelr</code> defines multiple helper functions related to statistical modelling:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(modelr)
 
-sleepstudy %&gt;%<span class="st"> </span>modelr::<span class="kw">fit_with</span>(lm, modelr::<span class="kw">formulas</span>(~Reaction, <span class="dt">no_intercept =</span> ~<span class="dv">0</span> +<span class="st"> </span>
-<span class="st">    </span>Days, <span class="dt">intercept =</span> ~<span class="dv">1</span> +<span class="st"> </span>Days))</code></pre></div>
+sleepstudy <span class="op">%&gt;%</span><span class="st"> </span>modelr<span class="op">::</span><span class="kw">fit_with</span>(lm, modelr<span class="op">::</span><span class="kw">formulas</span>(<span class="op">~</span>Reaction, <span class="dt">no_intercept =</span> <span class="op">~</span><span class="dv">0</span> <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span>Days, <span class="dt">intercept =</span> <span class="op">~</span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>Days))</code></pre></div>
 <pre><code>$no_intercept
 
 Call:
@@ -654,18 +660,18 @@ Coefficients:
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(kernlab)
 
 x &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">rnorm</span>(<span class="dv">25</span>), <span class="dv">5</span>)
-rbf &lt;-<span class="st"> </span>kernlab::<span class="kw">rbfdot</span>()
-(K &lt;-<span class="st"> </span>kernlab::<span class="kw">kernelMatrix</span>(rbf, x))</code></pre></div>
+rbf &lt;-<span class="st"> </span>kernlab<span class="op">::</span><span class="kw">rbfdot</span>()
+(K &lt;-<span class="st"> </span>kernlab<span class="op">::</span><span class="kw">kernelMatrix</span>(rbf, x))</code></pre></div>
 <pre><code>An object of class &quot;kernelMatrix&quot;
              [,1]         [,2]         [,3]         [,4]         [,5]
-[1,] 1.000000e+00 2.285038e-04 3.461725e-02 5.583422e-02 2.951412e-05
-[2,] 2.285038e-04 1.000000e+00 2.858761e-05 3.889770e-06 4.973854e-05
-[3,] 3.461725e-02 2.858761e-05 1.000000e+00 7.154156e-01 2.191637e-03
-[4,] 5.583422e-02 3.889770e-06 7.154156e-01 1.000000e+00 2.013994e-04
-[5,] 2.951412e-05 4.973854e-05 2.191637e-03 2.013994e-04 1.000000e+00</code></pre>
+[1,] 1.000000e+00 2.481308e-03 1.795408e-03 3.218746e-04 2.144079e-09
+[2,] 2.481308e-03 1.000000e+00 4.400264e-10 7.710158e-10 4.737936e-12
+[3,] 1.795408e-03 4.400264e-10 1.000000e+00 1.675348e-03 6.622170e-08
+[4,] 3.218746e-04 7.710158e-10 1.675348e-03 1.000000e+00 1.212343e-05
+[5,] 2.144079e-09 4.737936e-12 6.622170e-08 1.212343e-05 1.000000e+00</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">sort</span>(<span class="kw">rnorm</span>(<span class="dv">100</span>))
-y &lt;-<span class="st"> </span><span class="dv">3</span> +<span class="st"> </span><span class="fl">0.5</span> *<span class="st"> </span>x^<span class="dv">2</span> +<span class="st"> </span><span class="dv">1</span> *<span class="st"> </span>x +<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">100</span>, <span class="dv">0</span>, <span class="fl">0.05</span>)
-gpr &lt;-<span class="st"> </span>kernlab::<span class="kw">gausspr</span>(x, y)</code></pre></div>
+y &lt;-<span class="st"> </span><span class="dv">3</span> <span class="op">+</span><span class="st"> </span><span class="fl">0.5</span> <span class="op">*</span><span class="st"> </span>x<span class="op">^</span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">*</span><span class="st"> </span>x <span class="op">+</span><span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">100</span>, <span class="dv">0</span>, <span class="fl">0.05</span>)
+gpr &lt;-<span class="st"> </span>kernlab<span class="op">::</span><span class="kw">gausspr</span>(x, y)</code></pre></div>
 <pre><code>Using automatic sigma estimation (sigest) for RBF or laplace kernel </code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(x, y, <span class="dt">family =</span> <span class="st">&quot;serif&quot;</span>)
 <span class="kw">lines</span>(x, <span class="kw">predict</span>(gpr, x), <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>)</code></pre></div>
@@ -680,7 +686,7 @@ gpr &lt;-<span class="st"> </span>kernlab::<span class="kw">gausspr</span>(x, y)
         </div>
       </div>
 <a href="working-with-data.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="plotting-reporting-and-visualizing.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="optimization.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -700,9 +706,10 @@ gitbook.start({
 "google": false,
 "linkedin": true,
 "weibo": false,
-"instapper": false,
+"instapaper": false,
 "vk": false,
-"all": false
+"all": false,
+"instapper": false
 },
 "fontsettings": {
 "theme": "white",
@@ -710,6 +717,10 @@ gitbook.start({
 "size": 2
 },
 "edit": null,
+"history": {
+"link": null,
+"text": null
+},
 "download": null,
 "toc": {
 "collapse": "subsection"
@@ -728,7 +739,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "";
-    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:" && /^https?:/.test(src))
       src = src.replace(/^https?:/, '');
     script.src = src;

@@ -15,9 +15,9 @@ y <- 1 + 2 * x + rnorm(100)
 beta <- CVXR::Variable(1)
 
 obj.ols      <- CVXR::sum_squares(y - x %*% beta)
-result.ols   <- CVXR::solve(CVXR::Problem(CVXR::Minimize(obj.ols)))
+result.ols   <- solve(CVXR::Problem(CVXR::Minimize(obj.ols)))
 obj.huber    <- CVXR::sum_entries(CVXR::huber(y - x %*% beta, 1))
-result.huber <- CVXR::solve(CVXR::Problem(CVXR::Minimize(obj.huber)))
+result.huber <- solve(CVXR::Problem(CVXR::Minimize(obj.huber)))
 
 beta.hat.ols   <- result.ols$getValue(beta)
 beta.hat.huber <- result.huber$getValue(beta)

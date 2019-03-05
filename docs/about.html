@@ -5,11 +5,11 @@
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>8 Miscellaneous | Essential R</title>
-  <meta name="description" content="8 Miscellaneous | Essential R">
+  <title>Essential R</title>
+  <meta name="description" content="Essential R">
   <meta name="generator" content="bookdown  and GitBook 2.6.7">
 
-  <meta property="og:title" content="8 Miscellaneous | Essential R" />
+  <meta property="og:title" content="Essential R" />
   <meta property="og:type" content="book" />
   
   
@@ -17,7 +17,7 @@
   <meta name="github-repo" content="dirmeier/essential-R" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="8 Miscellaneous | Essential R" />
+  <meta name="twitter:title" content="Essential R" />
   
   
   
@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="plotting-reporting-and-visualizing.html">
-<link rel="next" href="good-practices.html">
+
+<link rel="next" href="r-package-development.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -228,89 +228,69 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="miscellaneous" class="section level1">
-<h1><span class="header-section-number">8</span> Miscellaneous</h1>
-<p>The following chapter covers miscellaneous, useful tools and libraries for working with R some of which belong to my favourites.</p>
-<div id="workflow-management" class="section level2">
-<h2><span class="header-section-number">8.1</span> Workflow management</h2>
-<p>I recently came across <a href="https://ropensci.github.io/drake/index.html"><code>drake</code></a> as a workflow manager. It allows you to run a project and easily update output files.</p>
-<div align="center">
-<p><img src="https://rawgit.com/dirmeier/essential-R/master/fig/drake.jpg" alt="oh no" width="500px"></p>
+<div id="header">
+<h1 class="title">Essential R</h1>
+<p class="author"><em>Simon Dirmeier</em></p>
+<p class="date"><em>2019-03-05</em></p>
 </div>
+<div id="about" class="section level1 unnumbered">
+<h1>About</h1>
+<div class="quote" style="text-align: center; margin-top: 5%">
+<p><i>The lyf so short, the craft so long to lerne.</i><br></p>
 </div>
-<div id="pry-back-the-covers-of-r" class="section level2">
-<h2><span class="header-section-number">8.2</span> Pry back the covers of R</h2>
-<p>In some cases it is interesting to have a look at the implementation of specific functions, get their sizes in byte or get the current memory consumption. It is especially useful to keep track of the addresses your objects point to. When I was new to R I found it confusing when a reference is dropped and when a new copy of an object is created.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(pryr)
-
-pryr<span class="op">::</span><span class="kw">inspect</span>(<span class="kw">list</span>())</code></pre></div>
-<pre><code>&lt;VECSXP 0xfcb4cc8&gt;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pryr<span class="op">::</span><span class="kw">inspect</span>(<span class="kw">vector</span>())</code></pre></div>
-<pre><code>&lt;LGLSXP 0xe3f5848&gt;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pryr<span class="op">::</span><span class="kw">object_size</span>(<span class="kw">numeric</span>())</code></pre></div>
-<pre><code>48 B</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pryr<span class="op">::</span><span class="kw">object_size</span>(<span class="kw">numeric</span>(<span class="dv">1</span>))</code></pre></div>
-<pre><code>56 B</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span>stats<span class="op">::</span><span class="kw">rnorm</span>(<span class="dv">10</span>)
-y &lt;-<span class="st"> </span>x
-pryr<span class="op">::</span><span class="kw">address</span>(x)</code></pre></div>
-<pre><code>[1] &quot;0x3090b298&quot;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pryr<span class="op">::</span><span class="kw">address</span>(y)</code></pre></div>
-<pre><code>[1] &quot;0x3090b298&quot;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">y[<span class="dv">1</span>] &lt;-<span class="st"> </span><span class="dv">1</span>
-pryr<span class="op">::</span><span class="kw">address</span>(y)</code></pre></div>
-<pre><code>[1] &quot;0x3090c3c8&quot;</code></pre>
+<div class="quote" style="text-align: right; margin-bottom: 5% ">
+<p><span style="text-align: right;">– Geoffrey Chaucer</span></p>
 </div>
-<div id="tidy-evaluation" class="section level2">
-<h2><span class="header-section-number">8.3</span> Tidy evaluation</h2>
-<p>TODO rlang</p>
-</div>
-<div id="compile" class="section level2">
-<h2><span class="header-section-number">8.4</span> Compile</h2>
-<p>Base <code>R</code> can be frustratingly slow at times, especially when you cannot vectorize your code or don’t want to extend it ro C++ or Fortran. Using <code>compiler</code> you can however improve your code a little:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(compiler)
-
-jit &lt;-<span class="st"> </span><span class="kw">enableJIT</span>(<span class="dv">0</span>)
-
-slow.mean &lt;-<span class="st"> </span><span class="cf">function</span>(x) {
-    sum &lt;-<span class="st"> </span><span class="dv">0</span>
-    n &lt;-<span class="st"> </span><span class="kw">length</span>(x)
-    <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>n) sum &lt;-<span class="st"> </span>sum <span class="op">+</span><span class="st"> </span>x[i]
-    sum<span class="op">/</span>n
-}
-
-fast.mean &lt;-<span class="st"> </span>compiler<span class="op">::</span><span class="kw">cmpfun</span>(slow.mean)
-
-array &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">1000</span>)
-microbenchmark<span class="op">::</span><span class="kw">microbenchmark</span>(<span class="kw">slow.mean</span>(array), <span class="kw">fast.mean</span>(array), <span class="kw">mean</span>(array))</code></pre></div>
-<pre><code>Unit: microseconds
-             expr     min       lq      mean   median      uq     max
- slow.mean(array) 241.630 245.1345 263.14913 252.3515 260.940 395.158
- fast.mean(array)  50.743  51.1650  55.60300  51.8135  53.094 107.146
-      mean(array)   9.768  10.4935  13.83114  13.2905  14.423  57.781
- neval
-   100
-   100
-   100</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">enableJIT</span>(jit)</code></pre></div>
-<pre><code>[1] 0</code></pre>
-</div>
-<div id="others-2" class="section level2">
-<h2><span class="header-section-number">8.5</span> Others</h2>
+<p>This book serves as a collection of</p>
 <ul>
-<li>In case you ever need to use Google’s <code>V8</code> JavaScript enginge, it has R bindings thanks to Jeroen Ooms.</li>
-<li>Understanding R on the backend has its benefits of its own. A fantastic package for this is <code>lobstr</code>.</li>
+<li>tools for package development,</li>
+<li>good practices for programming,</li>
+<li>and my most frequently used packages.</li>
+</ul>
+<p>The material treated here certainly does not cover all of <code>R</code>, but rather serves as my personal list of essential things related to programming in <code>R</code> that I found useful to know. The document is partly opinionated and subjective, so feel free to open up an <a href="https://github.com/dirmeier/essential-R/issues">issue</a> if you feel some parts should be clarified or reformulated.</p>
+<p>The book is no introduction on how to program functionally, procedurally or in an object-oriented way, how to write code in general, or how to speed it up. The interested reader is referred to:</p>
+<ul>
+<li>Robert Martin: Clean Code,</li>
+<li>Andrew Hunt: The Pragmatic Programmer,</li>
+<li>Gang of Four: Design Patterns,</li>
+<li>Colin Gillespie: Efficient R programming,</li>
+<li>Patrick Burns: The R Inferno,</li>
+<li>Hadley Wickham: R packages,</li>
+<li>Hadley Wickham: Advanced R,</li>
+<li>Dirk Eddelbuettel: Seamless R and C++ Integration with Rcpp,</li>
+<li>Thomas Cormen: Introduction to Algorithms,</li>
+<li>Dan Gusfield: Algorithms on Strings, Trees and Sequences,</li>
+<li>Donald Knuth: The Art of Computer Programming,</li>
+<li>a <a href="http://norvig.com/21-days.html">comment</a> by Peter Norvig,</li>
+<li>…</li>
+</ul>
+<p>Much of R’s popularity is due to its fantastic ecosystem. For data analysis or statistics R is a good choice for various reasons:</p>
+<ul>
+<li>high-level,</li>
+<li>easy to install packages,</li>
+<li>can be extended to C++ without needing knowledge of linking or C++ build-systems,</li>
+<li>probably the best plotting facility of any language,</li>
+<li>Bioconductor, machine learning and statistics libraries,</li>
+<li>small standard library.</li>
+</ul>
+<p>There are a few things, however, R is not so great at:</p>
+<ul>
+<li>in general slow,</li>
+<li>not really suited for large projects,</li>
+<li>poor object orientation,</li>
+<li>inconsistent function names,</li>
+<li>very limited threading capabilities,</li>
+<li>…</li>
 </ul>
 
-</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="plotting-reporting-and-visualizing.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="good-practices.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+
+<a href="r-package-development.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

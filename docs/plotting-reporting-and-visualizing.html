@@ -5,11 +5,11 @@
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Essential R</title>
-  <meta name="description" content="Essential R">
-  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
+  <title>7 Plotting, reporting and visualizing | Essential R</title>
+  <meta name="description" content="7 Plotting, reporting and visualizing | Essential R">
+  <meta name="generator" content="bookdown  and GitBook 2.6.7">
 
-  <meta property="og:title" content="Essential R" />
+  <meta property="og:title" content="7 Plotting, reporting and visualizing | Essential R" />
   <meta property="og:type" content="book" />
   
   
@@ -17,7 +17,7 @@
   <meta name="github-repo" content="dirmeier/essential-R" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Essential R" />
+  <meta name="twitter:title" content="7 Plotting, reporting and visualizing | Essential R" />
   
   
   
@@ -25,17 +25,18 @@
 <meta name="author" content="Simon Dirmeier">
 
 
-<meta name="date" content="2018-12-18">
+<meta name="date" content="2019-03-05">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="data-analysis-and-statistical-modeling.html">
+<link rel="prev" href="optimization.html">
 <link rel="next" href="miscellaneous.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
@@ -47,27 +48,27 @@
 
 
 
-<script src="libs/htmlwidgets-1.2/htmlwidgets.js"></script>
+<script src="libs/htmlwidgets-1.3/htmlwidgets.js"></script>
 <script src="libs/d3-3.5.6/d3.min.js"></script>
 <link href="libs/profvis-0.3.5/profvis.css" rel="stylesheet" />
 <script src="libs/profvis-0.3.5/profvis.js"></script>
 <link href="libs/highlight-6.2.0/textmate.css" rel="stylesheet" />
 <script src="libs/highlight-6.2.0/highlight.js"></script>
 <script src="libs/profvis-binding-0.3.5/profvis.js"></script>
-<script src="libs/plotly-binding-4.7.1/plotly.js"></script>
+<script src="libs/plotly-binding-4.8.0/plotly.js"></script>
 <script src="libs/typedarray-0.1/typedarray.min.js"></script>
 <link href="libs/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet" />
 <script src="libs/crosstalk-1.0.0/js/crosstalk.min.js"></script>
-<link href="libs/plotlyjs-1.29.2/plotly-htmlwidgets.css" rel="stylesheet" />
-<script src="libs/plotlyjs-1.29.2/plotly-latest.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-1.39.2/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-1.39.2/plotly-latest.min.js"></script>
 <script src="libs/detect-resize-0.5.3/jquery.resize.js"></script>
 <link href="libs/jquery-ui-1.11.4/jquery-ui.min.css" rel="stylesheet" />
 <script src="libs/jquery-ui-1.11.4/jquery-ui.min.js"></script>
 <script src="libs/vega-1.4.3/vega.min.js"></script>
 <script src="libs/lodash-2.2.1/lodash.min.js"></script>
 <script>var lodash = _.noConflict();</script>
-<link href="libs/ggvis-0.4.3/css/ggvis.css" rel="stylesheet" />
-<script src="libs/ggvis-0.4.3/js/ggvis.js"></script>
+<link href="libs/ggvis-0.4.4/css/ggvis.css" rel="stylesheet" />
+<script src="libs/ggvis-0.4.4/js/ggvis.js"></script>
 <script src="libs/viz-0.3/viz.js"></script>
 <link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
 <script src="libs/grViz-binding-1.0.0/grViz.js"></script>
@@ -127,7 +128,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li><a href="./">essential-R</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>About</a></li>
+<li class="chapter" data-level="" data-path="about.html"><a href="about.html"><i class="fa fa-check"></i>About</a></li>
 <li class="chapter" data-level="1" data-path="r-package-development.html"><a href="r-package-development.html"><i class="fa fa-check"></i><b>1</b> R package development</a><ul>
 <li class="chapter" data-level="1.1" data-path="r-package-development.html"><a href="r-package-development.html#creating-r-packages"><i class="fa fa-check"></i><b>1.1</b> Creating R packages</a></li>
 <li class="chapter" data-level="1.2" data-path="r-package-development.html"><a href="r-package-development.html#writing-r-packages"><i class="fa fa-check"></i><b>1.2</b> Writing R packages</a></li>
@@ -182,29 +183,33 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="5.9.2" data-path="data-analysis-and-statistical-modeling.html"><a href="data-analysis-and-statistical-modeling.html#kernlab"><i class="fa fa-check"></i><b>5.9.2</b> kernlab</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="plotting-reporting-and-visualizing.html"><a href="plotting-reporting-and-visualizing.html"><i class="fa fa-check"></i><b>6</b> Plotting, reporting and visualizing</a><ul>
-<li class="chapter" data-level="6.1" data-path="plotting-reporting-and-visualizing.html"><a href="plotting-reporting-and-visualizing.html#layout"><i class="fa fa-check"></i><b>6.1</b> Layout</a></li>
-<li class="chapter" data-level="6.2" data-path="plotting-reporting-and-visualizing.html"><a href="plotting-reporting-and-visualizing.html#publication-ready-plots"><i class="fa fa-check"></i><b>6.2</b> Publication ready plots</a></li>
-<li class="chapter" data-level="6.3" data-path="plotting-reporting-and-visualizing.html"><a href="plotting-reporting-and-visualizing.html#colors"><i class="fa fa-check"></i><b>6.3</b> Colors</a></li>
-<li class="chapter" data-level="6.4" data-path="plotting-reporting-and-visualizing.html"><a href="plotting-reporting-and-visualizing.html#interactive-and-animated-plots"><i class="fa fa-check"></i><b>6.4</b> Interactive and animated plots</a></li>
-<li class="chapter" data-level="6.5" data-path="plotting-reporting-and-visualizing.html"><a href="plotting-reporting-and-visualizing.html#graphs"><i class="fa fa-check"></i><b>6.5</b> Graphs</a></li>
-<li class="chapter" data-level="6.6" data-path="plotting-reporting-and-visualizing.html"><a href="plotting-reporting-and-visualizing.html#rmarkdown"><i class="fa fa-check"></i><b>6.6</b> RMarkdown</a></li>
-<li class="chapter" data-level="6.7" data-path="plotting-reporting-and-visualizing.html"><a href="plotting-reporting-and-visualizing.html#shiny"><i class="fa fa-check"></i><b>6.7</b> Shiny</a></li>
-<li class="chapter" data-level="6.8" data-path="plotting-reporting-and-visualizing.html"><a href="plotting-reporting-and-visualizing.html#others-1"><i class="fa fa-check"></i><b>6.8</b> Others</a></li>
+<li class="chapter" data-level="6" data-path="optimization.html"><a href="optimization.html"><i class="fa fa-check"></i><b>6</b> Optimization</a><ul>
+<li class="chapter" data-level="6.1" data-path="optimization.html"><a href="optimization.html#convex-optimization"><i class="fa fa-check"></i><b>6.1</b> Convex optimization</a></li>
+<li class="chapter" data-level="6.2" data-path="optimization.html"><a href="optimization.html#non-linear-optimizaton"><i class="fa fa-check"></i><b>6.2</b> Non-linear optimizaton</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="miscellaneous.html"><a href="miscellaneous.html"><i class="fa fa-check"></i><b>7</b> Miscellaneous</a><ul>
-<li class="chapter" data-level="7.1" data-path="miscellaneous.html"><a href="miscellaneous.html#workflow-management"><i class="fa fa-check"></i><b>7.1</b> Workflow management</a></li>
-<li class="chapter" data-level="7.2" data-path="miscellaneous.html"><a href="miscellaneous.html#pry-back-the-covers-of-r"><i class="fa fa-check"></i><b>7.2</b> Pry back the covers of R</a></li>
-<li class="chapter" data-level="7.3" data-path="miscellaneous.html"><a href="miscellaneous.html#tidy-evaluation"><i class="fa fa-check"></i><b>7.3</b> Tidy evaluation</a></li>
-<li class="chapter" data-level="7.4" data-path="miscellaneous.html"><a href="miscellaneous.html#compile"><i class="fa fa-check"></i><b>7.4</b> Compile</a></li>
-<li class="chapter" data-level="7.5" data-path="miscellaneous.html"><a href="miscellaneous.html#others-2"><i class="fa fa-check"></i><b>7.5</b> Others</a></li>
+<li class="chapter" data-level="7" data-path="plotting-reporting-and-visualizing.html"><a href="plotting-reporting-and-visualizing.html"><i class="fa fa-check"></i><b>7</b> Plotting, reporting and visualizing</a><ul>
+<li class="chapter" data-level="7.1" data-path="plotting-reporting-and-visualizing.html"><a href="plotting-reporting-and-visualizing.html#layout"><i class="fa fa-check"></i><b>7.1</b> Layout</a></li>
+<li class="chapter" data-level="7.2" data-path="plotting-reporting-and-visualizing.html"><a href="plotting-reporting-and-visualizing.html#publication-ready-plots"><i class="fa fa-check"></i><b>7.2</b> Publication ready plots</a></li>
+<li class="chapter" data-level="7.3" data-path="plotting-reporting-and-visualizing.html"><a href="plotting-reporting-and-visualizing.html#colors"><i class="fa fa-check"></i><b>7.3</b> Colors</a></li>
+<li class="chapter" data-level="7.4" data-path="plotting-reporting-and-visualizing.html"><a href="plotting-reporting-and-visualizing.html#interactive-and-animated-plots"><i class="fa fa-check"></i><b>7.4</b> Interactive and animated plots</a></li>
+<li class="chapter" data-level="7.5" data-path="plotting-reporting-and-visualizing.html"><a href="plotting-reporting-and-visualizing.html#graphs"><i class="fa fa-check"></i><b>7.5</b> Graphs</a></li>
+<li class="chapter" data-level="7.6" data-path="plotting-reporting-and-visualizing.html"><a href="plotting-reporting-and-visualizing.html#rmarkdown"><i class="fa fa-check"></i><b>7.6</b> RMarkdown</a></li>
+<li class="chapter" data-level="7.7" data-path="plotting-reporting-and-visualizing.html"><a href="plotting-reporting-and-visualizing.html#shiny"><i class="fa fa-check"></i><b>7.7</b> Shiny</a></li>
+<li class="chapter" data-level="7.8" data-path="plotting-reporting-and-visualizing.html"><a href="plotting-reporting-and-visualizing.html#others-1"><i class="fa fa-check"></i><b>7.8</b> Others</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="good-practices.html"><a href="good-practices.html"><i class="fa fa-check"></i><b>8</b> Good practices</a><ul>
-<li class="chapter" data-level="8.1" data-path="good-practices.html"><a href="good-practices.html#continuous-integration"><i class="fa fa-check"></i><b>8.1</b> Continuous integration</a></li>
-<li class="chapter" data-level="8.2" data-path="good-practices.html"><a href="good-practices.html#version-control"><i class="fa fa-check"></i><b>8.2</b> Version control</a></li>
-<li class="chapter" data-level="8.3" data-path="good-practices.html"><a href="good-practices.html#docker"><i class="fa fa-check"></i><b>8.3</b> Docker</a></li>
-<li class="chapter" data-level="8.4" data-path="good-practices.html"><a href="good-practices.html#code-style"><i class="fa fa-check"></i><b>8.4</b> Code style</a></li>
-<li class="chapter" data-level="8.5" data-path="good-practices.html"><a href="good-practices.html#debugging-c-from-r"><i class="fa fa-check"></i><b>8.5</b> Debugging C++ from R</a></li>
+<li class="chapter" data-level="8" data-path="miscellaneous.html"><a href="miscellaneous.html"><i class="fa fa-check"></i><b>8</b> Miscellaneous</a><ul>
+<li class="chapter" data-level="8.1" data-path="miscellaneous.html"><a href="miscellaneous.html#workflow-management"><i class="fa fa-check"></i><b>8.1</b> Workflow management</a></li>
+<li class="chapter" data-level="8.2" data-path="miscellaneous.html"><a href="miscellaneous.html#pry-back-the-covers-of-r"><i class="fa fa-check"></i><b>8.2</b> Pry back the covers of R</a></li>
+<li class="chapter" data-level="8.3" data-path="miscellaneous.html"><a href="miscellaneous.html#tidy-evaluation"><i class="fa fa-check"></i><b>8.3</b> Tidy evaluation</a></li>
+<li class="chapter" data-level="8.4" data-path="miscellaneous.html"><a href="miscellaneous.html#compile"><i class="fa fa-check"></i><b>8.4</b> Compile</a></li>
+<li class="chapter" data-level="8.5" data-path="miscellaneous.html"><a href="miscellaneous.html#others-2"><i class="fa fa-check"></i><b>8.5</b> Others</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="good-practices.html"><a href="good-practices.html"><i class="fa fa-check"></i><b>9</b> Good practices</a><ul>
+<li class="chapter" data-level="9.1" data-path="good-practices.html"><a href="good-practices.html#continuous-integration"><i class="fa fa-check"></i><b>9.1</b> Continuous integration</a></li>
+<li class="chapter" data-level="9.2" data-path="good-practices.html"><a href="good-practices.html#version-control"><i class="fa fa-check"></i><b>9.2</b> Version control</a></li>
+<li class="chapter" data-level="9.3" data-path="good-practices.html"><a href="good-practices.html#docker"><i class="fa fa-check"></i><b>9.3</b> Docker</a></li>
+<li class="chapter" data-level="9.4" data-path="good-practices.html"><a href="good-practices.html#code-style"><i class="fa fa-check"></i><b>9.4</b> Code style</a></li>
+<li class="chapter" data-level="9.5" data-path="good-practices.html"><a href="good-practices.html#debugging-c-from-r"><i class="fa fa-check"></i><b>9.5</b> Debugging C++ from R</a></li>
 </ul></li>
 </ul>
 
@@ -224,42 +229,42 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
             <section class="normal" id="section-">
 <div id="plotting-reporting-and-visualizing" class="section level1">
-<h1><span class="header-section-number">6</span> Plotting, reporting and visualizing</h1>
+<h1><span class="header-section-number">7</span> Plotting, reporting and visualizing</h1>
 <p>One of the most significant reasons to use R is probably its plotting capabilities, people contributing to <code>ggplot2</code> and the community’s effort of adding package that integrate with it. Below you’ll find some packages for plotting.</p>
 <div id="layout" class="section level2">
-<h2><span class="header-section-number">6.1</span> Layout</h2>
+<h2><span class="header-section-number">7.1</span> Layout</h2>
 <p>Use <code>hrbrthemes</code> for a nicer layout:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(hrbrthemes)
 <span class="kw">library</span>(ggsci)
 <span class="kw">import_roboto_condensed</span>()
 
-g &lt;-<span class="st"> </span><span class="kw">ggplot</span>(df) +<span class="st"> </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x =</span> height, <span class="dt">y =</span> mass, <span class="dt">color =</span> color)) +<span class="st"> </span>hrbrthemes::<span class="kw">theme_ipsum_rc</span>() +<span class="st"> </span>
-<span class="st">    </span>ggsci::<span class="kw">scale_color_rickandmorty</span>()
+g &lt;-<span class="st"> </span><span class="kw">ggplot</span>(df) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x =</span> height, <span class="dt">y =</span> mass, <span class="dt">color =</span> color)) <span class="op">+</span><span class="st"> </span>hrbrthemes<span class="op">::</span><span class="kw">theme_ipsum_rc</span>() <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span>ggsci<span class="op">::</span><span class="kw">scale_color_rickandmorty</span>()
 <span class="kw">print</span>(g)</code></pre></div>
-<p><img src="essential-R_files/figure-html/unnamed-chunk-52-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="essential-R_files/figure-html/unnamed-chunk-54-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Recently I started changing to simpler layouts and themes, for instance as described on <a href="http://motioninsocial.com/tufte/"> Tufte in R</a>. <code>ggthemes</code> offers some nice options to do so. For instance, if you are feeling jealous that you cannot draft some Excel plots, cause you are working with R:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggthemes)
 
-g &lt;-<span class="st"> </span><span class="kw">ggplot</span>(df) +<span class="st"> </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x =</span> height, <span class="dt">y =</span> mass), <span class="dt">color =</span> <span class="st">&quot;green&quot;</span>) +<span class="st"> </span>ggthemes::<span class="kw">theme_excel</span>()
+g &lt;-<span class="st"> </span><span class="kw">ggplot</span>(df) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x =</span> height, <span class="dt">y =</span> mass), <span class="dt">color =</span> <span class="st">&quot;green&quot;</span>) <span class="op">+</span><span class="st"> </span>ggthemes<span class="op">::</span><span class="kw">theme_excel</span>()
 <span class="kw">print</span>(g)</code></pre></div>
 <p><img src="essential-R_files/figure-html/blub-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="publication-ready-plots" class="section level2">
-<h2><span class="header-section-number">6.2</span> Publication ready plots</h2>
+<h2><span class="header-section-number">7.2</span> Publication ready plots</h2>
 <p><code>cowplot</code> and <code>ggpubr</code> are great for greating publication ready plots:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p1 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(mtcars, <span class="kw">aes</span>(hp, disp)) +<span class="st"> </span><span class="kw">geom_point</span>() +<span class="st"> </span>ggthemes::<span class="kw">theme_tufte</span>()
-p2 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(mtcars, <span class="kw">aes</span>(hp, disp)) +<span class="st"> </span><span class="kw">geom_point</span>() +<span class="st"> </span>ggthemes::<span class="kw">theme_gdocs</span>()
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p1 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(mtcars, <span class="kw">aes</span>(hp, disp)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span>ggthemes<span class="op">::</span><span class="kw">theme_tufte</span>()
+p2 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(mtcars, <span class="kw">aes</span>(hp, disp)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span>ggthemes<span class="op">::</span><span class="kw">theme_gdocs</span>()
 
-cowplot::<span class="kw">plot_grid</span>(p1, p2, <span class="dt">ncol =</span> <span class="dv">2</span>, <span class="dt">align =</span> <span class="st">&quot;vh&quot;</span>, <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;Nice&quot;</span>, <span class="st">&quot;Meh&quot;</span>))</code></pre></div>
+cowplot<span class="op">::</span><span class="kw">plot_grid</span>(p1, p2, <span class="dt">ncol =</span> <span class="dv">2</span>, <span class="dt">align =</span> <span class="st">&quot;vh&quot;</span>, <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;Nice&quot;</span>, <span class="st">&quot;Meh&quot;</span>))</code></pre></div>
 <p><img src="essential-R_files/figure-html/cow-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>If these two are still not enough, I usually go with <code>patchwork</code>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(patchwork)
 
-g +<span class="st"> </span>(p1 +<span class="st"> </span>p2) +<span class="st"> </span><span class="kw">plot_layout</span>(<span class="dt">ncol =</span> <span class="dv">1</span>)</code></pre></div>
+g <span class="op">+</span><span class="st"> </span>(p1 <span class="op">+</span><span class="st"> </span>p2) <span class="op">+</span><span class="st"> </span><span class="kw">plot_layout</span>(<span class="dt">ncol =</span> <span class="dv">1</span>)</code></pre></div>
 <p><img src="essential-R_files/figure-html/patch-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="colors" class="section level2">
-<h2><span class="header-section-number">6.3</span> Colors</h2>
+<h2><span class="header-section-number">7.3</span> Colors</h2>
 <p>I use <code>colorspace</code> and <code>colorblindr</code> in order to remove some hue and chroma. <code>viridis</code> is a wonderful set of colors for continuous, sequential data. For discrete, qualitative data I mainly use <code>ggthemr</code> and the <code>fresh</code> colors. <code>ggsci</code> also has some wonderful color palettes. <code>scales</code> lets you have a look at a color palette easily.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(colorspace)
 <span class="kw">library</span>(colorblindr)
@@ -267,18 +272,18 @@ g +<span class="st"> </span>(p1 +<span class="st"> </span>p2) +<span class="st">
 <span class="kw">library</span>(ggthemr)
 <span class="kw">library</span>(scales)
 <span class="kw">library</span>(cowplot)
-ggthemr::<span class="kw">ggthemr</span>(<span class="st">&quot;fresh&quot;</span>, <span class="st">&quot;scientific&quot;</span>, <span class="dt">spacing =</span> <span class="dv">2</span>, <span class="dt">type =</span> <span class="st">&quot;inner&quot;</span>)
+ggthemr<span class="op">::</span><span class="kw">ggthemr</span>(<span class="st">&quot;fresh&quot;</span>, <span class="st">&quot;scientific&quot;</span>, <span class="dt">spacing =</span> <span class="dv">2</span>, <span class="dt">type =</span> <span class="st">&quot;inner&quot;</span>)
 
-p1 &lt;-<span class="st"> </span>colorblindr::<span class="kw">gg_color_gradient</span>() +<span class="st"> </span>colorspace::<span class="kw">scale_fill_continuous_sequential</span>(<span class="st">&quot;viridis&quot;</span>, 
+p1 &lt;-<span class="st"> </span>colorblindr<span class="op">::</span><span class="kw">gg_color_gradient</span>() <span class="op">+</span><span class="st"> </span>colorspace<span class="op">::</span><span class="kw">scale_fill_continuous_sequential</span>(<span class="st">&quot;viridis&quot;</span>, 
     <span class="dt">c1 =</span> <span class="dv">20</span>, <span class="dt">c2 =</span> <span class="dv">70</span>, <span class="dt">l1 =</span> <span class="dv">25</span>, <span class="dt">l2 =</span> <span class="dv">100</span>)
-p2 &lt;-<span class="st"> </span>colorblindr::<span class="kw">gg_color_gradient</span>() +<span class="st"> </span>colorspace::<span class="kw">scale_fill_continuous_sequential</span>(<span class="st">&quot;Blues&quot;</span>, 
+p2 &lt;-<span class="st"> </span>colorblindr<span class="op">::</span><span class="kw">gg_color_gradient</span>() <span class="op">+</span><span class="st"> </span>colorspace<span class="op">::</span><span class="kw">scale_fill_continuous_sequential</span>(<span class="st">&quot;Blues&quot;</span>, 
     <span class="dt">c1 =</span> <span class="dv">20</span>, <span class="dt">c2 =</span> <span class="dv">70</span>, <span class="dt">l1 =</span> <span class="dv">25</span>, <span class="dt">l2 =</span> <span class="dv">100</span>)
-p3 &lt;-<span class="st"> </span>colorblindr::<span class="kw">gg_color_gradient</span>() +<span class="st"> </span>colorspace::<span class="kw">scale_fill_continuous_diverging</span>(<span class="dt">c1 =</span> <span class="dv">40</span>)
-df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">Col =</span> ggthemr::<span class="kw">swatch</span>()[<span class="dv">1</span>:<span class="dv">10</span>], <span class="dt">X =</span> <span class="dv">1</span>, <span class="dt">Y =</span> <span class="kw">seq</span>(<span class="dv">10</span>))
-p4 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(df) +<span class="st"> </span><span class="kw">geom_tile</span>(<span class="kw">aes</span>(<span class="dt">x =</span> Y, <span class="dt">y =</span> X), <span class="dt">fill =</span> df$Col) +<span class="st"> </span><span class="kw">theme_void</span>()
+p3 &lt;-<span class="st"> </span>colorblindr<span class="op">::</span><span class="kw">gg_color_gradient</span>() <span class="op">+</span><span class="st"> </span>colorspace<span class="op">::</span><span class="kw">scale_fill_continuous_diverging</span>(<span class="dt">c1 =</span> <span class="dv">40</span>)
+df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">Col =</span> ggthemr<span class="op">::</span><span class="kw">swatch</span>()[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>], <span class="dt">X =</span> <span class="dv">1</span>, <span class="dt">Y =</span> <span class="kw">seq</span>(<span class="dv">10</span>))
+p4 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(df) <span class="op">+</span><span class="st"> </span><span class="kw">geom_tile</span>(<span class="kw">aes</span>(<span class="dt">x =</span> Y, <span class="dt">y =</span> X), <span class="dt">fill =</span> df<span class="op">$</span>Col) <span class="op">+</span><span class="st"> </span><span class="kw">theme_void</span>()
 
-cowplot::<span class="kw">plot_grid</span>(p1, p2, p3, p4, <span class="dt">ncol =</span> <span class="dv">2</span>, <span class="dt">align =</span> <span class="st">&quot;vh&quot;</span>)</code></pre></div>
-<p><img src="essential-R_files/figure-html/unnamed-chunk-53-1.png" width="672" style="display: block; margin: auto;" /></p>
+cowplot<span class="op">::</span><span class="kw">plot_grid</span>(p1, p2, p3, p4, <span class="dt">ncol =</span> <span class="dv">2</span>, <span class="dt">align =</span> <span class="st">&quot;vh&quot;</span>)</code></pre></div>
+<p><img src="essential-R_files/figure-html/unnamed-chunk-55-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Another great tool is <code>swatches</code>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(swatches)
 
@@ -287,58 +292,58 @@ omega_nebula &lt;-<span class="st"> </span><span class="kw">read_ase</span>(<spa
 <p><img src="essential-R_files/figure-html/swatch-1.png" width="672" /></p>
 </div>
 <div id="interactive-and-animated-plots" class="section level2">
-<h2><span class="header-section-number">6.4</span> Interactive and animated plots</h2>
+<h2><span class="header-section-number">7.4</span> Interactive and animated plots</h2>
 <p>Often you want to create an interactive plot, for instance when serving on a <code>shiny</code> instance. One way to do that is using plotly:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(plotly)
 
-q &lt;-<span class="st"> </span><span class="kw">qplot</span>(<span class="dt">data =</span> iris, <span class="dt">x =</span> Sepal.Length, <span class="dt">y =</span> Sepal.Width, <span class="dt">color =</span> Species) +<span class="st"> </span>
-<span class="st">    </span>ggthemes::<span class="kw">theme_tufte</span>()
-plotly::<span class="kw">ggplotly</span>(q)</code></pre></div>
-<div id="8fc55fed1540" style="width:672px;height:576px;" class="plotly html-widget"></div>
-<script type="application/json" data-for="8fc55fed1540">{"x":{"data":[{"x":[5.1,4.9,4.7,4.6,5,5.4,4.6,5,4.4,4.9,5.4,4.8,4.8,4.3,5.8,5.7,5.4,5.1,5.7,5.1,5.4,5.1,4.6,5.1,4.8,5,5,5.2,5.2,4.7,4.8,5.4,5.2,5.5,4.9,5,5.5,4.9,4.4,5.1,5,4.5,4.4,5,5.1,4.8,5.1,4.6,5.3,5],"y":[3.5,3,3.2,3.1,3.6,3.9,3.4,3.4,2.9,3.1,3.7,3.4,3,3,4,4.4,3.9,3.5,3.8,3.8,3.4,3.7,3.6,3.3,3.4,3,3.4,3.5,3.4,3.2,3.1,3.4,4.1,4.2,3.1,3.2,3.5,3.6,3,3.4,3.5,2.3,3.2,3.5,3.8,3,3.8,3.2,3.7,3.3],"text":["~Sepal.Length: 5.1<br />~Sepal.Width: 3.5<br />~Species: setosa","~Sepal.Length: 4.9<br />~Sepal.Width: 3.0<br />~Species: setosa","~Sepal.Length: 4.7<br />~Sepal.Width: 3.2<br />~Species: setosa","~Sepal.Length: 4.6<br />~Sepal.Width: 3.1<br />~Species: setosa","~Sepal.Length: 5.0<br />~Sepal.Width: 3.6<br />~Species: setosa","~Sepal.Length: 5.4<br />~Sepal.Width: 3.9<br />~Species: setosa","~Sepal.Length: 4.6<br />~Sepal.Width: 3.4<br />~Species: setosa","~Sepal.Length: 5.0<br />~Sepal.Width: 3.4<br />~Species: setosa","~Sepal.Length: 4.4<br />~Sepal.Width: 2.9<br />~Species: setosa","~Sepal.Length: 4.9<br />~Sepal.Width: 3.1<br />~Species: setosa","~Sepal.Length: 5.4<br />~Sepal.Width: 3.7<br />~Species: setosa","~Sepal.Length: 4.8<br />~Sepal.Width: 3.4<br />~Species: setosa","~Sepal.Length: 4.8<br />~Sepal.Width: 3.0<br />~Species: setosa","~Sepal.Length: 4.3<br />~Sepal.Width: 3.0<br />~Species: setosa","~Sepal.Length: 5.8<br />~Sepal.Width: 4.0<br />~Species: setosa","~Sepal.Length: 5.7<br />~Sepal.Width: 4.4<br />~Species: setosa","~Sepal.Length: 5.4<br />~Sepal.Width: 3.9<br />~Species: setosa","~Sepal.Length: 5.1<br />~Sepal.Width: 3.5<br />~Species: setosa","~Sepal.Length: 5.7<br />~Sepal.Width: 3.8<br />~Species: setosa","~Sepal.Length: 5.1<br />~Sepal.Width: 3.8<br />~Species: setosa","~Sepal.Length: 5.4<br />~Sepal.Width: 3.4<br />~Species: setosa","~Sepal.Length: 5.1<br />~Sepal.Width: 3.7<br />~Species: setosa","~Sepal.Length: 4.6<br />~Sepal.Width: 3.6<br />~Species: setosa","~Sepal.Length: 5.1<br />~Sepal.Width: 3.3<br />~Species: setosa","~Sepal.Length: 4.8<br />~Sepal.Width: 3.4<br />~Species: setosa","~Sepal.Length: 5.0<br />~Sepal.Width: 3.0<br />~Species: setosa","~Sepal.Length: 5.0<br />~Sepal.Width: 3.4<br />~Species: setosa","~Sepal.Length: 5.2<br />~Sepal.Width: 3.5<br />~Species: setosa","~Sepal.Length: 5.2<br />~Sepal.Width: 3.4<br />~Species: setosa","~Sepal.Length: 4.7<br />~Sepal.Width: 3.2<br />~Species: setosa","~Sepal.Length: 4.8<br />~Sepal.Width: 3.1<br />~Species: setosa","~Sepal.Length: 5.4<br />~Sepal.Width: 3.4<br />~Species: setosa","~Sepal.Length: 5.2<br />~Sepal.Width: 4.1<br />~Species: setosa","~Sepal.Length: 5.5<br />~Sepal.Width: 4.2<br />~Species: setosa","~Sepal.Length: 4.9<br />~Sepal.Width: 3.1<br />~Species: setosa","~Sepal.Length: 5.0<br />~Sepal.Width: 3.2<br />~Species: setosa","~Sepal.Length: 5.5<br />~Sepal.Width: 3.5<br />~Species: setosa","~Sepal.Length: 4.9<br />~Sepal.Width: 3.6<br />~Species: setosa","~Sepal.Length: 4.4<br />~Sepal.Width: 3.0<br />~Species: setosa","~Sepal.Length: 5.1<br />~Sepal.Width: 3.4<br />~Species: setosa","~Sepal.Length: 5.0<br />~Sepal.Width: 3.5<br />~Species: setosa","~Sepal.Length: 4.5<br />~Sepal.Width: 2.3<br />~Species: setosa","~Sepal.Length: 4.4<br />~Sepal.Width: 3.2<br />~Species: setosa","~Sepal.Length: 5.0<br />~Sepal.Width: 3.5<br />~Species: setosa","~Sepal.Length: 5.1<br />~Sepal.Width: 3.8<br />~Species: setosa","~Sepal.Length: 4.8<br />~Sepal.Width: 3.0<br />~Species: setosa","~Sepal.Length: 5.1<br />~Sepal.Width: 3.8<br />~Species: setosa","~Sepal.Length: 4.6<br />~Sepal.Width: 3.2<br />~Species: setosa","~Sepal.Length: 5.3<br />~Sepal.Width: 3.7<br />~Species: setosa","~Sepal.Length: 5.0<br />~Sepal.Width: 3.3<br />~Species: setosa"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(101,173,194,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(101,173,194,1)"}},"hoveron":"points","name":"setosa","legendgroup":"setosa","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[7,6.4,6.9,5.5,6.5,5.7,6.3,4.9,6.6,5.2,5,5.9,6,6.1,5.6,6.7,5.6,5.8,6.2,5.6,5.9,6.1,6.3,6.1,6.4,6.6,6.8,6.7,6,5.7,5.5,5.5,5.8,6,5.4,6,6.7,6.3,5.6,5.5,5.5,6.1,5.8,5,5.6,5.7,5.7,6.2,5.1,5.7],"y":[3.2,3.2,3.1,2.3,2.8,2.8,3.3,2.4,2.9,2.7,2,3,2.2,2.9,2.9,3.1,3,2.7,2.2,2.5,3.2,2.8,2.5,2.8,2.9,3,2.8,3,2.9,2.6,2.4,2.4,2.7,2.7,3,3.4,3.1,2.3,3,2.5,2.6,3,2.6,2.3,2.7,3,2.9,2.9,2.5,2.8],"text":["~Sepal.Length: 7.0<br />~Sepal.Width: 3.2<br />~Species: versicolor","~Sepal.Length: 6.4<br />~Sepal.Width: 3.2<br />~Species: versicolor","~Sepal.Length: 6.9<br />~Sepal.Width: 3.1<br />~Species: versicolor","~Sepal.Length: 5.5<br />~Sepal.Width: 2.3<br />~Species: versicolor","~Sepal.Length: 6.5<br />~Sepal.Width: 2.8<br />~Species: versicolor","~Sepal.Length: 5.7<br />~Sepal.Width: 2.8<br />~Species: versicolor","~Sepal.Length: 6.3<br />~Sepal.Width: 3.3<br />~Species: versicolor","~Sepal.Length: 4.9<br />~Sepal.Width: 2.4<br />~Species: versicolor","~Sepal.Length: 6.6<br />~Sepal.Width: 2.9<br />~Species: versicolor","~Sepal.Length: 5.2<br />~Sepal.Width: 2.7<br />~Species: versicolor","~Sepal.Length: 5.0<br />~Sepal.Width: 2.0<br />~Species: versicolor","~Sepal.Length: 5.9<br />~Sepal.Width: 3.0<br />~Species: versicolor","~Sepal.Length: 6.0<br />~Sepal.Width: 2.2<br />~Species: versicolor","~Sepal.Length: 6.1<br />~Sepal.Width: 2.9<br />~Species: versicolor","~Sepal.Length: 5.6<br />~Sepal.Width: 2.9<br />~Species: versicolor","~Sepal.Length: 6.7<br />~Sepal.Width: 3.1<br />~Species: versicolor","~Sepal.Length: 5.6<br />~Sepal.Width: 3.0<br />~Species: versicolor","~Sepal.Length: 5.8<br />~Sepal.Width: 2.7<br />~Species: versicolor","~Sepal.Length: 6.2<br />~Sepal.Width: 2.2<br />~Species: versicolor","~Sepal.Length: 5.6<br />~Sepal.Width: 2.5<br />~Species: versicolor","~Sepal.Length: 5.9<br />~Sepal.Width: 3.2<br />~Species: versicolor","~Sepal.Length: 6.1<br />~Sepal.Width: 2.8<br />~Species: versicolor","~Sepal.Length: 6.3<br />~Sepal.Width: 2.5<br />~Species: versicolor","~Sepal.Length: 6.1<br />~Sepal.Width: 2.8<br />~Species: versicolor","~Sepal.Length: 6.4<br />~Sepal.Width: 2.9<br />~Species: versicolor","~Sepal.Length: 6.6<br />~Sepal.Width: 3.0<br />~Species: versicolor","~Sepal.Length: 6.8<br />~Sepal.Width: 2.8<br />~Species: versicolor","~Sepal.Length: 6.7<br />~Sepal.Width: 3.0<br />~Species: versicolor","~Sepal.Length: 6.0<br />~Sepal.Width: 2.9<br />~Species: versicolor","~Sepal.Length: 5.7<br />~Sepal.Width: 2.6<br />~Species: versicolor","~Sepal.Length: 5.5<br />~Sepal.Width: 2.4<br />~Species: versicolor","~Sepal.Length: 5.5<br />~Sepal.Width: 2.4<br />~Species: versicolor","~Sepal.Length: 5.8<br />~Sepal.Width: 2.7<br />~Species: versicolor","~Sepal.Length: 6.0<br />~Sepal.Width: 2.7<br />~Species: versicolor","~Sepal.Length: 5.4<br />~Sepal.Width: 3.0<br />~Species: versicolor","~Sepal.Length: 6.0<br />~Sepal.Width: 3.4<br />~Species: versicolor","~Sepal.Length: 6.7<br />~Sepal.Width: 3.1<br />~Species: versicolor","~Sepal.Length: 6.3<br />~Sepal.Width: 2.3<br />~Species: versicolor","~Sepal.Length: 5.6<br />~Sepal.Width: 3.0<br />~Species: versicolor","~Sepal.Length: 5.5<br />~Sepal.Width: 2.5<br />~Species: versicolor","~Sepal.Length: 5.5<br />~Sepal.Width: 2.6<br />~Species: versicolor","~Sepal.Length: 6.1<br />~Sepal.Width: 3.0<br />~Species: versicolor","~Sepal.Length: 5.8<br />~Sepal.Width: 2.6<br />~Species: versicolor","~Sepal.Length: 5.0<br />~Sepal.Width: 2.3<br />~Species: versicolor","~Sepal.Length: 5.6<br />~Sepal.Width: 2.7<br />~Species: versicolor","~Sepal.Length: 5.7<br />~Sepal.Width: 3.0<br />~Species: versicolor","~Sepal.Length: 5.7<br />~Sepal.Width: 2.9<br />~Species: versicolor","~Sepal.Length: 6.2<br />~Sepal.Width: 2.9<br />~Species: versicolor","~Sepal.Length: 5.1<br />~Sepal.Width: 2.5<br />~Species: versicolor","~Sepal.Length: 5.7<br />~Sepal.Width: 2.8<br />~Species: versicolor"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(35,59,67,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(35,59,67,1)"}},"hoveron":"points","name":"versicolor","legendgroup":"versicolor","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[6.3,5.8,7.1,6.3,6.5,7.6,4.9,7.3,6.7,7.2,6.5,6.4,6.8,5.7,5.8,6.4,6.5,7.7,7.7,6,6.9,5.6,7.7,6.3,6.7,7.2,6.2,6.1,6.4,7.2,7.4,7.9,6.4,6.3,6.1,7.7,6.3,6.4,6,6.9,6.7,6.9,5.8,6.8,6.7,6.7,6.3,6.5,6.2,5.9],"y":[3.3,2.7,3,2.9,3,3,2.5,2.9,2.5,3.6,3.2,2.7,3,2.5,2.8,3.2,3,3.8,2.6,2.2,3.2,2.8,2.8,2.7,3.3,3.2,2.8,3,2.8,3,2.8,3.8,2.8,2.8,2.6,3,3.4,3.1,3,3.1,3.1,3.1,2.7,3.2,3.3,3,2.5,3,3.4,3],"text":["~Sepal.Length: 6.3<br />~Sepal.Width: 3.3<br />~Species: virginica","~Sepal.Length: 5.8<br />~Sepal.Width: 2.7<br />~Species: virginica","~Sepal.Length: 7.1<br />~Sepal.Width: 3.0<br />~Species: virginica","~Sepal.Length: 6.3<br />~Sepal.Width: 2.9<br />~Species: virginica","~Sepal.Length: 6.5<br />~Sepal.Width: 3.0<br />~Species: virginica","~Sepal.Length: 7.6<br />~Sepal.Width: 3.0<br />~Species: virginica","~Sepal.Length: 4.9<br />~Sepal.Width: 2.5<br />~Species: virginica","~Sepal.Length: 7.3<br />~Sepal.Width: 2.9<br />~Species: virginica","~Sepal.Length: 6.7<br />~Sepal.Width: 2.5<br />~Species: virginica","~Sepal.Length: 7.2<br />~Sepal.Width: 3.6<br />~Species: virginica","~Sepal.Length: 6.5<br />~Sepal.Width: 3.2<br />~Species: virginica","~Sepal.Length: 6.4<br />~Sepal.Width: 2.7<br />~Species: virginica","~Sepal.Length: 6.8<br />~Sepal.Width: 3.0<br />~Species: virginica","~Sepal.Length: 5.7<br />~Sepal.Width: 2.5<br />~Species: virginica","~Sepal.Length: 5.8<br />~Sepal.Width: 2.8<br />~Species: virginica","~Sepal.Length: 6.4<br />~Sepal.Width: 3.2<br />~Species: virginica","~Sepal.Length: 6.5<br />~Sepal.Width: 3.0<br />~Species: virginica","~Sepal.Length: 7.7<br />~Sepal.Width: 3.8<br />~Species: virginica","~Sepal.Length: 7.7<br />~Sepal.Width: 2.6<br />~Species: virginica","~Sepal.Length: 6.0<br />~Sepal.Width: 2.2<br />~Species: virginica","~Sepal.Length: 6.9<br />~Sepal.Width: 3.2<br />~Species: virginica","~Sepal.Length: 5.6<br />~Sepal.Width: 2.8<br />~Species: virginica","~Sepal.Length: 7.7<br />~Sepal.Width: 2.8<br />~Species: virginica","~Sepal.Length: 6.3<br />~Sepal.Width: 2.7<br />~Species: virginica","~Sepal.Length: 6.7<br />~Sepal.Width: 3.3<br />~Species: virginica","~Sepal.Length: 7.2<br />~Sepal.Width: 3.2<br />~Species: virginica","~Sepal.Length: 6.2<br />~Sepal.Width: 2.8<br />~Species: virginica","~Sepal.Length: 6.1<br />~Sepal.Width: 3.0<br />~Species: virginica","~Sepal.Length: 6.4<br />~Sepal.Width: 2.8<br />~Species: virginica","~Sepal.Length: 7.2<br />~Sepal.Width: 3.0<br />~Species: virginica","~Sepal.Length: 7.4<br />~Sepal.Width: 2.8<br />~Species: virginica","~Sepal.Length: 7.9<br />~Sepal.Width: 3.8<br />~Species: virginica","~Sepal.Length: 6.4<br />~Sepal.Width: 2.8<br />~Species: virginica","~Sepal.Length: 6.3<br />~Sepal.Width: 2.8<br />~Species: virginica","~Sepal.Length: 6.1<br />~Sepal.Width: 2.6<br />~Species: virginica","~Sepal.Length: 7.7<br />~Sepal.Width: 3.0<br />~Species: virginica","~Sepal.Length: 6.3<br />~Sepal.Width: 3.4<br />~Species: virginica","~Sepal.Length: 6.4<br />~Sepal.Width: 3.1<br />~Species: virginica","~Sepal.Length: 6.0<br />~Sepal.Width: 3.0<br />~Species: virginica","~Sepal.Length: 6.9<br />~Sepal.Width: 3.1<br />~Species: virginica","~Sepal.Length: 6.7<br />~Sepal.Width: 3.1<br />~Species: virginica","~Sepal.Length: 6.9<br />~Sepal.Width: 3.1<br />~Species: virginica","~Sepal.Length: 5.8<br />~Sepal.Width: 2.7<br />~Species: virginica","~Sepal.Length: 6.8<br />~Sepal.Width: 3.2<br />~Species: virginica","~Sepal.Length: 6.7<br />~Sepal.Width: 3.3<br />~Species: virginica","~Sepal.Length: 6.7<br />~Sepal.Width: 3.0<br />~Species: virginica","~Sepal.Length: 6.3<br />~Sepal.Width: 2.5<br />~Species: virginica","~Sepal.Length: 6.5<br />~Sepal.Width: 3.0<br />~Species: virginica","~Sepal.Length: 6.2<br />~Sepal.Width: 3.4<br />~Species: virginica","~Sepal.Length: 5.9<br />~Sepal.Width: 3.0<br />~Species: virginica"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(232,70,70,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(232,70,70,1)"}},"hoveron":"points","name":"virginica","legendgroup":"virginica","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":24.5235920852359,"r":7.30593607305936,"b":38.4779299847793,"l":43.1050228310502},"font":{"color":"rgba(0,0,0,1)","family":"serif","size":14.6118721461187},"xaxis":{"domain":[0,1],"type":"linear","autorange":false,"range":[4.12,8.08],"tickmode":"array","ticktext":["5","6","7","8"],"tickvals":[5,6,7,8],"categoryorder":"array","categoryarray":["5","6","7","8"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"serif","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":null,"gridwidth":0,"zeroline":false,"anchor":"y","title":"Sepal.Length","titlefont":{"color":"rgba(0,0,0,1)","family":"serif","size":14.6118721461187},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"type":"linear","autorange":false,"range":[1.88,4.52],"tickmode":"array","ticktext":["2.0","2.5","3.0","3.5","4.0","4.5"],"tickvals":[2,2.5,3,3.5,4,4.5],"categoryorder":"array","categoryarray":["2.0","2.5","3.0","3.5","4.0","4.5"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"serif","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":null,"gridwidth":0,"zeroline":false,"anchor":"x","title":"Sepal.Width","titlefont":{"color":"rgba(0,0,0,1)","family":"serif","size":14.6118721461187},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":true,"legend":{"bgcolor":null,"bordercolor":null,"borderwidth":0,"font":{"color":"rgba(0,0,0,1)","family":"serif","size":11.689497716895},"y":0.927821522309711},"annotations":[{"text":"Species","x":1.02,"y":1,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(0,0,0,1)","family":"serif","size":14.6118721461187},"xref":"paper","yref":"paper","textangle":-0,"xanchor":"left","yanchor":"bottom","legendTitle":true}],"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","modeBarButtonsToAdd":[{"name":"Collaborate","icon":{"width":1000,"ascent":500,"descent":-50,"path":"M487 375c7-10 9-23 5-36l-79-259c-3-12-11-23-22-31-11-8-22-12-35-12l-263 0c-15 0-29 5-43 15-13 10-23 23-28 37-5 13-5 25-1 37 0 0 0 3 1 7 1 5 1 8 1 11 0 2 0 4-1 6 0 3-1 5-1 6 1 2 2 4 3 6 1 2 2 4 4 6 2 3 4 5 5 7 5 7 9 16 13 26 4 10 7 19 9 26 0 2 0 5 0 9-1 4-1 6 0 8 0 2 2 5 4 8 3 3 5 5 5 7 4 6 8 15 12 26 4 11 7 19 7 26 1 1 0 4 0 9-1 4-1 7 0 8 1 2 3 5 6 8 4 4 6 6 6 7 4 5 8 13 13 24 4 11 7 20 7 28 1 1 0 4 0 7-1 3-1 6-1 7 0 2 1 4 3 6 1 1 3 4 5 6 2 3 3 5 5 6 1 2 3 5 4 9 2 3 3 7 5 10 1 3 2 6 4 10 2 4 4 7 6 9 2 3 4 5 7 7 3 2 7 3 11 3 3 0 8 0 13-1l0-1c7 2 12 2 14 2l218 0c14 0 25-5 32-16 8-10 10-23 6-37l-79-259c-7-22-13-37-20-43-7-7-19-10-37-10l-248 0c-5 0-9-2-11-5-2-3-2-7 0-12 4-13 18-20 41-20l264 0c5 0 10 2 16 5 5 3 8 6 10 11l85 282c2 5 2 10 2 17 7-3 13-7 17-13z m-304 0c-1-3-1-5 0-7 1-1 3-2 6-2l174 0c2 0 4 1 7 2 2 2 4 4 5 7l6 18c0 3 0 5-1 7-1 1-3 2-6 2l-173 0c-3 0-5-1-8-2-2-2-4-4-4-7z m-24-73c-1-3-1-5 0-7 2-2 3-2 6-2l174 0c2 0 5 0 7 2 3 2 4 4 5 7l6 18c1 2 0 5-1 6-1 2-3 3-5 3l-174 0c-3 0-5-1-7-3-3-1-4-4-5-6z"},"click":"function(gd) { \n        // is this being viewed in RStudio?\n        if (location.search == '?viewer_pane=1') {\n          alert('To learn about plotly for collaboration, visit:\\n https://cpsievert.github.io/plotly_book/plot-ly-for-collaboration.html');\n        } else {\n          window.open('https://cpsievert.github.io/plotly_book/plot-ly-for-collaboration.html', '_blank');\n        }\n      }"}],"cloud":false},"source":"A","attrs":{"8fc539c5a949":{"x":{},"y":{},"colour":{},"type":"scatter"}},"cur_data":"8fc539c5a949","visdat":{"8fc539c5a949":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1}},"base_url":"https://plot.ly"},"evals":["config.modeBarButtonsToAdd.0.click"],"jsHooks":{"render":[{"code":"function(el, x) { var ctConfig = crosstalk.var('plotlyCrosstalkOpts').set({\"on\":\"plotly_click\",\"persistent\":false,\"dynamic\":false,\"selectize\":false,\"opacityDim\":0.2,\"selected\":{\"opacity\":1}}); }","data":null}]}}</script>
+q &lt;-<span class="st"> </span><span class="kw">qplot</span>(<span class="dt">data =</span> iris, <span class="dt">x =</span> Sepal.Length, <span class="dt">y =</span> Sepal.Width, <span class="dt">color =</span> Species) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span>ggthemes<span class="op">::</span><span class="kw">theme_tufte</span>()
+plotly<span class="op">::</span><span class="kw">ggplotly</span>(q)</code></pre></div>
+<div id="htmlwidget-0777132b9c742abe2d9f" style="width:672px;height:576px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-0777132b9c742abe2d9f">{"x":{"data":[{"x":[5.1,4.9,4.7,4.6,5,5.4,4.6,5,4.4,4.9,5.4,4.8,4.8,4.3,5.8,5.7,5.4,5.1,5.7,5.1,5.4,5.1,4.6,5.1,4.8,5,5,5.2,5.2,4.7,4.8,5.4,5.2,5.5,4.9,5,5.5,4.9,4.4,5.1,5,4.5,4.4,5,5.1,4.8,5.1,4.6,5.3,5],"y":[3.5,3,3.2,3.1,3.6,3.9,3.4,3.4,2.9,3.1,3.7,3.4,3,3,4,4.4,3.9,3.5,3.8,3.8,3.4,3.7,3.6,3.3,3.4,3,3.4,3.5,3.4,3.2,3.1,3.4,4.1,4.2,3.1,3.2,3.5,3.6,3,3.4,3.5,2.3,3.2,3.5,3.8,3,3.8,3.2,3.7,3.3],"text":["Sepal.Length: 5.1<br />Sepal.Width: 3.5<br />Species: setosa","Sepal.Length: 4.9<br />Sepal.Width: 3.0<br />Species: setosa","Sepal.Length: 4.7<br />Sepal.Width: 3.2<br />Species: setosa","Sepal.Length: 4.6<br />Sepal.Width: 3.1<br />Species: setosa","Sepal.Length: 5.0<br />Sepal.Width: 3.6<br />Species: setosa","Sepal.Length: 5.4<br />Sepal.Width: 3.9<br />Species: setosa","Sepal.Length: 4.6<br />Sepal.Width: 3.4<br />Species: setosa","Sepal.Length: 5.0<br />Sepal.Width: 3.4<br />Species: setosa","Sepal.Length: 4.4<br />Sepal.Width: 2.9<br />Species: setosa","Sepal.Length: 4.9<br />Sepal.Width: 3.1<br />Species: setosa","Sepal.Length: 5.4<br />Sepal.Width: 3.7<br />Species: setosa","Sepal.Length: 4.8<br />Sepal.Width: 3.4<br />Species: setosa","Sepal.Length: 4.8<br />Sepal.Width: 3.0<br />Species: setosa","Sepal.Length: 4.3<br />Sepal.Width: 3.0<br />Species: setosa","Sepal.Length: 5.8<br />Sepal.Width: 4.0<br />Species: setosa","Sepal.Length: 5.7<br />Sepal.Width: 4.4<br />Species: setosa","Sepal.Length: 5.4<br />Sepal.Width: 3.9<br />Species: setosa","Sepal.Length: 5.1<br />Sepal.Width: 3.5<br />Species: setosa","Sepal.Length: 5.7<br />Sepal.Width: 3.8<br />Species: setosa","Sepal.Length: 5.1<br />Sepal.Width: 3.8<br />Species: setosa","Sepal.Length: 5.4<br />Sepal.Width: 3.4<br />Species: setosa","Sepal.Length: 5.1<br />Sepal.Width: 3.7<br />Species: setosa","Sepal.Length: 4.6<br />Sepal.Width: 3.6<br />Species: setosa","Sepal.Length: 5.1<br />Sepal.Width: 3.3<br />Species: setosa","Sepal.Length: 4.8<br />Sepal.Width: 3.4<br />Species: setosa","Sepal.Length: 5.0<br />Sepal.Width: 3.0<br />Species: setosa","Sepal.Length: 5.0<br />Sepal.Width: 3.4<br />Species: setosa","Sepal.Length: 5.2<br />Sepal.Width: 3.5<br />Species: setosa","Sepal.Length: 5.2<br />Sepal.Width: 3.4<br />Species: setosa","Sepal.Length: 4.7<br />Sepal.Width: 3.2<br />Species: setosa","Sepal.Length: 4.8<br />Sepal.Width: 3.1<br />Species: setosa","Sepal.Length: 5.4<br />Sepal.Width: 3.4<br />Species: setosa","Sepal.Length: 5.2<br />Sepal.Width: 4.1<br />Species: setosa","Sepal.Length: 5.5<br />Sepal.Width: 4.2<br />Species: setosa","Sepal.Length: 4.9<br />Sepal.Width: 3.1<br />Species: setosa","Sepal.Length: 5.0<br />Sepal.Width: 3.2<br />Species: setosa","Sepal.Length: 5.5<br />Sepal.Width: 3.5<br />Species: setosa","Sepal.Length: 4.9<br />Sepal.Width: 3.6<br />Species: setosa","Sepal.Length: 4.4<br />Sepal.Width: 3.0<br />Species: setosa","Sepal.Length: 5.1<br />Sepal.Width: 3.4<br />Species: setosa","Sepal.Length: 5.0<br />Sepal.Width: 3.5<br />Species: setosa","Sepal.Length: 4.5<br />Sepal.Width: 2.3<br />Species: setosa","Sepal.Length: 4.4<br />Sepal.Width: 3.2<br />Species: setosa","Sepal.Length: 5.0<br />Sepal.Width: 3.5<br />Species: setosa","Sepal.Length: 5.1<br />Sepal.Width: 3.8<br />Species: setosa","Sepal.Length: 4.8<br />Sepal.Width: 3.0<br />Species: setosa","Sepal.Length: 5.1<br />Sepal.Width: 3.8<br />Species: setosa","Sepal.Length: 4.6<br />Sepal.Width: 3.2<br />Species: setosa","Sepal.Length: 5.3<br />Sepal.Width: 3.7<br />Species: setosa","Sepal.Length: 5.0<br />Sepal.Width: 3.3<br />Species: setosa"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(101,173,194,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(101,173,194,1)"}},"hoveron":"points","name":"setosa","legendgroup":"setosa","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[7,6.4,6.9,5.5,6.5,5.7,6.3,4.9,6.6,5.2,5,5.9,6,6.1,5.6,6.7,5.6,5.8,6.2,5.6,5.9,6.1,6.3,6.1,6.4,6.6,6.8,6.7,6,5.7,5.5,5.5,5.8,6,5.4,6,6.7,6.3,5.6,5.5,5.5,6.1,5.8,5,5.6,5.7,5.7,6.2,5.1,5.7],"y":[3.2,3.2,3.1,2.3,2.8,2.8,3.3,2.4,2.9,2.7,2,3,2.2,2.9,2.9,3.1,3,2.7,2.2,2.5,3.2,2.8,2.5,2.8,2.9,3,2.8,3,2.9,2.6,2.4,2.4,2.7,2.7,3,3.4,3.1,2.3,3,2.5,2.6,3,2.6,2.3,2.7,3,2.9,2.9,2.5,2.8],"text":["Sepal.Length: 7.0<br />Sepal.Width: 3.2<br />Species: versicolor","Sepal.Length: 6.4<br />Sepal.Width: 3.2<br />Species: versicolor","Sepal.Length: 6.9<br />Sepal.Width: 3.1<br />Species: versicolor","Sepal.Length: 5.5<br />Sepal.Width: 2.3<br />Species: versicolor","Sepal.Length: 6.5<br />Sepal.Width: 2.8<br />Species: versicolor","Sepal.Length: 5.7<br />Sepal.Width: 2.8<br />Species: versicolor","Sepal.Length: 6.3<br />Sepal.Width: 3.3<br />Species: versicolor","Sepal.Length: 4.9<br />Sepal.Width: 2.4<br />Species: versicolor","Sepal.Length: 6.6<br />Sepal.Width: 2.9<br />Species: versicolor","Sepal.Length: 5.2<br />Sepal.Width: 2.7<br />Species: versicolor","Sepal.Length: 5.0<br />Sepal.Width: 2.0<br />Species: versicolor","Sepal.Length: 5.9<br />Sepal.Width: 3.0<br />Species: versicolor","Sepal.Length: 6.0<br />Sepal.Width: 2.2<br />Species: versicolor","Sepal.Length: 6.1<br />Sepal.Width: 2.9<br />Species: versicolor","Sepal.Length: 5.6<br />Sepal.Width: 2.9<br />Species: versicolor","Sepal.Length: 6.7<br />Sepal.Width: 3.1<br />Species: versicolor","Sepal.Length: 5.6<br />Sepal.Width: 3.0<br />Species: versicolor","Sepal.Length: 5.8<br />Sepal.Width: 2.7<br />Species: versicolor","Sepal.Length: 6.2<br />Sepal.Width: 2.2<br />Species: versicolor","Sepal.Length: 5.6<br />Sepal.Width: 2.5<br />Species: versicolor","Sepal.Length: 5.9<br />Sepal.Width: 3.2<br />Species: versicolor","Sepal.Length: 6.1<br />Sepal.Width: 2.8<br />Species: versicolor","Sepal.Length: 6.3<br />Sepal.Width: 2.5<br />Species: versicolor","Sepal.Length: 6.1<br />Sepal.Width: 2.8<br />Species: versicolor","Sepal.Length: 6.4<br />Sepal.Width: 2.9<br />Species: versicolor","Sepal.Length: 6.6<br />Sepal.Width: 3.0<br />Species: versicolor","Sepal.Length: 6.8<br />Sepal.Width: 2.8<br />Species: versicolor","Sepal.Length: 6.7<br />Sepal.Width: 3.0<br />Species: versicolor","Sepal.Length: 6.0<br />Sepal.Width: 2.9<br />Species: versicolor","Sepal.Length: 5.7<br />Sepal.Width: 2.6<br />Species: versicolor","Sepal.Length: 5.5<br />Sepal.Width: 2.4<br />Species: versicolor","Sepal.Length: 5.5<br />Sepal.Width: 2.4<br />Species: versicolor","Sepal.Length: 5.8<br />Sepal.Width: 2.7<br />Species: versicolor","Sepal.Length: 6.0<br />Sepal.Width: 2.7<br />Species: versicolor","Sepal.Length: 5.4<br />Sepal.Width: 3.0<br />Species: versicolor","Sepal.Length: 6.0<br />Sepal.Width: 3.4<br />Species: versicolor","Sepal.Length: 6.7<br />Sepal.Width: 3.1<br />Species: versicolor","Sepal.Length: 6.3<br />Sepal.Width: 2.3<br />Species: versicolor","Sepal.Length: 5.6<br />Sepal.Width: 3.0<br />Species: versicolor","Sepal.Length: 5.5<br />Sepal.Width: 2.5<br />Species: versicolor","Sepal.Length: 5.5<br />Sepal.Width: 2.6<br />Species: versicolor","Sepal.Length: 6.1<br />Sepal.Width: 3.0<br />Species: versicolor","Sepal.Length: 5.8<br />Sepal.Width: 2.6<br />Species: versicolor","Sepal.Length: 5.0<br />Sepal.Width: 2.3<br />Species: versicolor","Sepal.Length: 5.6<br />Sepal.Width: 2.7<br />Species: versicolor","Sepal.Length: 5.7<br />Sepal.Width: 3.0<br />Species: versicolor","Sepal.Length: 5.7<br />Sepal.Width: 2.9<br />Species: versicolor","Sepal.Length: 6.2<br />Sepal.Width: 2.9<br />Species: versicolor","Sepal.Length: 5.1<br />Sepal.Width: 2.5<br />Species: versicolor","Sepal.Length: 5.7<br />Sepal.Width: 2.8<br />Species: versicolor"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(35,59,67,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(35,59,67,1)"}},"hoveron":"points","name":"versicolor","legendgroup":"versicolor","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[6.3,5.8,7.1,6.3,6.5,7.6,4.9,7.3,6.7,7.2,6.5,6.4,6.8,5.7,5.8,6.4,6.5,7.7,7.7,6,6.9,5.6,7.7,6.3,6.7,7.2,6.2,6.1,6.4,7.2,7.4,7.9,6.4,6.3,6.1,7.7,6.3,6.4,6,6.9,6.7,6.9,5.8,6.8,6.7,6.7,6.3,6.5,6.2,5.9],"y":[3.3,2.7,3,2.9,3,3,2.5,2.9,2.5,3.6,3.2,2.7,3,2.5,2.8,3.2,3,3.8,2.6,2.2,3.2,2.8,2.8,2.7,3.3,3.2,2.8,3,2.8,3,2.8,3.8,2.8,2.8,2.6,3,3.4,3.1,3,3.1,3.1,3.1,2.7,3.2,3.3,3,2.5,3,3.4,3],"text":["Sepal.Length: 6.3<br />Sepal.Width: 3.3<br />Species: virginica","Sepal.Length: 5.8<br />Sepal.Width: 2.7<br />Species: virginica","Sepal.Length: 7.1<br />Sepal.Width: 3.0<br />Species: virginica","Sepal.Length: 6.3<br />Sepal.Width: 2.9<br />Species: virginica","Sepal.Length: 6.5<br />Sepal.Width: 3.0<br />Species: virginica","Sepal.Length: 7.6<br />Sepal.Width: 3.0<br />Species: virginica","Sepal.Length: 4.9<br />Sepal.Width: 2.5<br />Species: virginica","Sepal.Length: 7.3<br />Sepal.Width: 2.9<br />Species: virginica","Sepal.Length: 6.7<br />Sepal.Width: 2.5<br />Species: virginica","Sepal.Length: 7.2<br />Sepal.Width: 3.6<br />Species: virginica","Sepal.Length: 6.5<br />Sepal.Width: 3.2<br />Species: virginica","Sepal.Length: 6.4<br />Sepal.Width: 2.7<br />Species: virginica","Sepal.Length: 6.8<br />Sepal.Width: 3.0<br />Species: virginica","Sepal.Length: 5.7<br />Sepal.Width: 2.5<br />Species: virginica","Sepal.Length: 5.8<br />Sepal.Width: 2.8<br />Species: virginica","Sepal.Length: 6.4<br />Sepal.Width: 3.2<br />Species: virginica","Sepal.Length: 6.5<br />Sepal.Width: 3.0<br />Species: virginica","Sepal.Length: 7.7<br />Sepal.Width: 3.8<br />Species: virginica","Sepal.Length: 7.7<br />Sepal.Width: 2.6<br />Species: virginica","Sepal.Length: 6.0<br />Sepal.Width: 2.2<br />Species: virginica","Sepal.Length: 6.9<br />Sepal.Width: 3.2<br />Species: virginica","Sepal.Length: 5.6<br />Sepal.Width: 2.8<br />Species: virginica","Sepal.Length: 7.7<br />Sepal.Width: 2.8<br />Species: virginica","Sepal.Length: 6.3<br />Sepal.Width: 2.7<br />Species: virginica","Sepal.Length: 6.7<br />Sepal.Width: 3.3<br />Species: virginica","Sepal.Length: 7.2<br />Sepal.Width: 3.2<br />Species: virginica","Sepal.Length: 6.2<br />Sepal.Width: 2.8<br />Species: virginica","Sepal.Length: 6.1<br />Sepal.Width: 3.0<br />Species: virginica","Sepal.Length: 6.4<br />Sepal.Width: 2.8<br />Species: virginica","Sepal.Length: 7.2<br />Sepal.Width: 3.0<br />Species: virginica","Sepal.Length: 7.4<br />Sepal.Width: 2.8<br />Species: virginica","Sepal.Length: 7.9<br />Sepal.Width: 3.8<br />Species: virginica","Sepal.Length: 6.4<br />Sepal.Width: 2.8<br />Species: virginica","Sepal.Length: 6.3<br />Sepal.Width: 2.8<br />Species: virginica","Sepal.Length: 6.1<br />Sepal.Width: 2.6<br />Species: virginica","Sepal.Length: 7.7<br />Sepal.Width: 3.0<br />Species: virginica","Sepal.Length: 6.3<br />Sepal.Width: 3.4<br />Species: virginica","Sepal.Length: 6.4<br />Sepal.Width: 3.1<br />Species: virginica","Sepal.Length: 6.0<br />Sepal.Width: 3.0<br />Species: virginica","Sepal.Length: 6.9<br />Sepal.Width: 3.1<br />Species: virginica","Sepal.Length: 6.7<br />Sepal.Width: 3.1<br />Species: virginica","Sepal.Length: 6.9<br />Sepal.Width: 3.1<br />Species: virginica","Sepal.Length: 5.8<br />Sepal.Width: 2.7<br />Species: virginica","Sepal.Length: 6.8<br />Sepal.Width: 3.2<br />Species: virginica","Sepal.Length: 6.7<br />Sepal.Width: 3.3<br />Species: virginica","Sepal.Length: 6.7<br />Sepal.Width: 3.0<br />Species: virginica","Sepal.Length: 6.3<br />Sepal.Width: 2.5<br />Species: virginica","Sepal.Length: 6.5<br />Sepal.Width: 3.0<br />Species: virginica","Sepal.Length: 6.2<br />Sepal.Width: 3.4<br />Species: virginica","Sepal.Length: 5.9<br />Sepal.Width: 3.0<br />Species: virginica"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(232,70,70,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(232,70,70,1)"}},"hoveron":"points","name":"virginica","legendgroup":"virginica","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":24.5235920852359,"r":7.30593607305936,"b":38.4779299847793,"l":43.1050228310502},"font":{"color":"rgba(0,0,0,1)","family":"serif","size":14.6118721461187},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[4.12,8.08],"tickmode":"array","ticktext":["5","6","7","8"],"tickvals":[5,6,7,8],"categoryorder":"array","categoryarray":["5","6","7","8"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"serif","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":false,"gridcolor":null,"gridwidth":0,"zeroline":false,"anchor":"y","title":"Sepal.Length","titlefont":{"color":"rgba(0,0,0,1)","family":"serif","size":14.6118721461187},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[1.88,4.52],"tickmode":"array","ticktext":["2.0","2.5","3.0","3.5","4.0","4.5"],"tickvals":[2,2.5,3,3.5,4,4.5],"categoryorder":"array","categoryarray":["2.0","2.5","3.0","3.5","4.0","4.5"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"serif","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":false,"gridcolor":null,"gridwidth":0,"zeroline":false,"anchor":"x","title":"Sepal.Width","titlefont":{"color":"rgba(0,0,0,1)","family":"serif","size":14.6118721461187},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":true,"legend":{"bgcolor":null,"bordercolor":null,"borderwidth":0,"font":{"color":"rgba(0,0,0,1)","family":"serif","size":11.689497716895},"y":0.972933070866142},"annotations":[{"text":"Species","x":1.02,"y":1,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(0,0,0,1)","family":"serif","size":14.6118721461187},"xref":"paper","yref":"paper","textangle":-0,"xanchor":"left","yanchor":"bottom","legendTitle":true}],"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","modeBarButtonsToAdd":[{"name":"Collaborate","icon":{"width":1000,"ascent":500,"descent":-50,"path":"M487 375c7-10 9-23 5-36l-79-259c-3-12-11-23-22-31-11-8-22-12-35-12l-263 0c-15 0-29 5-43 15-13 10-23 23-28 37-5 13-5 25-1 37 0 0 0 3 1 7 1 5 1 8 1 11 0 2 0 4-1 6 0 3-1 5-1 6 1 2 2 4 3 6 1 2 2 4 4 6 2 3 4 5 5 7 5 7 9 16 13 26 4 10 7 19 9 26 0 2 0 5 0 9-1 4-1 6 0 8 0 2 2 5 4 8 3 3 5 5 5 7 4 6 8 15 12 26 4 11 7 19 7 26 1 1 0 4 0 9-1 4-1 7 0 8 1 2 3 5 6 8 4 4 6 6 6 7 4 5 8 13 13 24 4 11 7 20 7 28 1 1 0 4 0 7-1 3-1 6-1 7 0 2 1 4 3 6 1 1 3 4 5 6 2 3 3 5 5 6 1 2 3 5 4 9 2 3 3 7 5 10 1 3 2 6 4 10 2 4 4 7 6 9 2 3 4 5 7 7 3 2 7 3 11 3 3 0 8 0 13-1l0-1c7 2 12 2 14 2l218 0c14 0 25-5 32-16 8-10 10-23 6-37l-79-259c-7-22-13-37-20-43-7-7-19-10-37-10l-248 0c-5 0-9-2-11-5-2-3-2-7 0-12 4-13 18-20 41-20l264 0c5 0 10 2 16 5 5 3 8 6 10 11l85 282c2 5 2 10 2 17 7-3 13-7 17-13z m-304 0c-1-3-1-5 0-7 1-1 3-2 6-2l174 0c2 0 4 1 7 2 2 2 4 4 5 7l6 18c0 3 0 5-1 7-1 1-3 2-6 2l-173 0c-3 0-5-1-8-2-2-2-4-4-4-7z m-24-73c-1-3-1-5 0-7 2-2 3-2 6-2l174 0c2 0 5 0 7 2 3 2 4 4 5 7l6 18c1 2 0 5-1 6-1 2-3 3-5 3l-174 0c-3 0-5-1-7-3-3-1-4-4-5-6z"},"click":"function(gd) { \n        // is this being viewed in RStudio?\n        if (location.search == '?viewer_pane=1') {\n          alert('To learn about plotly for collaboration, visit:\\n https://cpsievert.github.io/plotly_book/plot-ly-for-collaboration.html');\n        } else {\n          window.open('https://cpsievert.github.io/plotly_book/plot-ly-for-collaboration.html', '_blank');\n        }\n      }"}],"cloud":false},"source":"A","attrs":{"e236c1d7bb8":{"x":{},"y":{},"colour":{},"type":"scatter"}},"cur_data":"e236c1d7bb8","visdat":{"e236c1d7bb8":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"base_url":"https://plot.ly"},"evals":["config.modeBarButtonsToAdd.0.click"],"jsHooks":[]}</script>
 <p>Recently I also stumbled upon <code>highcharter</code> and <code>ggvis</code>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(highcharter)
 
-<span class="kw">hchart</span>(iris, <span class="st">&quot;scatter&quot;</span>, <span class="kw">hcaes</span>(<span class="dt">x =</span> Sepal.Length, <span class="dt">y =</span> Sepal.Width, <span class="dt">group =</span> Species)) %&gt;%<span class="st"> </span>
+<span class="kw">hchart</span>(iris, <span class="st">&quot;scatter&quot;</span>, <span class="kw">hcaes</span>(<span class="dt">x =</span> Sepal.Length, <span class="dt">y =</span> Sepal.Width, <span class="dt">group =</span> Species)) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">    </span><span class="kw">hc_add_theme</span>(<span class="kw">hc_theme_tufte</span>())</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;ggvis&quot;</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggvis)
 <span class="kw">data</span>(<span class="st">&quot;mtcars&quot;</span>)
-mtcars %&gt;%<span class="st"> </span><span class="kw">ggvis</span>(~wt, ~mpg, <span class="st">`</span><span class="dt">:=</span><span class="st">`</span>(size, <span class="kw">input_slider</span>(<span class="dv">10</span>, <span class="dv">100</span>)), <span class="st">`</span><span class="dt">:=</span><span class="st">`</span>(opacity, 
-    <span class="kw">input_slider</span>(<span class="dv">0</span>, <span class="dv">1</span>))) %&gt;%<span class="st"> </span><span class="kw">layer_points</span>()</code></pre></div>
-<div id="plot_id115026762-container" class="ggvis-output-container">
-<div id="plot_id115026762" class="ggvis-output"></div>
+mtcars <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ggvis</span>(<span class="op">~</span>wt, <span class="op">~</span>mpg, <span class="st">`</span><span class="dt">:=</span><span class="st">`</span>(size, <span class="kw">input_slider</span>(<span class="dv">10</span>, <span class="dv">100</span>)), <span class="st">`</span><span class="dt">:=</span><span class="st">`</span>(opacity, 
+    <span class="kw">input_slider</span>(<span class="dv">0</span>, <span class="dv">1</span>))) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">layer_points</span>()</code></pre></div>
+<div id="plot_id812155435-container" class="ggvis-output-container">
+<div id="plot_id812155435" class="ggvis-output"></div>
 <div class="plot-gear-icon">
 <nav class="ggvis-control">
 <a class="ggvis-dropdown-toggle" title="Controls" onclick="return false;"></a>
 <ul class="ggvis-dropdown">
 <li>
 Renderer: 
-<a id="plot_id115026762_renderer_svg" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_id115026762" data-renderer="svg">SVG</a>
+<a id="plot_id812155435_renderer_svg" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_id812155435" data-renderer="svg">SVG</a>
  | 
-<a id="plot_id115026762_renderer_canvas" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_id115026762" data-renderer="canvas">Canvas</a>
+<a id="plot_id812155435_renderer_canvas" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_id812155435" data-renderer="canvas">Canvas</a>
 </li>
 <li>
-<a id="plot_id115026762_download" class="ggvis-download" data-plot-id="plot_id115026762">Download</a>
+<a id="plot_id812155435_download" class="ggvis-download" data-plot-id="plot_id812155435">Download</a>
 </li>
 </ul>
 </nav>
 </div>
 </div>
 <script type="text/javascript">
-var plot_id115026762_spec = {
+var plot_id812155435_spec = {
   "data": [
     {
       "name": ".0",
       "format": {
         "type": "csv",
         "parse": {
-          "reactive_112759011": "number",
-          "reactive_879407900": "number",
+          "reactive_907247114": "number",
+          "reactive_389085625": "number",
           "wt": "number",
           "mpg": "number"
         }
       },
-      "values": "\"reactive_112759011\",\"reactive_879407900\",\"wt\",\"mpg\"\n55,0.5,2.62,21\n55,0.5,2.875,21\n55,0.5,2.32,22.8\n55,0.5,3.215,21.4\n55,0.5,3.44,18.7\n55,0.5,3.46,18.1\n55,0.5,3.57,14.3\n55,0.5,3.19,24.4\n55,0.5,3.15,22.8\n55,0.5,3.44,19.2\n55,0.5,3.44,17.8\n55,0.5,4.07,16.4\n55,0.5,3.73,17.3\n55,0.5,3.78,15.2\n55,0.5,5.25,10.4\n55,0.5,5.424,10.4\n55,0.5,5.345,14.7\n55,0.5,2.2,32.4\n55,0.5,1.615,30.4\n55,0.5,1.835,33.9\n55,0.5,2.465,21.5\n55,0.5,3.52,15.5\n55,0.5,3.435,15.2\n55,0.5,3.84,13.3\n55,0.5,3.845,19.2\n55,0.5,1.935,27.3\n55,0.5,2.14,26\n55,0.5,1.513,30.4\n55,0.5,3.17,15.8\n55,0.5,2.77,19.7\n55,0.5,3.57,15\n55,0.5,2.78,21.4"
+      "values": "\"reactive_907247114\",\"reactive_389085625\",\"wt\",\"mpg\"\n55,0.5,2.62,21\n55,0.5,2.875,21\n55,0.5,2.32,22.8\n55,0.5,3.215,21.4\n55,0.5,3.44,18.7\n55,0.5,3.46,18.1\n55,0.5,3.57,14.3\n55,0.5,3.19,24.4\n55,0.5,3.15,22.8\n55,0.5,3.44,19.2\n55,0.5,3.44,17.8\n55,0.5,4.07,16.4\n55,0.5,3.73,17.3\n55,0.5,3.78,15.2\n55,0.5,5.25,10.4\n55,0.5,5.424,10.4\n55,0.5,5.345,14.7\n55,0.5,2.2,32.4\n55,0.5,1.615,30.4\n55,0.5,1.835,33.9\n55,0.5,2.465,21.5\n55,0.5,3.52,15.5\n55,0.5,3.435,15.2\n55,0.5,3.84,13.3\n55,0.5,3.845,19.2\n55,0.5,1.935,27.3\n55,0.5,2.14,26\n55,0.5,1.513,30.4\n55,0.5,3.17,15.8\n55,0.5,2.77,19.7\n55,0.5,3.57,15\n55,0.5,2.78,21.4"
     },
     {
       "name": "scale/x",
@@ -394,10 +399,10 @@ var plot_id115026762_spec = {
             "value": "#000000"
           },
           "size": {
-            "field": "data.reactive_112759011"
+            "field": "data.reactive_907247114"
           },
           "opacity": {
-            "field": "data.reactive_879407900"
+            "field": "data.reactive_389085625"
           },
           "x": {
             "scale": "x",
@@ -451,15 +456,15 @@ var plot_id115026762_spec = {
   },
   "handlers": null
 };
-ggvis.getPlot("plot_id115026762").parseSpec(plot_id115026762_spec);
+ggvis.getPlot("plot_id812155435").parseSpec(plot_id812155435_spec);
 </script>
 <p>With <code>gganimate</code> you can directly create GIFs from you plots:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(gganimate)
 <span class="kw">library</span>(gapminder)
 
-g &lt;-<span class="st"> </span><span class="kw">ggplot</span>(gapminder, <span class="kw">aes</span>(gdpPercap, lifeExp, <span class="dt">size =</span> pop, <span class="dt">frame =</span> year)) +<span class="st"> </span>
-<span class="st">    </span><span class="kw">geom_point</span>() +<span class="st"> </span><span class="kw">geom_smooth</span>(<span class="kw">aes</span>(<span class="dt">group =</span> year), <span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">show.legend =</span> <span class="ot">FALSE</span>) +<span class="st"> </span>
-<span class="st">    </span><span class="kw">facet_wrap</span>(~continent, <span class="dt">scales =</span> <span class="st">&quot;free&quot;</span>) +<span class="st"> </span>ggthemes::<span class="kw">theme_tufte</span>()
+g &lt;-<span class="st"> </span><span class="kw">ggplot</span>(gapminder, <span class="kw">aes</span>(gdpPercap, lifeExp, <span class="dt">size =</span> pop, <span class="dt">frame =</span> year)) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span><span class="kw">geom_smooth</span>(<span class="kw">aes</span>(<span class="dt">group =</span> year), <span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">show.legend =</span> <span class="ot">FALSE</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">facet_wrap</span>(<span class="op">~</span>continent, <span class="dt">scales =</span> <span class="st">&quot;free&quot;</span>) <span class="op">+</span><span class="st"> </span>ggthemes<span class="op">::</span><span class="kw">theme_tufte</span>()
 <span class="kw">gganimate</span>(g)</code></pre></div>
 <div class="figure">
 <img src="https://rawgit.com/dirmeier/essential-R/master/fig/gganimate.gif" />
@@ -467,42 +472,42 @@ g &lt;-<span class="st"> </span><span class="kw">ggplot</span>(gapminder, <span 
 </div>
 </div>
 <div id="graphs" class="section level2">
-<h2><span class="header-section-number">6.5</span> Graphs</h2>
+<h2><span class="header-section-number">7.5</span> Graphs</h2>
 <p>There are many wonderful graph and network libraries around for plotting. For HTML <code>DiagrammeR</code> produces beautiful graphs:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(DiagrammeR)
 
-<span class="kw">create_graph</span>() %&gt;%<span class="st"> </span><span class="kw">add_node</span>(<span class="dt">label =</span> <span class="kw">expression</span>(Z), <span class="dt">node_aes =</span> <span class="kw">node_aes</span>(<span class="dt">penwidth =</span> <span class="dv">2</span>, 
-    <span class="dt">fontname =</span> <span class="st">&quot;Arial Narrow&quot;</span>, <span class="dt">fontcolor =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fillcolor =</span> <span class="st">&quot;white&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>)) %&gt;%<span class="st"> </span>
+<span class="kw">create_graph</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">add_node</span>(<span class="dt">label =</span> <span class="kw">expression</span>(Z), <span class="dt">node_aes =</span> <span class="kw">node_aes</span>(<span class="dt">penwidth =</span> <span class="dv">2</span>, 
+    <span class="dt">fontname =</span> <span class="st">&quot;Arial Narrow&quot;</span>, <span class="dt">fontcolor =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fillcolor =</span> <span class="st">&quot;white&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">    </span><span class="kw">add_node</span>(<span class="dt">label =</span> <span class="st">&quot;X&quot;</span>, <span class="dt">node_aes =</span> <span class="kw">node_aes</span>(<span class="dt">penwidth =</span> <span class="dv">2</span>, <span class="dt">fontname =</span> <span class="st">&quot;Arial Narrow&quot;</span>, 
-        <span class="dt">fontcolor =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fillcolor =</span> <span class="st">&quot;grey&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>)) %&gt;%<span class="st"> </span><span class="kw">add_edge</span>(<span class="dt">from =</span> <span class="dv">1</span>, 
-    <span class="dt">to =</span> <span class="dv">2</span>, <span class="dt">edge_aes =</span> <span class="kw">edge_aes</span>(<span class="dt">color =</span> <span class="st">&quot;black&quot;</span>)) %&gt;%<span class="st"> </span><span class="kw">render_graph</span>(<span class="dt">layout =</span> <span class="st">&quot;tree&quot;</span>)</code></pre></div>
-<div id="htmlwidget-b0b1ae902ff44bdb55d3" style="width:672px;height:192px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-b0b1ae902ff44bdb55d3">{"x":{"diagram":"digraph {\n\ngraph [layout = \"neato\",\n       outputorder = \"edgesfirst\",\n       bgcolor = \"white\"]\n\nnode [fontname = \"Helvetica\",\n      fontsize = \"10\",\n      shape = \"circle\",\n      fixedsize = \"true\",\n      width = \"0.5\",\n      style = \"filled\",\n      fillcolor = \"aliceblue\",\n      color = \"gray70\",\n      fontcolor = \"gray50\"]\n\nedge [fontname = \"Helvetica\",\n     fontsize = \"8\",\n     len = \"1.5\",\n     color = \"gray80\",\n     arrowsize = \"0.5\"]\n\n  \"1\" [label = \"Z\", penwidth = \"2\", color = \"black\", fontname = \"Arial Narrow\", fontcolor = \"black\", fillcolor = \"#FFFFFF\", pos = \"0,2!\"] \n  \"2\" [label = \"X\", penwidth = \"2\", color = \"black\", fontname = \"Arial Narrow\", fontcolor = \"black\", fillcolor = \"#C0C0C0\", pos = \"0,1!\"] \n\"1\"->\"2\" [color = \"black\"] \n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+        <span class="dt">fontcolor =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fillcolor =</span> <span class="st">&quot;grey&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">add_edge</span>(<span class="dt">from =</span> <span class="dv">1</span>, 
+    <span class="dt">to =</span> <span class="dv">2</span>, <span class="dt">edge_aes =</span> <span class="kw">edge_aes</span>(<span class="dt">color =</span> <span class="st">&quot;black&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">render_graph</span>(<span class="dt">layout =</span> <span class="st">&quot;tree&quot;</span>)</code></pre></div>
+<div id="htmlwidget-2bb40215e4b3e564814b" style="width:672px;height:192px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-2bb40215e4b3e564814b">{"x":{"diagram":"digraph {\n\ngraph [layout = \"neato\",\n       outputorder = \"edgesfirst\",\n       bgcolor = \"white\"]\n\nnode [fontname = \"Helvetica\",\n      fontsize = \"10\",\n      shape = \"circle\",\n      fixedsize = \"true\",\n      width = \"0.5\",\n      style = \"filled\",\n      fillcolor = \"aliceblue\",\n      color = \"gray70\",\n      fontcolor = \"gray50\"]\n\nedge [fontname = \"Helvetica\",\n     fontsize = \"8\",\n     len = \"1.5\",\n     color = \"gray80\",\n     arrowsize = \"0.5\"]\n\n  \"1\" [label = \"Z\", penwidth = \"2\", color = \"black\", fontname = \"Arial Narrow\", fontcolor = \"black\", fillcolor = \"#FFFFFF\", pos = \"0,2!\"] \n  \"2\" [label = \"X\", penwidth = \"2\", color = \"black\", fontname = \"Arial Narrow\", fontcolor = \"black\", fillcolor = \"#C0C0C0\", pos = \"0,1!\"] \n\"1\"->\"2\" [color = \"black\"] \n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 <p>For PDFs I primarily use <code>igraph</code> (which you can also use for graph algorithms).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(igraph)
 
 <span class="kw">set.seed</span>(<span class="dv">1</span>)
-g &lt;-<span class="st"> </span>igraph::<span class="kw">random.graph.game</span>(<span class="dv">5</span>, <span class="dt">p.or.m =</span> <span class="fl">0.4</span>)
-l &lt;-<span class="st"> </span>igraph::<span class="kw">layout.reingold.tilford</span>(g)
-l[<span class="dv">1</span>, <span class="dv">1</span>:<span class="dv">2</span>] &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>)
-l[<span class="dv">2</span>, <span class="dv">1</span>:<span class="dv">2</span>] &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)
-l[<span class="dv">3</span>, <span class="dv">1</span>:<span class="dv">2</span>] &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">0</span>)
-l[<span class="dv">4</span>, <span class="dv">1</span>:<span class="dv">2</span>] &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">0</span>)
+g &lt;-<span class="st"> </span>igraph<span class="op">::</span><span class="kw">random.graph.game</span>(<span class="dv">5</span>, <span class="dt">p.or.m =</span> <span class="fl">0.4</span>)
+l &lt;-<span class="st"> </span>igraph<span class="op">::</span><span class="kw">layout.reingold.tilford</span>(g)
+l[<span class="dv">1</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">2</span>] &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>)
+l[<span class="dv">2</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">2</span>] &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)
+l[<span class="dv">3</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">2</span>] &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">0</span>)
+l[<span class="dv">4</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">2</span>] &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">0</span>)
 <span class="co"># l[5, 1:2] &lt;- c(2, 2)</span>
 <span class="kw">plot</span>(g, <span class="dt">vertex.size =</span> <span class="dv">9</span>, <span class="dt">vertex.color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">vertex.label.degree =</span> <span class="dv">0</span>, <span class="dt">vertex.label.cex =</span> <span class="dv">1</span>, 
     <span class="dt">vertex.label.dist =</span> <span class="dv">1</span>, <span class="dt">vertex.label.color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">edge.color =</span> <span class="st">&quot;darkgrey&quot;</span>, 
     <span class="dt">edge.width =</span> <span class="fl">0.5</span>, <span class="dt">edge.arrow.size =</span> <span class="fl">0.65</span>, <span class="dt">layout =</span> l)</code></pre></div>
-<p><img src="essential-R_files/figure-html/unnamed-chunk-55-1.png" width="672" /></p>
+<p><img src="essential-R_files/figure-html/unnamed-chunk-57-1.png" width="672" /></p>
 <p>Other packages for graphi visualisations include <code>ggnetwork</code>/<code>ggnet</code>, <code>tidygraph</code>, or <code>ggraph</code>.</p>
 </div>
 <div id="rmarkdown" class="section level2">
-<h2><span class="header-section-number">6.6</span> RMarkdown</h2>
+<h2><span class="header-section-number">7.6</span> RMarkdown</h2>
 <p><code>Rmarkdown</code> is a great way for documentation, reporting and working reproducibly. Rstudio provides tons of different output formats like web sites (like this one), Tufte style documents, blogs and others. For presentations that use R code I use either <a href="https://github.com/yihui/xaringan">xaringan</a>, <a href="http://slidify.org/">Slidify</a> or <a href="https://rmarkdown.rstudio.com/revealjs_presentation_format.html">reveal.js</a>. Find all the output formats by Rstudio <a href="https://rmarkdown.rstudio.com/lesson-9.html">here</a>.</p>
 </div>
 <div id="shiny" class="section level2">
-<h2><span class="header-section-number">6.7</span> Shiny</h2>
+<h2><span class="header-section-number">7.7</span> Shiny</h2>
 <p>If you want to present your work interactively you can do so by building a web page using <code>shiny</code>. Setting up a Shiny instance for reporting is a great way to present data using interactive plots. Setting up shiny is fairly easy. You need to create a <code>server.R</code> file and <code>ui.R</code> file, e.g. like this:</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">  <span class="kw">cat</span> R/ui.R</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="fu">cat</span> R/ui.R</code></pre></div>
 <pre><code>library(shiny)
 library(shinyjs)
 library(plotly)
@@ -521,7 +526,7 @@ shinyUI(
 
     )
 )</code></pre>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">  <span class="kw">cat</span> R/server.R</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="fu">cat</span> R/server.R</code></pre></div>
 <pre><code>library(shiny)
 library(shinyjs)
 library(ggplot2)
@@ -544,7 +549,7 @@ shinyServer(function(input, output)
 <p>You can publish your server on <a href="http://www.shinyapps.io/">shinyapps.io</a> so that it is accessible by everyone.</p>
 </div>
 <div id="others-1" class="section level2">
-<h2><span class="header-section-number">6.8</span> Others</h2>
+<h2><span class="header-section-number">7.8</span> Others</h2>
 <p>TODO add some other packages</p>
 <ul>
 <li><code>ggraph</code>, <code>ggnet</code> and <code>ggnetwork</code></li>
@@ -573,7 +578,7 @@ shinyServer(function(input, output)
           </div>
         </div>
       </div>
-<a href="data-analysis-and-statistical-modeling.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="optimization.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 <a href="miscellaneous.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
@@ -594,9 +599,10 @@ gitbook.start({
 "google": false,
 "linkedin": true,
 "weibo": false,
-"instapper": false,
+"instapaper": false,
 "vk": false,
-"all": false
+"all": false,
+"instapper": false
 },
 "fontsettings": {
 "theme": "white",
@@ -604,6 +610,10 @@ gitbook.start({
 "size": 2
 },
 "edit": null,
+"history": {
+"link": null,
+"text": null
+},
 "download": null,
 "toc": {
 "collapse": "subsection"
@@ -622,7 +632,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "";
-    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:" && /^https?:/.test(src))
       src = src.replace(/^https?:/, '');
     script.src = src;

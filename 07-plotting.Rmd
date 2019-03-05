@@ -108,13 +108,13 @@ hchart(iris, "scatter", hcaes(x = Sepal.Length, y = Sepal.Width,  group=Species)
 ```
 
 ```{r ggvis, fig.align = 'center', fig.height=6}
-  library('ggvis')
-  data("mtcars")
-  mtcars %>%
-    ggvis(~wt, ~mpg,  
-          size := input_slider(10, 100),
-          opacity := input_slider(0, 1) ) %>%  
-      layer_points()
+library(ggvis)
+data("mtcars")
+mtcars %>%
+  ggvis(~wt, ~mpg,  
+        size := input_slider(10, 100),
+        opacity := input_slider(0, 1) ) %>%  
+    layer_points()
 ```
 
 With `gganimate` you can directly create GIFs from you plots:
@@ -181,11 +181,11 @@ If you want to present your work interactively you can do so by building a web p
 Setting up shiny is fairly easy. You need to create a `server.R` file and `ui.R` file, e.g. like this:
 
 ```{bash}
-  cat R/ui.R
+cat R/ui.R
 ```
 
 ```{bash}
-  cat R/server.R
+cat R/server.R
 ```
 
 You can publish your server on <a href="http://www.shinyapps.io/">shinyapps.io</a> so that it is accessible by everyone.
