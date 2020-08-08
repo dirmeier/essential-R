@@ -38,16 +38,17 @@ A minimum `R`-package stack at least consists of the following packages of tools
 - `bench`
 - `microbenchmark`
 - `lobstr`
+- `here`
 
 # Programming
 
 - `purrr`
 - `magrittr`
 - `R6`
-- `rcpp`
+- `rcpp` with `RcppArmadillo`, `RcppEigen` and `BH`
 - `reticulate`
 - `cpp11`
-
+- `parallel`, `doParallel`, `foreach`
 
 ## C++
 
@@ -94,6 +95,10 @@ A minimum `R`-package stack at least consists of the following packages of tools
 - mgcv
 - kernlab
 
+- bnlearn
+- pcalg
+- ggdag
+- dagitty
 
 # Optimization
 
@@ -119,6 +124,9 @@ A minimum `R`-package stack at least consists of the following packages of tools
 - ggraph
 - gganimate
 - DiagrammeR
+-highcharter
+- tidybayes
+- scico
 
 - `ggraph`, `ggnet` and `ggnetwork`
 - `gganimate`
@@ -142,12 +150,15 @@ A minimum `R`-package stack at least consists of the following packages of tools
 - tufte
 - xaringan
 - other standard library for presentations?
+- ioslides
+- reveal
 
 # other
 
 shiny
 igraph
 - compiler
+-drake
 
 # CI
 

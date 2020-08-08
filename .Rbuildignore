@@ -1,4 +1,0 @@
-^\.travis\.yml$
-^\./newpkg/\./newpkg/docs$
-^\./newpkg//\./newpkg//docs$
-^docs$
