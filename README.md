@@ -6,7 +6,11 @@
 
 ## Introduction
 
-This repository is a collection of programming guidelines, good practices and  libraries I tend to use routinely when writing code in `R` and `C++`.
+This document serves as a personal collection of
+
+* tools for package development,
+* good practices for programming,
+* and most frequently used packages.
 
 ## Author
 

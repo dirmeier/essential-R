@@ -4,29 +4,22 @@
 devtools::install("./pkg")
 ```
 
-The following section covers tools that help and speed up developing R
+The following section covers tools that help and speed up developing R.
 
 ## Creating R packages
 
 A minimum `R`-package stack at least consists of the following packages of tools:
 
-- `yeoman`
 - `devtools`
 - `testthat`
 - `roxygen2`
 - `covr`
 - `lintr`
+- `styler`
 - `usethis`
-
-If you have `yeoman` installed, you can use the `R-bones` generator in order to initialize a complete project. This gives you the following barebone:
-
-```{bash, eval=FALSE}
-  yo r-bones
-  ls -la pkg
-```
-```{bash, include=TRUE, eval=TRUE, echo=FALSE}
-  ls -la pkg
-```
+- `remotes`
+- `pkgdown`
+- `rcmdcheck`
 
 ## Writing R packages
 
@@ -34,10 +27,10 @@ When creating an R package `devtools` and `covr` cover almost any functionality 
 
 ```{r, include=TRUE, eval=FALSE, echo=TRUE}
   devtools::create("pkg")
-  devtools::use_rcpp()  
+  usethis::use_rcpp()  
   devtools::document()  
   devtools::test()
-  devtools::check_cran()
+  rcmdcheck::rcmdcheck()
   devtools::lint()
   devtools::run_examples()
   covr::package_coverage()

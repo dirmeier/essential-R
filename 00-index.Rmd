@@ -30,7 +30,7 @@ library(gam)
 data(kyphosis)
 ```
 
-This book serves as a personal collection of
+This document serves as a personal collection of
 
 * tools for package development,
 * good practices for programming,
@@ -38,7 +38,7 @@ This book serves as a personal collection of
 
 The material treated here certainly does not cover all of `R`, but rather serves as list of essential things related to programming in `R` that I find useful to know. The document is partly opinionated and subjective, so feel free to open up an <a href="https://github.com/dirmeier/essential-R/issues">issue</a> if you feel some parts should be clarified or reformulated.
 
-The book is no introduction on how to program functionally, procedurally or in an object-oriented way, how to write code in general, or how to speed it up. The interested reader is referred to:
+For general references on programming the interested reader is referred to:
 
 - Robert Martin: Clean Code,
 - Andrew Hunt: The Pragmatic Programmer,
@@ -48,8 +48,6 @@ The book is no introduction on how to program functionally, procedurally or in a
 - Hadley Wickham: R packages,
 - Hadley Wickham: Advanced R,
 - Dirk Eddelbuettel: Seamless R and C++ Integration with Rcpp,
-- Thomas Cormen: Introduction to Algorithms,
-- Dan Gusfield: Algorithms on Strings, Trees and Sequences,
 - Donald Knuth: The Art of Computer Programming,
 - a <a href="http://norvig.com/21-days.html">comment</a> by Peter Norvig,
 - ...
