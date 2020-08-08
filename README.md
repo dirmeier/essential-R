@@ -4,7 +4,7 @@
 
 :rocket: Essential tools and libraries for programming in R.
 
-## Introduction
+## About
 
 This document serves as a personal list of
 
@@ -68,7 +68,7 @@ Furthermore, some good reading:
 - David Vandevoorde: C++ Templates - the compete guide
 - Nicolai Josuttis: C++17 - the complete guide
 
-### Working with data
+## Working with data
 
 - [`tidyverse`](https://github.com/tidyverse/tidyverse) (`dplyr`, `tidyr`, ...) for working with data in general
 - [`data.table`](https://github.com/Rdatatable/data.table) as a fast alternative to R`s native data frame
@@ -103,12 +103,12 @@ Furthermore, some good reading:
 - [`ggdag`](https://github.com/malcolmbarrett/ggdag) for visualizing DAGs
 - [`dagitty`](https://github.com/jtextor/dagitty) for analysis of structural equation models
 
-# Optimization
+## Optimization
 
 - [`nloptr`](https://cran.r-project.org/web/packages/nloptr/index.html) for non-linear optimization
 - [`cvxr`](https://github.com/cvxgrp/CVXR) for disciplined convec optimization
 
-# Visualization
+## Visualization
 
 - [`ggplot2`](https://github.com/tidyverse/ggplot2) as base package for visualization
 - [`paletteer`](https://github.com/EmilHvitfeldt/paletteer) for all the palettes
@@ -119,7 +119,6 @@ Furthermore, some good reading:
 - [`ggsci`](https://github.com/nanxstats/ggsci) for sci-fi themes
 - [`ggthemr`](https://github.com/cttobin/ggthemr) for even mroe themes
 - [`colourlovers`](https://github.com/andrewheiss/colourlovers) for access to the COLOURlovers API 
-
 - [`patchwork`](https://github.com/thomasp85/patchwork) to easily compose plots
 - [`colorspace`](https://cran.r-project.org/web/packages/colorspace/index.html) for color manipulation
 - [`cowplot`](https://github.com/wilkelab/cowplot) for plot annotations
@@ -145,7 +144,7 @@ Furthermore, some good reading:
 - [`tufte`](https://github.com/rstudio/tufte) for Tufte-style documents
 - [`xaringan`](https://github.com/yihui/xaringan) for HTML presentations
 
-# Other
+## Other
 
 - [`igraph`](https://github.com/igraph/igraph) to work with graphs
 - [`drake`](https://github.com/ropensci/drake) for building pipelines
