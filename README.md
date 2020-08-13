@@ -51,6 +51,8 @@ Many more can be find on github at [r-lib](https://github.com/r-lib) or [rstudio
 ### C++
 
 - [`meson`](https://mesonbuild.com/) as modern build system and [`autotools`](https://www.gnu.org/software/automake/manual/html_node/Autotools-Introduction.html) since R is old
+- [`VTune`](https://software.intel.com/content/www/us/en/develop/tools/vtune-profiler.html) and the Parallel Studio to profile code
+- [`Callgrind`](https://valgrind.org/docs/manual/cl-manual.html) as an alternative to the above
 - [`gdb`](https://www.gnu.org/software/gdb/) and [`lldb`](https://lldb.llvm.org/) for debugging C++
 - [`sanitizers`](https://gcc.gnu.org/onlinedocs/gcc/Instrumentation-Options.html) to detect memory leaks, etc.
 - [`cppcheck`](http://cppcheck.sourceforge.net/) for static code analysis
