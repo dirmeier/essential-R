@@ -2,7 +2,7 @@
 
 [![Project Status](http://www.repostatus.org/badges/latest/concept.svg)](http://www.repostatus.org/#concept)
 
-:rocket: Essential tools and libraries for programming in R.
+:rocket: Essential tools and libraries for programming in R
 
 ## About
 
@@ -12,7 +12,7 @@ This document serves as a personal list of
 * good practices for programming,
 * and most frequently used packages
 
-with emphasis on data science, Bayesian stats and probabilistic ML.
+with an emphasis on data science, Bayesian stats and probabilistic ML.
 
 ## R package development
 
@@ -86,6 +86,7 @@ Furthermore, some good reading:
 - [`loo`](https://github.com/stan-dev/loo) for approximate LOO-CV and PSIS
 - [`projpred`](https://github.com/stan-dev/projpred) for projection predictive variable selection 
 - [`rstantools`](https://github.com/stan-dev/rstantools) for developing R Packages interfacing with Stan 
+- [`posterior`](https://github.com/stan-dev/posterior) for working with output from Bayesian models
 - [`coda`](https://cran.r-project.org/web/packages/coda/index.html) for summarizing and working with MCMC output
 - [`MCMCpack`](https://cran.r-project.org/web/packages/MCMCpack/index.html) provides some utility functions
 - [`LaplacesDemon`](https://github.com/LaplacesDemonR/LaplacesDemon) for even more Bayes utility
